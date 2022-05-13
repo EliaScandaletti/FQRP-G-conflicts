@@ -1,0 +1,27 @@
+
+function getCConflict(instance, vehicle) {
+    assert(1 <= vehicle <= instance.size)
+    set sigma = instance.sigma
+
+    if (vehicle in instance.H) {
+        return nullVehicle
+    }
+
+    if (vehicle in instance.R) {
+        set target = 2*sigma(vehicle) - vehicle
+        if (1 <= target <= instance.size && sigma(target) < sigma(vehicle)) {
+            return target
+        } else {
+            return nullVehicle
+        }
+    }
+
+    if (vehicle in instance.L) {
+        set target = 2*sigma(vehicle) - vehicle
+        if (1 <= target <= instance.size && sigma(target) > sigma(vehicle)) {
+            return target
+        } else {
+            return nullVehicle
+        }
+    }
+}
