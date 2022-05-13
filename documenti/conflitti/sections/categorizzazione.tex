@@ -9,38 +9,31 @@ I conflitti di nodo sono ulteriormente divisi in conflitto di tipo A, conflitti 
 
 \paragraph{Conflitti di arco}
 Dati due veicoli $i$ e $j$, questi sono in conflitto di arco se e solo se le seguenti condizioni sono rispettate:
-\begin{subnumcases}{\label{cond:arc}}
-  i \in \mathbb{R}\label{cond:arc:a} \\
-  j \in \mathbb{L}\label{cond:arc:b} \\
-  j - i = 2n + 1,\ n \in \mathbb{N}\label{cond:arc:c} \\
-  \sigma(j) < \frac{i+j}{2} < \sigma(i)\label{cond:arc:d}
+\begin{subnumcases}{\label{def:arc}}
+  i \in \mathbb{R}\label{def:arc:a} \\
+  j \in \mathbb{L}\label{def:arc:b} \\
+  j - i = 2n + 1,\ n \in \mathbb{N}\label{def:arc:c} \\
+  \sigma(j) < \frac{i+j}{2} < \sigma(i)\label{def:arc:d}
 \end{subnumcases}
-In questo caso si potrebbe generare una collisione negli archi (\ref{cond:arc:c}) tra la colonna $\frac{i+j-1}{2}$ e la colonna $\frac{i+j+1}{2}$ poiché i due veicoli ci passano in contemporanea (\ref{cond:arc:d}) e in direzioni opposte (\ref{cond:arc:a}, \ref{cond:arc:b}).
+In questo caso si potrebbe generare una collisione negli archi (\ref{def:arc:c}) tra la colonna $\frac{i+j-1}{2}$ e la colonna $\frac{i+j+1}{2}$ poiché i due veicoli ci passano in contemporanea (\ref{def:arc:d}) e in direzioni opposte (\ref{def:arc:a}, \ref{def:arc:b}).
 
 \paragraph{Conflitti di nodo}
 Dati due veicoli $i$ e $j$, questi possono essere in un conflitto di tipo A, B o C.
 
 \subparagraph{Conflitti di nodo di tipo A}
 I conflitti di tipo A sono un particolare caso di conflitti di nodo. In particolare, un conflitto è di tipo A se e solo se rispetta le seguenti condizioni:
-\begin{subnumcases}{\label{cond:nodeA}}
-  \min\{j, \sigma(j)\} < \sigma(i) < \max\{j, \sigma(j)\}\label{cond:nodeA:a} \\
-  \left|i-\sigma(i)\right| < \left|j-\sigma(i)\right|\label{cond:nodeA:b}
+\begin{subnumcases}{\label{def:nodeA}}
+  \min\{j, \sigma(j)\} < \sigma(i) < \max\{j, \sigma(j)\}\label{def:nodeA:a} \\
+  \left|i-\sigma(i)\right| < \left|j-\sigma(i)\right|\label{def:nodeA:b}
 \end{subnumcases}
-In questo caso potrebbe generarsi una collisione nel nodo $(m, \sigma(i))$, dove $m$ è l'ultimo livello della griglia, poiché:
-\begin{itemize}
-  \item è nel percorso di $i$, poiché è la sua destinazione;
-  \item è in una colonna attraversata da $j$ (\ref{cond:nodeA:a});
-  \item $i$ ci arriva prima di $j$ e ci si ferma (\ref{cond:nodeA:b}).
-\end{itemize}
 
 \subparagraph{Conflitti di nodo di tipo B}
 I conflitti di tipo B sono un particolare caso di conflitti di nodo. In particolare, un conflitto è di tipo B se e solo se rispetta le seguenti condizioni:
-\begin{subnumcases}{\label{cond:nodeB}}
-  i \in \mathbb{R}\label{cond:nodeB:a} \\
-  j \in \mathbb{L}\label{cond:nodeB:b} \\
-  j - i = 2n,\ n \in \mathbb{N}\label{cond:nodeB:c} \\
-  \sigma(j) < \frac{i+j}{2} < \sigma(i)\label{cond:nodeB:d}
+\begin{subnumcases}{\label{def:nodeB}}
+  i \in \mathbb{R}\label{def:nodeB:a} \\
+  j \in \mathbb{L}\label{def:nodeB:b} \\
+  j - i = 2n,\ n \in \mathbb{N}\label{def:nodeB:c} \\
+  \sigma(j) < \frac{i+j}{2} < \sigma(i)\label{def:nodeB:d}
 \end{subnumcases}
-In questo caso potrebbe generarsi una collisione nei nodi della colonna $\frac{i+j}{2}$ poiché tale colonna viene raggiunta dai due veicoli in contemporanea.
 
 \end{document}
