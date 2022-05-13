@@ -1,0 +1,30 @@
+\documentclass[../../main.tex]{subfiles}
+\graphicspath{{\subfix{../../images/}}}
+
+\begin{document}
+
+Dato un problema di $n$ colonne, vogliamo calcolare la probabilità che un veicolo $i$ appartenga a $\mathbb{R}$, $\mathbb{L}$ o $\mathbb{H}$.
+
+Iniziamo osservando che gli insiemi $\mathbb{R}$, $\mathbb{L}$ ed $\mathbb{H}$ sono una partizione dell'insieme dei veicoli.
+Da questo segue che
+\begin{equation}\label{analisi:part}
+  P(i \in \mathbb{R}) + P(i \in \mathbb{L}) + P(i \in \mathbb{H}) = 1
+\end{equation}
+
+Inoltre, per la simmetria della definizione di $\mathbb{R}$ e $\mathbb{L}$, si ha
+\begin{equation}\label{analisi:simmRL}
+  P(i \in \mathbb{R}) = P(i \in \mathbb{L})
+\end{equation}
+
+Calcolare $\mathbb{H}$ è banale.
+Si ha
+\begin{equation}\label{analisi:probH}
+  P(i \in \mathbb{H}) = \frac{1}{n}
+\end{equation}
+
+Dalle equazioni (\ref{analisi:part}), (\ref{analisi:simmRL}) e (\ref{analisi:probH}), si ottiene
+\begin{equation}
+  P(i \in \mathbb{R}) = P(i \in \mathbb{L}) = \frac{n-1}{2n}
+\end{equation}
+
+\end{document}
