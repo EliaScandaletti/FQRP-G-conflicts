@@ -1,0 +1,36 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{biblatex}
+\usepackage{cases}
+\usepackage{graphicx}
+\usepackage{pxfonts}
+\usepackage{subfiles}
+
+\addbibresource{../common.bib}
+\graphicspath{{images/}}
+
+\title{Descrizione e Analisi dei Conflitti nei FQRP-G}
+\author{Elia Scandaletti}
+\date{Maggio-Giugno 2022}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Notazioni utili}
+\subfile{sections/notazioni.tex}
+
+\section{Categorizzazione dei conflitti}
+\subfile{sections/categorizzazione.tex}
+
+\section{Analisi teorica dei conflitti}
+\subsection{Probabilità dei veicoli di appartenere a una partizione dell'insieme}
+\subfile{sections/analisi/partizione.tex}
+\subsection{Probabilità che un veicolo sia oggetto di un conflitto di tipo C}
+\subfile{sections/analisi/probabilita_tipoC.tex}
+
+\end{document}
