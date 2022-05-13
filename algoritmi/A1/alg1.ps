@@ -1,0 +1,31 @@
+set nullVehicle = 0
+
+function alg1(instance) {
+    set conflictGraph = empty
+
+    foreach (vehicle in instance.vehicles) {
+        set CConflict = getCConflict(instance, vehicle)
+        if (CConflict != nullVehicle) {
+            conflictGraph.add_C_arc(vehicle, CConflict)
+        }
+        
+        foreach (otherVehicle in instance.vehicles) {
+            if (otherVehicle > vehicle) {
+                if ((otherVehicle - vehicle) % 2 != 0) {
+                    if(checkAConflict(instance, vehicle, otherVehicle)) {
+                        conflictGraph.add_A_arc(vehicle, otherVehicle)
+                    }
+                    if (checkBConflict(instance, vehicle, otherVehicle)) {
+                        conflictGraph.add_B_arc(vehicle, otherVehicle)
+                    }
+                } else {
+                    if(checkNodeConflict(instance, vehicle, otherVehicle)) {
+                        conflictGraph.add_arc_arc(vehicle, otherVehicle)
+                    }
+                }
+            }
+        }
+    }
+
+    return conflictGraph
+}
