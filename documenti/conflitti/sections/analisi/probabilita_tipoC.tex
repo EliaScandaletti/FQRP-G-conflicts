@@ -1,0 +1,95 @@
+\documentclass[../../main.tex]{subfiles}
+\graphicspath{{\subfix{../../images/}}}
+
+\begin{document}
+
+Dato un problema di $n$ colonne, vogliamo calcolare la probabilità che un veicolo $i$ sia oggetto di un conflitto di tipo C.
+Formalmente vogliamo calcolare
+\begin{equation*}
+  P(\exists j : i(j))
+\end{equation*}
+
+Per simmetria della definizione di $\mathbb{R}$ e $\mathbb{L}$, si ha
+\begin{equation}\label{analisi:probC:simmRL}
+  P(\exists j : i(j)\ \mid\ i \in \mathbb{R}) = P(\exists j : i(j)\ \mid\ i \in \mathbb{L})
+\end{equation}
+
+Inoltre, per la definizione di conflitto di tipo C e la definizione di $\mathbb{H}$, si ha
+\begin{equation}\label{analisi:probC:probH}
+  P(\exists j : i(j)\ \mid\ i \in \mathbb{H}) = 0
+\end{equation}
+
+Essendo $\mathbb{R}$, $\mathbb{L}$ e $\mathbb{H}$ partizione dell'insiemi dei veicoli, dalle equazioni (\ref{analisi:probC:simmRL}) e (\ref{analisi:probC:probH}), otteniamo
+\begin{equation}\label{analisi:probC:prob2R}
+  \begin{split}
+    P(\exists j : i(j)) &= 2 * P(\exists j : i(j)\ \mid\ i \in \mathbb{R}) \\
+    &= 2 * P(\exists j : i(j)\ \mid\ i \in \mathbb{L})
+  \end{split}
+\end{equation}
+
+Scomponiamo la condizione $\exists j : i(j)$ in condizioni più piccole.
+Basandoci sulla definizione \textbf{TODO}, si ha
+\begin{subnumcases}{
+    \exists j : i(j) \iff \label{analisi:probC:condExGen} }
+  j = 2\sigma(i) - i \label{analisi:probC:condExGen:a}\\
+  1 \leq j \leq n \label{analisi:probC:condExGen:b}\\
+  \begin{cases}\label{analisi:probC:condExGen:c}
+    \sigma(j) < \sigma(i) & \text{se $i \in \mathbb{R}$} \\
+    \sigma(j) > \sigma(i) & \text{se $i \in \mathbb{L}$}
+  \end{cases}\\
+  \begin{cases}\label{analisi:probC:condExGen:d}
+    j \in \mathbb{L} & \text{se $i \in \mathbb{R}$} \\
+    j \in \mathbb{R} & \text{se $i \in \mathbb{L}$}
+  \end{cases}
+\end{subnumcases}
+
+Da notare che (\ref{analisi:probC:condExGen:a}) e (\ref{analisi:probC:condExGen:c}) implicano (\ref{analisi:probC:condExGen:d}).
+Si assuma il caso $i \in \mathbb{R}$; il caso $i \in \mathbb{L}$ è analogo.
+Per ipotesi, $i < \sigma(i)$, di conseguenza, per la (\ref{analisi:probC:condExGen:a}) $j = 2\sigma(i) - i > \sigma(i) + i - i = \sigma(i)$.
+Insieme alla (\ref{analisi:probC:condExGen:c}), $j > \sigma(i) > \sigma(j) \therefore j \in \mathbb{L}$.
+Da ciò si evince anche che $j \geq 1$ ($j \leq n$ nel caso $i \in \mathbb{L}$).
+
+Si noti anche che, per le probabilità condizionate in (\ref{analisi:probC:prob2R}), possiamo considerare solo la prima (o la seconda) condizione di (\ref{analisi:probC:condExGen:c}) e (\ref{analisi:probC:condExGen:d}).
+
+Infine, si noti che la condizione (\ref{analisi:probC:condExGen:a}) può essere portata fuori dal sistema e usata come ipotesi.
+
+Possiamo quindi scrivere che
+\begin{equation}\label{analisi:probC:condEx}
+  \exists j : i(j) \iff
+  \begin{cases}
+    j \leq n \\
+    \sigma(j) < \sigma(i)
+  \end{cases}
+\end{equation}
+per $i \in \mathbb{R}$ e $j = 2\sigma(i) - i$.
+
+Per l'equivalenza (\ref{analisi:probC:condEx}), si può affermare che
+\begin{equation}\label{analisi:probC:chainRule}
+  \begin{split}
+    P(\exists j : i(j)\ \mid\ i \in \mathbb{R})
+    &= P(\exists J : i(j)\ \mid\ i < \sigma(i)) \\
+    &= P(j \leq n \wedge \sigma(j) < \sigma(i)\ \mid\ i < \sigma(i)) \\
+    &= \frac{P(j \leq n \wedge \sigma(j) < \sigma(i) \wedge i < \sigma(i))}{P(i < \sigma(i))} \\
+    &= \frac{P(\sigma(j) < \sigma(i)\ \mid\ j \leq n \wedge i < \sigma(i)) * P(j \leq n \wedge i < \sigma(i))}{P(i < \sigma(i))} \\
+    &= \frac{P(\sigma(j) < \sigma(i)\ \mid\ j \leq n \wedge i < \sigma(i)) * P(j \leq n\ \mid\ i < \sigma(i)) * P(i < \sigma(i))}{P(i < \sigma(i))} \\
+    &= P(\sigma(j) < \sigma(i)\ \mid\ j \leq n \wedge i < \sigma(i)) * P(j \leq n\ \mid\ i < \sigma(i))
+  \end{split}
+\end{equation}
+per $i \in \mathbb{R}$ e $j = 2\sigma(i) - i$.
+
+Procediamo ora a calcolare il valore di ciascun fattore dell'equazione (\ref{analisi:probC:chainRule}).
+\paragraph{$P(j \leq n\ \mid\ i < \sigma(i))$}
+Sostituendo $j$, otteniamo
+$$j = 2\sigma(i) - i \leq n \implies \sigma(i) \leq \frac{n+i}{2}$$
+Per definizione del problema, $\sigma(i) \leq n$.
+Calcoliamo la probabilità come il rapporto tra casi favorevoli e casi possibili.
+I casi possibili sono $n-i$, i.e. $i < \sigma(i) \leq n$.
+
+Per calcolare i casi favorevoli appare evidente la necessità di distinguere i casi $n+i$ pari e $n+i$ dispari.
+Nel primo caso avrò $\frac{n+i}{2}$ casi favorevoli; nel secondo $\frac{n+i-1}{2}$.
+
+Calcoliamo quindi le rispettive probabilità.
+
+
+
+\end{document}
