@@ -1,6 +1,6 @@
 set nullVehicle = 0
 
-function alg1(instance) {
+function getConflictCount(instance) {
     set outgoingCConflict[instance.size] = [false, ..., false]
     set incomingCConflict[instance.size] = [false, ..., false]
     set potentialMixedConflicts = []
