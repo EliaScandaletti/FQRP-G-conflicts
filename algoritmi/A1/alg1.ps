@@ -22,18 +22,16 @@ function alg1(instance) {
         
         foreach (otherVehicle in instance.vehicles) {
             if (otherVehicle > vehicle) {
-                if ((otherVehicle - vehicle) % 2 != 0) {
-                    if(checkAConflict(instance, vehicle, otherVehicle)) {
-                        conflictCount.AType += 1
-                    }
+                if(checkAConflict(instance, vehicle, otherVehicle)) {
+                    conflictCount.AType += 1
+                }
+                if ((otherVehicle - vehicle) % 2 == 0) {
                     if (checkBConflict(instance, vehicle, otherVehicle)) {
                         conflictCount.BType += 1
-                        if (checkSameCChain(instance, vehicle, otherVehicle)) {
-                            potentialMixedConflicts.push((vehicle, otherVehicle))
-                        }
+                        potentialMixedConflicts.push((vehicle, otherVehicle))
                     }
                 } else {
-                    if(checkNodeConflict(instance, vehicle, otherVehicle)) {
+                    if(checkArcConflict(instance, vehicle, otherVehicle)) {
                         conflictCount.arcType += 1
                     }
                 }

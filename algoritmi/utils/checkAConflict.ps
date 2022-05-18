@@ -1,15 +1,16 @@
 
 function checkAConflict(instance, vehicleA, vehicleB) {
-    assert(1 <= vehicleA <= instance.size)
-    assert(1 <= vehicleB <= instance.size)
-    set diff = abs(i - sigma(i)) - abs(j - sigma(i))
+    assert(1 <= vehicleA < vehicleB <= instance.size)
+    
+    set diff = abs(vehicleA - sigma(vehicleA)) - abs(vehicleB - sigma(vehicleA))
     if (diff == 0) {
         return false
     }
     if (diff < 0) {
-     return checkAConflict(instance, vehicleB, vehicleA)   
+     swap(vehicleA, vehicleB)
     }
-    assert(abs(i - sigma(i)) < abs(j - sigma(i)))
+    assert(abs(vehicleA - sigma(vehicleA)) < abs(vehicleB - sigma(vehicleA)))
+    
     set sigma = instance.sigma
     if (vehicleB in instance.L) {
         set lower = sigma(B)
@@ -18,7 +19,5 @@ function checkAConflict(instance, vehicleA, vehicleB) {
         set lower = vehicleB
         set upper = sigma(B)
     }
-    return (
-        lower < sigma(i) < upper
-    )
+    return (lower < sigma(vehicleA) < upper)
 }

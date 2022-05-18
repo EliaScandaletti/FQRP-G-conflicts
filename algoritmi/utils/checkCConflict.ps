@@ -6,22 +6,21 @@ function getCConflict(instance, vehicle) {
     if (vehicle in instance.H) {
         return nullVehicle
     }
-
-    if (vehicle in instance.R) {
-        set target = 2*sigma(vehicle) - vehicle
-        if (1 <= target <= instance.size && sigma(target) < sigma(vehicle)) {
-            return target
+    
+    set target = 2*sigma(vehicle) - vehicle
+    if(1 <= target <= instance.size) {
+        if (vehicle in instance.R) {
+            if (sigma(target) < sigma(vehicle)) {
+                return target
+            } else {
+                return nullVehicle
+            }
         } else {
-            return nullVehicle
-        }
-    }
-
-    if (vehicle in instance.L) {
-        set target = 2*sigma(vehicle) - vehicle
-        if (1 <= target <= instance.size && sigma(target) > sigma(vehicle)) {
-            return target
-        } else {
-            return nullVehicle
+            if (sigma(target) > sigma(vehicle)) {
+                return target
+            } else {
+                return nullVehicle
+            }
         }
     }
 }
