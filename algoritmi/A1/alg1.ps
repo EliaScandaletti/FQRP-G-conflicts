@@ -1,17 +1,23 @@
 set nullVehicle = 0
 
 function alg1(instance) {
+    set outgoingCConflict[instance.size] = [false, ..., false]
+    set incomingCConflict[instance.size] = [false, ..., false]
+    set potentialMixedConflicts = []
     set conflictCount = {
         arcType: 0,
         AType: 0,
         BType: 0,
-        CType: 0
+        CType: 0,
+        mixedType: 0
     }
 
     foreach (vehicle in instance.vehicles) {
         set CConflict = getCConflict(instance, vehicle)
         if (CConflict != nullVehicle) {
             conflictCount.CType += 1
+            outgoingCConflict[vehicle] = true
+            incomingCConflict[CConflict] = true
         }
         
         foreach (otherVehicle in instance.vehicles) {
@@ -22,6 +28,9 @@ function alg1(instance) {
                     }
                     if (checkBConflict(instance, vehicle, otherVehicle)) {
                         conflictCount.BType += 1
+                        if (checkSameCChain(instance, vehicle, otherVehicle)) {
+                            potentialMixedConflicts.push((vehicle, otherVehicle))
+                        }
                     }
                 } else {
                     if(checkNodeConflict(instance, vehicle, otherVehicle)) {
@@ -29,6 +38,18 @@ function alg1(instance) {
                     }
                 }
             }
+        }
+    }
+
+    foreach (conflict in potentialMixedConflicts) {
+        if (
+            incomingCConflict[conflict[0]] &&
+            outgoingCConflict[conflict[0]] &&
+            incomingCConflict[conflict[1]] &&
+            outgoingCConflict[conflict[1]] &&
+            !checkSameCChain(instance, conflict[0], conflict[1])
+        ) {
+            conflictCount.mixedType += 1
         }
     }
 
