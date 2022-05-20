@@ -1,0 +1,31 @@
+// https://en.wikipedia.org/wiki/Heap%27s_algorithm#cite_ref-3
+class permutationsGenerator(A, size) {
+    set c = [0,..,0] // lenght = size
+    set i = -1
+
+    function next() {
+        assert(!finished())
+
+        if(i == -1) {
+            i += 1
+        } else if (i < size) {
+            if (c[i] < i) {
+                if ((i % 2) == 0) {
+                    swap(A[0], A[i])
+                } else {
+                    swap(A[c[i]], A[i])
+                }
+                c[i] += 1
+                i = 0
+            } else {
+                c[i] = 0
+                i += 1
+            }
+        }
+        return A
+    }
+
+    function finished() {
+        return i >= size
+    }
+}

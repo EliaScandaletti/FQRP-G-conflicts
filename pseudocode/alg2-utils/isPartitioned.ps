@@ -1,0 +1,19 @@
+
+function isNotPartitioned(instance) {
+    return !isPartitioned(instance)
+}
+
+function isPartitioned(instance) {
+    set sigma = instance.sigma
+
+    set i = 1
+    set maxSigma = 0
+    while (i <= instance.size) {
+        maxSigma = max(maxSigma, sigma(i))
+        if (maxSigma == i) {
+            return true   
+        }
+        i += 1
+    }
+    return false
+}

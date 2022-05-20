@@ -1,0 +1,33 @@
+
+class instanceGenerator(size, filter) {
+    set generator = permutationsGenerator([1,...,size], size)
+    set buf = null
+
+    private function cacheNext() {
+        assert(buf == null)
+        assert(!generator.finished())
+        
+        buf = generator.next()
+        if(!filter(buf)) {
+            buf = null
+        }
+    }
+
+    function next() {
+        assert(!finished())
+
+        while (!buf && !generator.finished()) {
+            cacheNext()
+        }
+        set ret = buf
+        buf = null
+        return ret
+    }
+
+    function finished() {
+        while (!buf && !generator.finished()) {
+            cacheNext()
+        }
+        return !buf && generator.finished()
+    }
+}
