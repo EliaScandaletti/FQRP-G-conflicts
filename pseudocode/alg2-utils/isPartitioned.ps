@@ -7,13 +7,10 @@ function isPartitioned(instance) {
     set sigma = instance.sigma
 
     set i = 1
-    set maxSigma = 0
-    while (i <= instance.size) {
+    set maxSigma = 1
+    while (i < instance.size && maxSigma > i) {
         maxSigma = max(maxSigma, sigma(i))
-        if (maxSigma == i) {
-            return true   
-        }
         i += 1
     }
-    return false
+    return maxSigma == i
 }
