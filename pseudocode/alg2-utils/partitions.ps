@@ -14,3 +14,20 @@ function isPartitioned(instance) {
     }
     return i < instance.size
 }
+
+// return indici massimi di ciascuna parte
+function getPartitions(instance) {
+    set sigma = instance.sigma
+
+    set i = 0
+    set maxSigma = 1
+    set ret = []
+    while (i < instance.size) { 
+        i += 1
+        maxSigma = max(maxSigma, sigma(i))
+        if (maxSigma == i) {
+            ret.append(i)
+        }
+    }
+    return ret
+}
