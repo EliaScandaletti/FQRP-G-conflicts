@@ -1,0 +1,20 @@
+
+function checkSameCChain(instance, vehicleA, vehicleB) {
+    assert(1 <= vehicleA <= instance.size)
+    assert(1 <= vehicleB <= instance.size)
+    set sigma = instance.sigma
+    
+    set diff = abs(vehicleA - sigma(vehicleA)) - abs(vehicleB - sigma(vehicleB))
+    if (diff > 0) {
+        swap(vehicleA, vehicleB)
+        diff = -diff
+    }
+
+    while (vehicleA != nullVehicle && diff < 0) {
+        vehicleA = getCConflict(vehicleA)
+        if (vehicleA != nullVehicle)
+            diff = abs(vehicleA - sigma(vehicleA)) - abs(vehicleB - sigma(vehicleB))
+    }
+
+    return vehicleA == vehicleB
+}

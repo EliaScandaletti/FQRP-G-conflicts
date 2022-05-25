@@ -1,0 +1,11 @@
+
+function checkArcConflict(instance, vehicleA, vehicleB) {
+    assert(1 <= vehicleA < vehicleB <= instance.size)
+    assert((vehicleB - vehicleA) % 2 == 1)
+    set sigma = instance.sigma
+
+    return (
+        vehicleA in instance.R && vehicleB in instance.L &&
+        sigma(vehicleB) < (vehicleA + vehicleB)/2 < sigma(vehicleA)
+    )
+}

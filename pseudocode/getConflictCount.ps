@@ -1,0 +1,55 @@
+set nullVehicle = 0
+
+function getConflictCount(instance) {
+    set outgoingCConflict[instance.size] = [false, ..., false]
+    set incomingCConflict[instance.size] = [false, ..., false]
+    set potentialMixedConflicts = []
+    set conflictCount = {
+        arcType: 0,
+        AType: 0,
+        BType: 0,
+        CType: 0,
+        mixedType: 0
+    }
+
+    foreach (vehicle in instance.vehicles) {
+        set CConflict = getCConflict(instance, vehicle)
+        if (CConflict != nullVehicle) {
+            conflictCount.CType += 1
+            outgoingCConflict[vehicle] = true
+            incomingCConflict[CConflict] = true
+        }
+        
+        foreach (otherVehicle in instance.vehicles) {
+            if (otherVehicle > vehicle) {
+                if(checkAConflict(instance, vehicle, otherVehicle)) {
+                    conflictCount.AType += 1
+                }
+                if ((otherVehicle - vehicle) % 2 == 0) {
+                    if (checkBConflict(instance, vehicle, otherVehicle)) {
+                        conflictCount.BType += 1
+                        potentialMixedConflicts.push((vehicle, otherVehicle))
+                    }
+                } else {
+                    if(checkArcConflict(instance, vehicle, otherVehicle)) {
+                        conflictCount.arcType += 1
+                    }
+                }
+            }
+        }
+    }
+
+    foreach (conflict in potentialMixedConflicts) {
+        if (
+            incomingCConflict[conflict[0]] &&
+            outgoingCConflict[conflict[0]] &&
+            incomingCConflict[conflict[1]] &&
+            outgoingCConflict[conflict[1]] &&
+            !checkSameCChain(instance, conflict[0], conflict[1])
+        ) {
+            conflictCount.mixedType += 1
+        }
+    }
+
+    return conflictCount
+}
