@@ -3,7 +3,8 @@
 
 \begin{document}
 
-In caso il conflitto avvenga su un arco, si parla di conflitto di arco. In caso il conflitto avvenga su un nodo, si parla di conflitto di nodo.
+In caso il conflitto avvenga su un arco, si parla di conflitto di arco.
+In caso il conflitto avvenga su un nodo, si parla di conflitto di nodo.
 
 I conflitti di nodo sono ulteriormente divisi in conflitto di tipo A, conflitti di tipo B e conflitti di tipo C.
 
@@ -15,20 +16,21 @@ Dati due veicoli $i$ e $j$, questi sono in conflitto di arco se e solo se le seg
   j - i = 2n + 1,\ n \in \mathbb{N}\label{def:arc:c} \\
   \sigma(j) < \frac{i+j}{2} < \sigma(i)\label{def:arc:d}
 \end{subnumcases}
-In questo caso si potrebbe generare una collisione negli archi (\ref{def:arc:c}) tra la colonna $\frac{i+j-1}{2}$ e la colonna $\frac{i+j+1}{2}$ poiché i due veicoli ci passano in contemporanea (\ref{def:arc:d}) e in direzioni opposte (\ref{def:arc:a}, \ref{def:arc:b}).
 
 \paragraph{Conflitti di nodo}
 Dati due veicoli $i$ e $j$, questi possono essere in un conflitto di tipo A, B o C.
 
 \subparagraph{Conflitti di nodo di tipo A}
-I conflitti di tipo A sono un particolare caso di conflitti di nodo. In particolare, un conflitto è di tipo A se e solo se rispetta le seguenti condizioni:
+I conflitti di tipo A sono un particolare caso di conflitti di nodo.
+In particolare, un conflitto è di tipo A se e solo se rispetta le seguenti condizioni:
 \begin{subnumcases}{\label{def:nodeA}}
   \min\{j, \sigma(j)\} < \sigma(i) < \max\{j, \sigma(j)\}\label{def:nodeA:a} \\
   \left|i-\sigma(i)\right| < \left|j-\sigma(i)\right|\label{def:nodeA:b}
 \end{subnumcases}
 
 \subparagraph{Conflitti di nodo di tipo B}
-I conflitti di tipo B sono un particolare caso di conflitti di nodo. In particolare, un conflitto è di tipo B se e solo se rispetta le seguenti condizioni:
+I conflitti di tipo B sono un particolare caso di conflitti di nodo.
+In particolare, un conflitto è di tipo B se e solo se rispetta le seguenti condizioni:
 \begin{subnumcases}{\label{def:nodeB}}
   i \in \mathbb{R}\label{def:nodeB:a} \\
   j \in \mathbb{L}\label{def:nodeB:b} \\
@@ -37,7 +39,8 @@ I conflitti di tipo B sono un particolare caso di conflitti di nodo. In particol
 \end{subnumcases}
 
 \subparagraph{Conflitti di nodo di tipo C}
-I conflitti di tipo C sono un particolare caso di conflitti di nodo. In particolare, un conflitto è di tipo C se e solo se rispetta le seguenti condizioni:
+I conflitti di tipo C sono un particolare caso di conflitti di nodo.
+In particolare, un conflitto è di tipo C se e solo se rispetta le seguenti condizioni:
 \begin{subnumcases}{\label{def:nodeC}}
   i \in \mathbb{R}\label{def:nodeC:a} \\
   j \in \mathbb{L}\label{def:nodeC:b} \\
