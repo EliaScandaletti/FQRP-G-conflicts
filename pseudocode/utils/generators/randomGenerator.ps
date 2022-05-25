@@ -1,0 +1,21 @@
+
+class randomGenerator is-a generator(size) {
+    set base = [1,...,size]
+
+    function next() {
+        assert(!finished())
+        
+        // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+        for (set i = 0; i < size-1; i+=1) {
+            set j = randomInt(i, size)
+            assert(i <= j < size)
+            swap(base[i], base[j])
+        }
+        
+        return base
+    }
+
+    function finished() {
+        return false
+    }
+}

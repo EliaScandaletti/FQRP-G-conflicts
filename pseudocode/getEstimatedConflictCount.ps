@@ -1,0 +1,12 @@
+
+function getEstimatedConflictCount(size, maxSample, generator, aggregator) {
+    set n = 0
+    
+    while (n < maxSample && !generator.finished()) {
+        instance = generator.next()
+        aggregator.aggregate(getConflictCount(instance))
+        n += 1
+    }
+
+    return aggregator.result()
+}
