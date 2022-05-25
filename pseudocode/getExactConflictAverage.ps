@@ -1,9 +1,0 @@
-
-function getExactConflictAverage(size, generator, aggregator) {
-
-    foreach (instance in generator(size, isNotPartitioned)) {
-        aggregator.aggregate(getConflictCount(instance))
-    }
-
-    return aggregator.result()
-}
