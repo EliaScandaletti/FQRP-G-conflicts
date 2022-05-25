@@ -36,4 +36,16 @@ I conflitti di tipo B sono un particolare caso di conflitti di nodo. In particol
   \sigma(j) < \frac{i+j}{2} < \sigma(i)\label{def:nodeB:d}
 \end{subnumcases}
 
+\subparagraph{Conflitti di nodo di tipo C}
+I conflitti di tipo C sono un particolare caso di conflitti di nodo. In particolare, un conflitto è di tipo C se e solo se rispetta le seguenti condizioni:
+\begin{subnumcases}{\label{def:nodeC}}
+  i \in \mathbb{R}\label{def:nodeC:a} \\
+  j \in \mathbb{L}\label{def:nodeC:b} \\
+  j - i = 2n,\ n \in \mathbb{N}\label{def:nodeC:c} \\
+  \sigma(j) < \sigma(i)\label{def:nodeC:d} \\
+  \sigma(i) = \frac{i+j}{2} \vee \sigma(j) = \frac{i+j}{2}\label{def:nodeC:e}
+\end{subnumcases}
+Nel caso $\sigma(i) = \frac{i+j}{2}$, la notazione $i(j)$ indica che $i$ è soggetto a conflitto di tipo C con $j$.
+Nel caso $\sigma(j) = \frac{i+j}{2}$, la notazione $j(i)$ indica che $j$ è soggetto a conflitto di tipo C con $i$.
+
 \end{document}
