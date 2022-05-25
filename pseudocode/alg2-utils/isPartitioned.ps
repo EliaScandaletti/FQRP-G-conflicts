@@ -6,11 +6,11 @@ function isNotPartitioned(instance) {
 function isPartitioned(instance) {
     set sigma = instance.sigma
 
-    set i = 1
+    set i = 0
     set maxSigma = 1
-    while (i < instance.size && maxSigma > i) {
-        maxSigma = max(maxSigma, sigma(i))
+    while (i < instance.size && maxSigma > i) { 
         i += 1
+        maxSigma = max(maxSigma, sigma(i))
     }
-    return maxSigma == i
+    return i < instance.size
 }
