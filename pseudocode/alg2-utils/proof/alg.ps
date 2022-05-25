@@ -1,0 +1,12 @@
+def isPartitioned(instance) {
+    set pi = instance.permutation
+    set n = instance.size
+
+    set k = 0
+    set maxPi = 1
+    while (k < n && k < maxPi) { 
+        k += 1
+        maxPi = max(maxPi, pi(k))
+    }
+    return k < n
+}

@@ -1,0 +1,29 @@
+
+class averageAggregator is-a aggregator {
+    set cumCCount = {
+        arcType: 0,
+        AType: 0,
+        BType: 0,
+        CType: 0,
+        mixedType: 0
+    }
+    set n = 0
+
+    function aggregate(conflictCount) {
+        cumCCount.arcType += conflictCount.arcType
+        cumCCount.AType += conflictCount.AType
+        cumCCount.BType += conflictCount.BType
+        cumCCount.CType += conflictCount.CType
+        cumCCount.mixedType += conflictCount.mixedType
+        n += 1
+    }
+
+    function result() {
+        averageCCount.arcType = cumCCount.arcType / n
+        averageCCount.AType = cumCCount.AType / n
+        averageCCount.BType = cumCCount.BType / n
+        averageCCount.CType = cumCCount.CType / n
+        averageCCount.mixedType = cumCCount.mixedType / n
+        return averageCCount
+    }
+}

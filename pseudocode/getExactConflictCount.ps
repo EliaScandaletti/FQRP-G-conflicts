@@ -1,0 +1,9 @@
+
+function getExactConflictCount(size, generator, aggregator) {
+
+    foreach (instance in generator) {
+        aggregator.aggregate(getConflictCount(instance))
+    }
+
+    return aggregator.result()
+}
