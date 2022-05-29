@@ -1,0 +1,22 @@
+\documentclass[../../main.tex]{subfiles}
+\graphicspath{{\subfix{../../images/}}}
+
+\begin{document}
+
+Questo metodo è il più intuitivo e facile da implementare.
+Al contempo è anche il meno efficiente.
+
+Il metodo consiste nel generare istanze casuali (per esempio, con l'algoritmo di Fisher-Yates) e, successivamente, considerare solo le istanze non partizionate.
+
+Questo metodo è poco efficiente e richiede che vengano generate intere istanze che poi verranno scartate.
+
+\subsubsection{Implementazione d'esempio}
+\lstinputlisting{alg/casuale_filtro_post.ps}
+
+\subsubsection{Efficienza nella generazione}
+% TODO
+
+\subsubsection{Distribuzione delle permutazioni}
+% TODO
+
+\end{document}

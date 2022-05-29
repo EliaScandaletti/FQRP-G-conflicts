@@ -10,10 +10,12 @@ Formalmente, i cammini minimi di due veicoli $i$ e $j$ appartenenti a parti dist
 \[ \min(j, \pi_j) \leq \max(i, \pi_i) \wedge \min(i, \pi_i) \leq \max(j, \pi_j) \]
 dove $\pi$ è la permutazione degli arrivi rispetto alle partenze e $\pi_k$ è la destinazione del veicolo k.
 
-In altri termini, un'istanza è partizionata se è possibili partizionare la corrispondente permutazione $\pi$ in modo tale che
+In altri termini, un'istanza è partizionata se è possibile partizionare la corrispondente permutazione $\pi$ in modo tale che
 \begin{equation}
   \label{cond_part}
   \max(i, \pi_i) < \min(j, \pi_j)\;\forall i, j : i < j \mbox{ appartenenti a parti distinte}.
 \end{equation}
+
+In questa definizione, e nel resto del documento, dove non diversamente specificato, si considerano i veicoli e gli indici di $\pi$ da 1 a $n$.
 
 \end{document}
