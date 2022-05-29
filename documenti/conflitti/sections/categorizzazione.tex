@@ -1,0 +1,54 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+
+\begin{document}
+
+In caso il conflitto avvenga su un arco, si parla di conflitto di arco.
+In caso il conflitto avvenga su un nodo, si parla di conflitto di nodo.
+
+I conflitti di nodo sono ulteriormente divisi in conflitto di tipo A, conflitti di tipo B e conflitti di tipo C.
+
+\paragraph{Conflitti di arco}
+Dati due veicoli $i$ e $j$, questi sono in conflitto di arco se e solo se le seguenti condizioni sono rispettate:
+\begin{subnumcases}{\label{def:arc}}
+  i \in \mathbb{R}\label{def:arc:a} \\
+  j \in \mathbb{L}\label{def:arc:b} \\
+  j - i = 2n + 1,\ n \in \mathbb{N}\label{def:arc:c} \\
+  \sigma(j) < \frac{i+j}{2} < \sigma(i)\label{def:arc:d}
+\end{subnumcases}
+
+\paragraph{Conflitti di nodo}
+Dati due veicoli $i$ e $j$, questi possono essere in un conflitto di tipo A, B o C.
+
+\subparagraph{Conflitti di nodo di tipo A}
+I conflitti di tipo A sono un particolare caso di conflitti di nodo.
+In particolare, un conflitto è di tipo A se e solo se rispetta le seguenti condizioni:
+\begin{subnumcases}{\label{def:nodeA}}
+  \min\{j, \sigma(j)\} < \sigma(i) < \max\{j, \sigma(j)\}\label{def:nodeA:a} \\
+  \left|i-\sigma(i)\right| < \left|j-\sigma(i)\right|\label{def:nodeA:b}
+\end{subnumcases}
+
+\subparagraph{Conflitti di nodo di tipo B}
+I conflitti di tipo B sono un particolare caso di conflitti di nodo.
+In particolare, un conflitto è di tipo B se e solo se rispetta le seguenti condizioni:
+\begin{subnumcases}{\label{def:nodeB}}
+  i \in \mathbb{R}\label{def:nodeB:a} \\
+  j \in \mathbb{L}\label{def:nodeB:b} \\
+  j - i = 2n,\ n \in \mathbb{N}\label{def:nodeB:c} \\
+  \sigma(j) < \frac{i+j}{2} < \sigma(i)\label{def:nodeB:d}
+\end{subnumcases}
+
+\subparagraph{Conflitti di nodo di tipo C}
+I conflitti di tipo C sono un particolare caso di conflitti di nodo.
+In particolare, un conflitto è di tipo C se e solo se rispetta le seguenti condizioni:
+\begin{subnumcases}{\label{def:nodeC}}
+  i \in \mathbb{R}\label{def:nodeC:a} \\
+  j \in \mathbb{L}\label{def:nodeC:b} \\
+  j - i = 2n,\ n \in \mathbb{N}\label{def:nodeC:c} \\
+  \sigma(j) < \sigma(i)\label{def:nodeC:d} \\
+  \sigma(i) = \frac{i+j}{2} \vee \sigma(j) = \frac{i+j}{2}\label{def:nodeC:e}
+\end{subnumcases}
+Nel caso $\sigma(i) = \frac{i+j}{2}$, la notazione $i(j)$ indica che $i$ è soggetto a conflitto di tipo C con $j$.
+Nel caso $\sigma(j) = \frac{i+j}{2}$, la notazione $j(i)$ indica che $j$ è soggetto a conflitto di tipo C con $i$.
+
+\end{document}

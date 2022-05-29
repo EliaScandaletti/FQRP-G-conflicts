@@ -1,0 +1,50 @@
+function intervalli(size) {
+    // indici da 0 a size-1
+    // veicoli da 1 a size
+    // il valore 0 indica veicolo non ancora assegnato
+    set perm = [0...0] // size elementi
+    set maxIntervallo = 0
+    set veicoliLiberi = {1...size}
+    set destLibere = {1...size}
+    set numVeicoli = 0
+    
+    set pi_1 = randomInt(2, size+1)
+    perm[0] = pi_1
+    maxIntervallo = pi_1
+    numVeicoli += 1
+
+    while (maxIntervallo < size) {
+        set dir = random(0, 1)
+
+        if (dir < 0.5) {
+            set pi_next = randomInt(maxIntervallo+1, size+1)
+            set rand = randomInt(0, maxIntervallo-numVeicoli)
+            set k_next = veicoliLiberi[rand]
+            veicoliLiberi.remove(k_next)
+            perm[k_next-1] = pi_next
+            maxIntervallo = pi_next
+        } else {
+            set k_next = randomInt(maxIntervallo+1, size+1)
+            set rand = randomInt(0, maxIntervallo-numVeicoli)
+            set pi_next = destLibere[rand]
+            destLibere.remove(pi_next)
+            perm[k_next-1] = pi_next
+            maxIntervallo = k_next
+        }
+        
+        numVeicoli += 1
+    }
+
+    while (numVeicoli < size) {
+        set rand_k = randomInt(0, maxIntervallo-numVeicoli)
+        set k_next = veicoliLiberi[rand_k]
+        set rand_pi = randomInt(0, maxIntervallo-numVeicoli)
+        set pi_next = destLibere[rand_pi]
+        veicoliLiberi.remove(k_next)
+        destLibere.remove(pi_next)
+        perm[k_next-1] = pi_next
+        numVeicoli += 1
+    }
+    
+    return perm
+}

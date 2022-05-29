@@ -1,0 +1,21 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+
+\begin{document}
+
+\begin{definition}[Istanza partizionata]\label{def_part}
+  Un'istanza FQRP è detta partizionata se è possibile partizionare i veicoli di tale istanza in parti tali per cui i cammini minimi di due veicoli appartenenti a parti distinte non possono intersecarsi.
+\end{definition}
+Formalmente, i cammini minimi di due veicoli $i$ e $j$ appartenenti a parti distinte possono intersecarsi sse
+\[ \min(j, \pi_j) \leq \max(i, \pi_i) \wedge \min(i, \pi_i) \leq \max(j, \pi_j) \]
+dove $\pi$ è la permutazione degli arrivi rispetto alle partenze e $\pi_k$ è la destinazione del veicolo k.
+
+In altri termini, un'istanza è partizionata se è possibile partizionare la corrispondente permutazione $\pi$ in modo tale che
+\begin{equation}
+  \label{cond_part}
+  \max(i, \pi_i) < \min(j, \pi_j)\;\forall i, j : i < j \mbox{ appartenenti a parti distinte}.
+\end{equation}
+
+In questa definizione, e nel resto del documento, dove non diversamente specificato, si considerano i veicoli e gli indici di $\pi$ da 1 a $n$.
+
+\end{document}

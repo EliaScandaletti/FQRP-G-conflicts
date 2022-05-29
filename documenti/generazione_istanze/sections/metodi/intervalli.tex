@@ -1,0 +1,48 @@
+\documentclass[../../main.tex]{subfiles}
+\graphicspath{{\subfix{../../images/}}}
+
+\begin{document}
+
+Questo metodo prevede di:
+\begin{enumerate}
+    \item scegliere una destinazione casuale per il veicolo 1 t.c. $1 < \pi_1 \leq n$;
+    \item considerare $[1, \pi_1]$ come massimo intervallo non partizionato;
+    \item scegliere casualmente se il prossimo veicolo andrà verso destra o verso sinistra;
+    \label{alg:gen_int:desc:scelta}
+    \item se il veicolo andrà verso destra:
+    \begin{enumerate}
+        \item scegliere una destinazione $\pi_k$ al di fuori del massimo intervallo non partizionato
+        \footnote{si noti che poiché il percorso di ogni veicolo appartiene al massimo intervallo non partizionato, allora scegliere una destinazione all'infuori di tale intervallo garantisce che tale destinazione sia libera};
+        \item scegliere una partenza $k$ non ancora scelta nel massimo intervallo non partizionato;
+        \item considerare $[1, \pi_k]$ come massimo intervallo non partizionato;
+    \end{enumerate}
+    \item se il veicolo andrà verso sinistra:
+    \begin{enumerate}
+        \item scegliere una partenza $k$ al di fuori del massimo intervallo non partizionato
+        \footnote{si noti che poiché il percorso di ogni veicolo appartiene al massimo intervallo non partizionato, allora scegliere una partenza all'infuori di tale intervallo garantisce che tale partenza sia libera};
+        \item scegliere una destinazione $\pi_k$ non ancora scelta nel massimo intervallo non partizionato;
+        \item considerare $[1, k]$ come massimo intervallo non partizionato;
+    \end{enumerate}
+    \item se il massimo intervallo non partizionato coincide con $[1, n]$, procedere al prossimo punto;
+    altrimenti tornare al punto \ref{alg:gen_int:desc:scelta});
+    \item associare in modo casuale le rimanenti partenze con le rimanenti destinazioni.
+\end{enumerate}
+
+Si noti che al punto \ref{alg:gen_int:desc:scelta}) è possibile adottare varie strategie per la scelta della direzione del veicolo.
+Quella più intuitiva è considerare ciascuna direzione equiprobabile.
+Questa scelta deriva dal fatto che a ogni iterazione all'esterno del massimo intervallo non partizionato ci sono tante partenze libere quante destinazioni libere.
+Analogamente, questa proprietà vale anche all'interno dell'intervallo.
+
+Il rischio che questo metodo introduce è la possibile presenza di bias.
+Maggiori approfondimenti sono richiesti.
+
+\subsubsection{Implementazione d'esempio}
+\lstinputlisting{alg/intervalli.ps}
+
+\subsubsection{Efficienza nella generazione}
+% TODO
+
+\subsubsection{Distribuzione delle permutazioni}
+% TODO
+
+\end{document}

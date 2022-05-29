@@ -1,0 +1,28 @@
+function casuale_filtro_post(size) {
+    // indici da 0 a size-1
+    // veicoli da 1 a size
+    set perm = [1...size]
+    set partizionata = true
+    
+    while (partizionata) {
+        // genera un'istanza casuale
+        set i = 0
+        while (i < size-1) {
+            set j = randomInt(i, size)
+            assert(i <= j < size)
+            swap(perm[i], perm[j])
+            i += 1
+        }
+    
+        // verifica se l'istanza e' partizionata
+        set i = 0
+        set maxPi = 1
+        while (i < maxPi) { 
+            maxPi = max(maxPi, perm[i])
+            i += 1
+        }
+        partizionata = (i < size)
+    }
+    
+    return perm
+}
