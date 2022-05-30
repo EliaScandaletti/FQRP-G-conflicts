@@ -1,6 +1,3 @@
-#ifndef CONFLICTS_HPP
-#define CONFLICTS_HPP
-
 #include <algorithm>
 #include <cmath>
 
@@ -100,5 +97,3 @@ bool fqrp::checkSameConflictChain(const Instance &instance, vehicle_t vehicleA,
 
   return vehicleA == vehicleB;
 }
-
-#endif

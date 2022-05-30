@@ -1,6 +1,3 @@
-#ifndef ALG1_CPP
-#define ALG1_CPP
-
 #include <utility>
 #include <vector>
 
@@ -63,5 +60,3 @@ conflictCount fqrp::getConflictCount(const Instance &instance) {
 
   return count;
 }
-
-#endif
