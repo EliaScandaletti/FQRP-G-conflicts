@@ -17,6 +17,8 @@ Instance::Instance(const vehicle_t *const perm, vehicle_t size)
 
 Instance::~Instance() { delete[] permutation; }
 
+vehicle_t Instance::getSize() const { return size; }
+
 vehicle_t Instance::sigma(vehicle_t vehicle) const {
   return permutation[vehicle];
 }

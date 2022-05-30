@@ -9,7 +9,7 @@ namespace fqrp {
 
 class Instance {
   const vehicle_t size;
-  const vehicle_t *const permutation;
+  vehicle_t *const permutation;
 
 public:
   Instance(std::vector<vehicle_t> perm);
