@@ -1,15 +1,15 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "Stage",
             "includePath": [
-                "${workspaceFolder}/c++/include/**"
+                "${workspaceFolder}/include"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/clang",
+            "compilerPath": "/usr/bin/g++",
             "cStandard": "c11",
             "cppStandard": "c++11",
-            "intelliSenseMode": "linux-clang-x64"
+            "intelliSenseMode": "${default}"
         }
     ],
     "version": 4

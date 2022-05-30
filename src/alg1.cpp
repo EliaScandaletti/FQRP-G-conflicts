@@ -4,35 +4,35 @@
 #include <utility>
 #include <vector>
 
-#include "alg1.hpp"
-#include "conflicts.hpp"
-#include "instance.hpp"
+#include "fqrp.h"
+
+using namespace fqrp;
 
 conflictCount alg1(const Instance &instance) {
-  const int &size = instance.getSize();
+  vehicle_t size = instance.getSize();
 
   // memo
   bool outgoingCConflict[size];
   bool incomingCConflict[size];
-  std::vector<std::pair<int, int>> potentialMixedConflicts;
+  std::vector<std::pair<vehicle_t, vehicle_t>> potentialMixedConflicts;
   // memo.init
-  for (int i = 0; i < size; i++)
+  for (vehicle_t i = 0; i < size; i++)
     outgoingCConflict[i] = incomingCConflict[i] = false;
 
   // accumulator
-  conflictCount count = {
-      .arcType = 0, .AType = 0, .BType = 0, .CType = 0, .mixedType = 0};
+  conflictCount count;
 
-  for (int vehicle = 0; vehicle <= size; vehicle++) {
+  for (vehicle_t vehicle = 0; vehicle <= size; vehicle++) {
 
-    int CConflict = getCConflict(instance, vehicle);
-    if (CConflict != Instance::nullVehicle) {
+    vehicle_t CConflict = getCConflict(instance, vehicle);
+    if (CConflict != fqrp::null_vehicle) {
       count.CType++;
       outgoingCConflict[vehicle - 1] = true;
       incomingCConflict[CConflict - 1] = true;
     }
-    
-    for (int otherVehicle = vehicle + 1; otherVehicle <= size; otherVehicle++) {
+
+    for (vehicle_t otherVehicle = vehicle + 1; otherVehicle <= size;
+         otherVehicle++) {
       if (checkAConflict(instance, vehicle, otherVehicle)) {
         count.AType++;
       }
@@ -49,7 +49,7 @@ conflictCount alg1(const Instance &instance) {
     }
   }
 
-  for (std::pair<int, int> &conflict : potentialMixedConflicts) {
+  for (std::pair<vehicle_t, vehicle_t> &conflict : potentialMixedConflicts) {
     if (incomingCConflict[conflict.first] &&
         outgoingCConflict[conflict.first] &&
         incomingCConflict[conflict.second] &&
