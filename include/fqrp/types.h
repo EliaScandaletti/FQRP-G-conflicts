@@ -1,5 +1,5 @@
-#ifndef FQRP_TYPES_HPP
-#define FQRP_TYPES_HPP
+#ifndef FQRP_TYPES_H
+#define FQRP_TYPES_H
 
 #include <cstdint>
 
@@ -8,7 +8,7 @@ namespace fqrp {
 typedef std::uint32_t vehicle_t;
 typedef std::uint64_t count_t;
 
-const vehicle_t null_vehicle = 0;
+constexpr vehicle_t null_vehicle = 0;
 
 struct conflictCount {
   count_t arcType;

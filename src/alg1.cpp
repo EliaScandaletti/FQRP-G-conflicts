@@ -4,11 +4,12 @@
 #include <utility>
 #include <vector>
 
-#include "fqrp.h"
+#include "conflicts.h"
+#include <fqrp/algorithms.h>
 
 using namespace fqrp;
 
-conflictCount alg1(const Instance &instance) {
+conflictCount fqrp::getConflictCount(const Instance &instance) {
   vehicle_t size = instance.getSize();
 
   // memo
@@ -49,7 +50,8 @@ conflictCount alg1(const Instance &instance) {
     }
   }
 
-  for (std::pair<vehicle_t, vehicle_t> &conflict : potentialMixedConflicts) {
+  for (const std::pair<vehicle_t, vehicle_t> &conflict :
+       potentialMixedConflicts) {
     if (incomingCConflict[conflict.first] &&
         outgoingCConflict[conflict.first] &&
         incomingCConflict[conflict.second] &&

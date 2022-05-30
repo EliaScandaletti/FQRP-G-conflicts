@@ -1,6 +1,7 @@
 #include <algorithm>
 
-#include "fqrp.h"
+#include <fqrp/instance.h>
+#include <fqrp/types.h>
 
 using namespace fqrp;
 

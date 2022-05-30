@@ -1,5 +1,5 @@
-#ifndef FQRP_INSTANCE_HPP
-#define FQRP_INSTANCE_HPP
+#ifndef FQRP_INSTANCE_H
+#define FQRP_INSTANCE_H
 
 #include <vector>
 
