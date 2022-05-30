@@ -15,20 +15,21 @@ Intrinsecamente questi metodi portano a generare anche istanze non valide, sprec
 In compenso, hanno il grosso vantaggio di generare istanze con una distribuzione di probabilità uniforme.
 
 Per ogni metodo, verrà fornita un analisi dell'efficienza.
-L'efficienza è calcolata come $eff = average\left(\frac{dimensione\_istanza}{\#numeri\_casuali\_generati}\right)$.
+L'efficienza è calcolata come
+\[ eff = average\left(\frac{dimensione\_istanza}{\#numeri\_casuali\_generati}\right) \]
 Questo parametro sarà incluso tra 0 e 1, dove 1 indica un'efficienza ottimale.
 
 \subsubsection{Metodo a intervalli}
 Questo metodo genera le istanze un veicolo alla volta in modo tale che le istanze costruite siano non partizionate.
 In questo modo nessuna istanza verrà sprecata, tuttavia il rischio di creare bias è forte.
 
-Questo metodo si basa sull'osservazione che la proiezione di un qualsiasi percorso minimo di un veicolo $i$ è la stessa e coincide con l'intervallo $[\min(i, \pi_i), \max(i, \pi_i)]$.
+Questo metodo si basa sull'osservazione che la proiezione di un qualsiasi percorso minimo di un veicolo $i$ è la stessa e coincide con l'intervallo $[\min(i,\, \pi_i),\, \max(i,\, \pi_i)]$.
 Ognuno di questi intervalli è non partizionato, dove con non partizionato si intende che tutti i veicoli al suo interno devono appartenere alla stessa parte dell'istanza.
 In altri termini, non può esserci il confine tra due parti al suo interno.
 
 Osserviamo che se due intervalli non partizionati si intersecano, allora l'intervallo unione sarà a sua volta non partizionato.
 Abbiamo quindi un modo per generare intervalli non partizionati sempre più grandi.
-Se si riesce a raggiungere un intervallo non partizionato coincidente con $[1, n]$, dove $n$ è la dimensione dell'istanza, allora è evidente che l'istanza stessa non è partizionata.
+Se si riesce a raggiungere un intervallo non partizionato coincidente con $[1,\, n]$, dove $n$ è la dimensione dell'istanza, allora è evidente che l'istanza stessa non è partizionata.
 
 Per raggiungere questo obiettivo, sarà sufficiente far sì che per ogni intervallo ci sia almeno un veicolo che parta o arrivi all'interno di tale intervallo e arrivi o parta all'esterno di questo.
 

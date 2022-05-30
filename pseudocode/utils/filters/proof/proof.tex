@@ -6,27 +6,28 @@
 \usepackage{cases}
 \usepackage{enumitem}
 \usepackage{listings}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 
 \title{Dimostrazione di correttezza dell'algoritmo per verificare che un'istanza FQRP sia partizionata}
 \author{Elia Scandaletti}
 \date{25 Maggio 2022}
 
-\theoremstyle{definition}
 \newtheorem{definition}{Definizione}
 \newtheorem{theorem}{Teorema}
 
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
 \lstdefinelanguage{ps}{
-    morekeywords={def, set, while, return, max},
+    morekeywords=[1]{def},
+    morekeywords=[2]{set, while, for, return, if, else, &&},
+    morekeywords=[3]{assert, swap, max, min, random, randomInt, randomFrom, push, pop},
     sensitive=true
 }
 \lstset{
-    backgroundcolor=\color{backcolour},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
+    keywordstyle=[1]\color{Blue},
+    keywordstyle=[2]\color{DarkOrchid},
+    keywordstyle=[3]\color{Blue},
+    numberstyle=\scriptsize\color{darkgray},
     basicstyle=\ttfamily\small,
     numbers=left,
     numbersep=5pt,
@@ -42,22 +43,22 @@
 \clearpage
 
 \section{Definizione di istanza partizionata}
-\begin{definition}[Istanza partizionata]\label{def_part}
+\begin{definition}\label{def_part}
     Un'istanza FQRP è detta partizionata se è possibile partizionare i veicoli di tale istanza in parti tali per cui i cammini minimi di due veicoli appartenenti a parti distinte non possono intersecarsi.
 \end{definition}
 Formalmente, i cammini minimi di due veicoli $i$ e $j$ appartenenti a parti distinte possono intersecarsi sse
-\[ \min(j, \pi_j) \leq \max(i, \pi_i) \wedge \min(i, \pi_i) \leq \max(j, \pi_j) \]
+\[ \min(j,\, \pi_j) \leq \max(i,\, \pi_i)\, \wedge\, \min(i,\, \pi_i) \leq \max(j,\, \pi_j) \]
 dove $\pi$ è la permutazione degli arrivi rispetto alle partenze e $\pi_k$ è la destinazione del veicolo k.
 
 In altri termini, un'istanza è partizionata se è possibili partizionare la corrispondente permutazione $\pi$ in modo tale che
 \begin{equation}
     \label{cond_part}
-    \max(i, \pi_i) < \min(j, \pi_j)\;\forall i, j : i < j \mbox{ appartenenti a parti distinte}
+    \max(i,\, \pi_i) < \min(j,\, \pi_j),\, \forall\, i,\, j : i < j \mbox{ appartenenti a parti distinte}
 \end{equation}
 
 In questa definizione, e nel resto del documento, si considerano i veicoli e gli indici di $\pi$ da 1 a $n$.
 
-\section{Algoritmo}
+\section{Algoritmo}\label{sect:alg}
 \lstinputlisting{alg.ps}
 
 \section{Dimostrazione}
@@ -65,45 +66,49 @@ Vogliamo dimostrare che una istanza è partizionata se e solo se nei primi $k$ e
 Successivamente si dimostra che l'algoritmo proposto rispetta questa condizione (Teorema \ref{dim_alg}).
 
 \subsection{Condizione equivalente alla definizione di istanza partizionata}
-\begin{theorem}[Un'istanza è partizionata sse $\exists k < n : \pi_i \leq k \forall i \leq k$]
+\begin{theorem}[Condizione semplificata per istanze partizionate]
     \label{dim_part_iniziale}
-    Dimostriamo che la condizione è sufficiente dimostrando che la partizione $\{[1\dots k],[k+1\dots n]\}$ è una partizione valida.
+    Un'istanza è partizionata sse $\exists\, k < n : \pi_i \leq k,\, \forall\, i \leq k$.
+\end{theorem}
+
+\begin{proof}
+    Dimostriamo che la condizione è sufficiente dimostrando che la partizione $\{[1\dots k],\, [k+1\dots n]\}$ è una partizione valida.
     Ovvero, dimostriamo che ogni veicolo in una delle due partizioni non può incrociare il percorso di un veicolo nell'altra partizione.
     \begin{equation}
         \label{dim_part:suff:eq1}
-        \pi_i \leq k \forall i \leq k \implies \max(i, \pi_i) \leq k \forall i \leq k
+        \pi_i \leq k,\, \forall\, i \leq k \implies \max(i,\, \pi_i) \leq k,\, \forall\, i \leq k
     \end{equation}
     Appare evidente, per il principio dei cassetti, che le prime $k$ destinazioni saranno riservate ai primi $k$ veicoli.
     Di conseguenza,
-    $\pi_j > k \forall j > k, j \leq n$.
+    $\pi_j > k,\, \forall\, k < j \leq n$.
     Da ciò, si avrà
     \begin{equation}
         \label{dim_part:suff:eq2}
-        \pi_j > k \forall j > k, j \leq n \implies \min(j, \pi_j) > k \forall j > k
+        \pi_j > k,\, \forall\, j :  k < j \leq n \implies \min(j,\, \pi_j) > k,\, \forall\, j > k
     \end{equation}
     Dalla (\ref{dim_part:suff:eq1}) e dalla (\ref{dim_part:suff:eq2}), otteniamo che
-    \[ \max(i, \pi_i) <= k < \min(j, \pi_j) \forall i,j : 1 \leq i \leq k \wedge k < j \leq n \]
-    Da ciò, otteniamo che la partizione $\{[1\dots k], [k+1\dots n]\}$ soddisfa la condizione (\ref{cond_part}).
+    \[ \max(i,\, \pi_i) <= k < \min(j,\, \pi_j),\, \forall\, i,\, j : 1 \leq i \leq k\,  \wedge\, k < j \leq n \]
+    Da ciò, otteniamo che la partizione $\{[1\dots k],\, [k+1\dots n]\}$ soddisfa la condizione (\ref{cond_part}).
 
     Dimostriamo ora che la condizione è anche necessaria.
     Supponiamo per assurdo che l'istanza sia partizionata e, al contempo,
-    $\not\exists k < n : \pi_i \leq k \forall i \leq k$.
+    $\not\exists\, k < n : \pi_i \leq k,\, \forall\, i \leq k$.
     È possibile riscrivere la seconda assunzione come
     \begin{equation}
         \label{dim_part:nec:abs_hy}
-        \exists i \leq k : \pi_i > k \forall k < n
+        \exists\, i \leq k : \pi_i > k,\, \forall\, k < n
     \end{equation}
     Poiché l'istanza è partizionata, ci sono almeno due parti.
     Poniamo $k$ uguale all'estremo inferiore della seconda parte.
     Dalla condizione (\ref{cond_part}) sappiamo che
-    \[ \max(i, \pi_i) < \min(j, \pi_j) \]
-    $\forall i < j$ appartenenti a parti distinte.
+    \[ \max(i,\, \pi_i) < \min(j,\, \pi_j) \]
+    $,\, \forall\, i < j$ appartenenti a parti distinte.
 
     Possiamo dunque scegliere $j = k$.
     Sostituendo nella (\ref{cond_part}), otteniamo
     \begin{equation}
         \label{dim_part:nec:eq1}
-        \max(i, \pi_i) < \min(k, \pi_k) \forall i < k
+        \max(i,\, \pi_i) < \min(k,\, \pi_k),\, \forall\, i < k
     \end{equation}
     Notare che non è più necessaria la condizione che $i$ e $k$ siano in parti distinti poiché $i < k$ e $k$ è il minimo della sua parte.
 
@@ -112,38 +117,41 @@ Successivamente si dimostra che l'algoritmo proposto rispetta questa condizione 
 
     Concludiamo dunque che la condizione
     \begin{equation}\label{dim_part:cond_sempl}
-        \exists k < n : \pi_i \leq k \forall i \leq k
+        \exists\, k < n : \pi_i \leq k,\, \forall\, i \leq k
     \end{equation}
     è equivalente alla condizione (\ref{cond_part}) derivante dalla definizione di istanza partizionata.
-    \qed
 
-\end{theorem}
+\end{proof}
 
 \subsection{Dimostrazione di correttezza dell'algoritmo proposto}
-\begin{theorem}[L'algoritmo proposto è corretto]
+\begin{theorem}[Correttezza dell'algoritmo proposto]
     \label{dim_alg}
+    L'algoritmo proposto nella sezione \ref{sect:alg} ritorna vero se e solo se l'istanza passata in input è partizionata.
+\end{theorem}
+
+\begin{proof}
     Per dimostrare la correttezza dell'algoritmo proposto verrà trovata una condizione invariante rispetto al ciclo \texttt{while} che, combinata con la condizione di uscita, permetterà di dimostrare la correttezza del valore ritornato.
     In particolare, verrà dimostrato che:
     \begin{itemize}
         \item l'invariante è vera prima della prima iterazione;
         \item l'invariante è vera al termine di ogni iterazione;
         \item il ciclo termina in un numero finito di passi;
-        \item l'invariante, unita alla condizione di uscita, fornisce una condizione tale per cui il valore ritornato è corretto in relazione alla condizione (\ref{cond_part}).
+        \item l'invariante, unita alla condizione di uscita, fornisce una condizione tale per cui il valore ritornato è corretto.
     \end{itemize}
 
     L'invariante del ciclo è la seguente:
     \begin{subnumcases}{\label{alg:inv}}
         k \leq n \label{alg:inv:a}\\
         k \leq maxPi \label{alg:inv:b}\\
-        maxPi = \max_{\forall i \leq k}(\pi_i) \label{alg:inv:c}\\
-        \not\exists k' < k : \pi_i \leq k' \forall i \leq k'\label{alg:inv:d}
+        maxPi = \max_{\forall\, i \leq k}(\pi_i) \label{alg:inv:c}\\
+        \not\exists\, k' < k : \pi_i \leq k',\, \forall\, i \leq k'\label{alg:inv:d}
     \end{subnumcases}
     Consideriamo $\max(\emptyset) = 1$.
     Questa assunzione non crea problemi poiché $1$ è l'estremo inferiore dell'insieme dei possibili valori che possono essere presi in considerazione.
 
     \paragraph{L'invariante è vera prima della prima iterazione.}
     Per dimostrarlo è sufficiente sostituire $k$ con $0$ e $maxPi$ con $1$.
-    In questo modo tutte le condizioni sono verificate. In particolare la condizione (\ref{alg:inv:d}) è rispettata perché $\not\exists k' < 0$.
+    In questo modo tutte le condizioni sono verificate. In particolare la condizione (\ref{alg:inv:d}) è rispettata perché $\not\exists\, k' < 0$.
 
     \paragraph{L'invariante è vera alla fine di ogni iterazione.}
     È sufficiente dimostrare che, in un qualsiasi ciclo, se l'invariante è vera all'inizio, sarà vera anche alla fine.
@@ -162,7 +170,7 @@ Successivamente si dimostra che l'algoritmo proposto rispetta questa condizione 
         \item $n$ e $\pi$ sono costanti;
         \item $k = k_v + 1$;\label{alg:inv:obs:k}
         \item $maxPi \geq maxPi_v$;\label{alg:inv:obs:maxPi_incr}
-        \item $maxPi = \max(maxPi_v, \pi_k)$.\label{alg:inv:obs:maxPi_eq}
+        \item $maxPi = \max(maxPi_v,\, \pi_k)$.\label{alg:inv:obs:maxPi_eq}
     \end{enumerate}
 
     Analizziamo le condizioni una alla volta.
@@ -183,30 +191,30 @@ Successivamente si dimostra che l'algoritmo proposto rispetta questa condizione 
         \item[\ref{alg:inv:c})]
               \begin{align*}
                   maxPi_v
-                   & = \max_{\forall i \leq k_v}(\pi_i)         & \because & \mbox{ (\ref{alg:inv:c})}_v        \\
-                   & = \max_{\forall i < k}(\pi_i)              & \because & \mbox{ \ref{alg:inv:obs:k}}        \\
+                   & = \max_{\forall\, i \leq k_v}(\pi_i)         & \because & \mbox{ (\ref{alg:inv:c})}_v        \\
+                   & = \max_{\forall\, i < k}(\pi_i)              & \because & \mbox{ \ref{alg:inv:obs:k}}        \\
                   maxPi
-                   & = \max(maxPi_v, \pi_k)                     & \because & \mbox{ \ref{alg:inv:obs:maxPi_eq}} \\
-                   & = \max(\max_{\forall i < k}(\pi_i), \pi_k)                                                 \\
-                   & = \max_{\forall i \leq k}(\pi_i)
+                   & = \max(maxPi_v,\, \pi_k)                     & \because & \mbox{ \ref{alg:inv:obs:maxPi_eq}} \\
+                   & = \max(\max_{\forall\, i < k}(\pi_i),\, \pi_k)                                                 \\
+                   & = \max_{\forall\, i \leq k}(\pi_i)
               \end{align*}
 
         \item[\ref{alg:inv:d})]
               \begin{align*}
-                  \not\exists k' < k_v & : \pi_i \leq k' \forall i \leq k'                                  & \because & \mbox{ (\ref{alg:inv:d})}_v   \\
+                  \not\exists\, k' < k_v & : \pi_i \leq k',\, \forall\, i \leq k'                                  & \because & \mbox{ (\ref{alg:inv:d})}_v   \\
                   maxPi_v > k_v        &                                                                    & \because & \mbox{ (\ref{alg:cond_in:b})} \\
-                                       & \implies \max_{\forall i \leq k_v}(\pi_i) > k_v                    & \because & \mbox{ (\ref{alg:inv:c})}_v   \\
-                                       & \implies \exists i \leq k_v : \pi_i > k_v                                                                     \\
-                                       & \implies \neg(\pi_i \leq k_v \forall i \leq k_v)                                                              \\
-                                       & \implies \not\exists k' = k_v : \pi_i \leq k' \forall i \leq k'                                               \\
+                                       & \implies \max_{\forall\, i \leq k_v}(\pi_i) > k_v                    & \because & \mbox{ (\ref{alg:inv:c})}_v   \\
+                                       & \implies \exists\, i \leq k_v : \pi_i > k_v                                                                     \\
+                                       & \implies \neg(\pi_i \leq k_v,\, \forall\, i \leq k_v)                                                              \\
+                                       & \implies \not\exists\, k' = k_v : \pi_i \leq k',\, \forall\, i \leq k'                                               \\
                   \left.
-                  \begin{array}[]{r}
-                      \not\exists k' < k_v : \pi_i \leq k' \forall i \leq k' \\
-                      \not\exists k' = k_v : \pi_i \leq k' \forall i \leq k'
+                  \begin{array}{r}
+                      \not\exists\, k' < k_v : \pi_i \leq k',\, \forall\, i \leq k' \\
+                      \not\exists\, k' = k_v : \pi_i \leq k',\, \forall\, i \leq k'
                   \end{array}
                   \right\}
-                                       & \implies \not\exists k' \leq k_v : \pi_i \leq k' \forall i \leq k'                                            \\
-                                       & \implies \not\exists k' < k : \pi_i \leq k' \forall i \leq k'      & \because & \mbox{ \ref{alg:inv:obs:k}}
+                                       & \implies \not\exists\, k' \leq k_v : \pi_i \leq k',\, \forall\, i \leq k'                                            \\
+                                       & \implies \not\exists\, k' < k : \pi_i \leq k',\, \forall\, i \leq k'      & \because & \mbox{ \ref{alg:inv:obs:k}}
               \end{align*}
 
     \end{itemize}
@@ -214,19 +222,19 @@ Successivamente si dimostra che l'algoritmo proposto rispetta questa condizione 
     \paragraph{Il ciclo termina}
     Considerato che a ogni iterazione il valore di $k$ aumenta di $1$;
     considerato che una condizione sufficiente di uscita dal ciclo è $k \geq n$;
-    allora è evidente che il ciclo termina in un numero finito di passi, al più $n$.
+    allora è evidente che il ciclo termina in un numero finito di iterazioni, al più $n$.
     
     Questo consente anche di dimostrare che la complessità computazionale dell'algoritmo è $O(n)$.
 
     \paragraph{L'invariante, con la condizione di uscita, implica che il valore ritornato è corretto.}
     Il ciclo termina quando la sua condizione non è più soddisfatta, ovvero quando
     \begin{equation}\label{alg:cond_out}
-        k \geq n \vee k \geq maxPi
+        k \geq n\, \vee\, k \geq maxPi
     \end{equation}
     Dobbiamo dimostrare che la condizione negata, insieme all'invariante che, per quanto dimostrato, sarà vera anche a termine dell'ultima iterazione, permettono di ritornare sempre il valore corretto.
     In particolare vogliamo dimostrare che
-    \[ k < n \iff \exists k < n : \pi_i \leq k \forall i \leq k \]
-    Si noti che la parte destra dell'implicazione è esattamente la condizione (\ref{dim_part:cond_sempl}).
+    \[ k < n \iff \exists\, k < n : \pi_i \leq k,\, \forall\, i \leq k \]
+    Si noti che la parte destra dell'implicazione è esattamente la condizione (\ref{dim_part:cond_sempl}), mentre la parte sinistra è il valore ritornato dall'algoritmo.
     Distinguiamo i casi $k < n$ e $k \geq n$.
 
     \subparagraph{Caso $k < n$:}
@@ -235,36 +243,35 @@ Successivamente si dimostra che l'algoritmo proposto rispetta questa condizione 
         \begin{cases}
             k \geq maxPi \mbox{,}                                        & \because \mbox{ (\ref{alg:cond_out})} \\
             k \leq maxPi \mbox{,}                                        & \because \mbox{ (\ref{alg:inv:b})}    \\
-            maxPi = \displaystyle\max_{\forall i \leq k}(\pi_i) \mbox{,} & \because \mbox{ (\ref{alg:inv:c})}
+            maxPi = \displaystyle\max_{\forall\, i \leq k}(\pi_i) \mbox{,} & \because \mbox{ (\ref{alg:inv:c})}
         \end{cases}
     \end{equation*}
     Da ciò deriva che
     \begin{align*}
         k & = maxPi                                \\
-          & = \max_{\forall i \leq k}(\pi_i)       \\
-          & \implies k \geq \pi_i \forall i \leq k
+          & = \max_{\forall\, i \leq k}(\pi_i)       \\
+          & \implies k \geq \pi_i,\, \forall\, i \leq k
     \end{align*}
-    Si può quindi affermare che $k < n \implies \exists k < n : \pi_i \leq k \forall i \leq k$.
+    Si può quindi affermare che $k < n \implies \exists\, k < n : \pi_i \leq k,\, \forall\, i \leq k$.
 
     \subparagraph{Caso $k \geq n$:}
     In questo caso, dev'essere necessariamente
     \begin{equation*}
         \begin{cases}
             k \leq n \mbox{,}                                             & \because \mbox{ (\ref{alg:inv:a})} \\
-            \not\exists k' < k : \pi_i \leq k' \forall i \leq k' \mbox{,} & \because \mbox{ (\ref{alg:inv:d})}
+            \not\exists\, k' < k : \pi_i \leq k',\, \forall\, i \leq k' \mbox{,} & \because \mbox{ (\ref{alg:inv:d})}
         \end{cases}
     \end{equation*}
     Da ciò deriva che
     \begin{align*}
-        k \geq n \implies k = n  \implies \not\exists k' < n : \pi_i \leq n \forall i \leq n
+        k \geq n \implies k = n  \implies \not\exists\, k' < n : \pi_i \leq n,\, \forall\, i \leq n
     \end{align*}
-    Si può quindi affermare che $\neg(k < n) \implies \not\exists k < n : \pi_i \leq k \forall i \leq k$.
+    Si può quindi affermare che $\neg(k < n) \implies \not\exists\, k < n : \pi_i \leq k,\, \forall\, i \leq k$.
 
     Considerando quanto dimostrato nei due casi precedenti, segue che
-    \[ k < n \iff \exists k < n : \pi_i \leq k \forall i \leq k \]
+    \[ k < n \iff \exists\, k < n : \pi_i \leq k,\, \forall\, i \leq k \]
     In altri termini, il valore ritornato dall'algoritmo indica se l'istanza in input è partizionata o meno.
-    \qed
 
-\end{theorem}
+\end{proof}
 
 \end{document}
