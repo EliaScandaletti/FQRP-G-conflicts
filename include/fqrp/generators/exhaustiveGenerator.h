@@ -13,7 +13,6 @@ namespace generators {
 // Implements Heap's algorithm
 // https://en.wikipedia.org/wiki/Heap%27s_algorithm#cite_ref-3
 class ExhaustiveGenerator : public Generator {
-  vehicle_t size;
   std::vector<vehicle_t> perm;
   std::vector<vehicle_t> buf;
   std::vector<vehicle_t> c;

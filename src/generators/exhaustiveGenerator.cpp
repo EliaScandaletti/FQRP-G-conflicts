@@ -5,7 +5,7 @@ using namespace fqrp::generators;
 
 // assert(i == -1 || i < size)
 std::vector<vehicle_t> ExhaustiveGenerator::cacheNext() {
-  while (buf.empty() && i < size) {
+  while (buf.empty() && i < perm.size()) {
     if (c[i] < i) {
       if ((i % 2) == 0) {
         std::swap(perm[0], perm[i]);
@@ -25,10 +25,9 @@ std::vector<vehicle_t> ExhaustiveGenerator::cacheNext() {
 }
 
 ExhaustiveGenerator::ExhaustiveGenerator(vehicle_t size)
-    : size(size), perm(size), buf(size), c(size), i(0) {
+    : perm(size), buf(size), c(size), i(0) {
   for (vehicle_t i = 0; i < size; i += 1) {
     perm[i] = buf[i] = i + 1;
-    c[i] = 0;
   }
 }
 
