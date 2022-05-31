@@ -15,6 +15,7 @@ public:
   virtual ~Instance() = default;
 
   vehicle_t getSize() const;
+  // index of vehicles start at 1
   vehicle_t sigma(vehicle_t vehicle) const;
 };
 
