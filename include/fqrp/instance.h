@@ -8,11 +8,10 @@
 namespace fqrp {
 
 class Instance {
-  const vehicle_t size;
-  std::vector<vehicle_t> const permutation;
+  std::vector<vehicle_t> permutation;
 
 public:
-  Instance(std::vector<vehicle_t> perm);
+  Instance(std::vector<vehicle_t> perm = std::vector<vehicle_t>());
   virtual ~Instance() = default;
 
   vehicle_t getSize() const;
