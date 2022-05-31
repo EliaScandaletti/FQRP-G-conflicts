@@ -9,7 +9,13 @@ namespace filters {
 
 class IsPartitioned : public Filter {
 public:
-  virtual ~IsPartitioned() = default;
+  bool operator()(const Instance &instance) override;
+};
+
+class IsNotPartitioned : public Filter {
+  IsPartitioned filter;
+
+public:
   bool operator()(const Instance &instance) override;
 };
 
