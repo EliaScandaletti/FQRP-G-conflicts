@@ -14,7 +14,3 @@ bool IsPartitioned::operator()(const Instance &instance) {
 
   return i < instance.getSize();
 }
-
-bool IsNotPartitioned::operator()(const Instance &instance) {
-  return !filter(instance);
-}

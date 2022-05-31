@@ -12,13 +12,6 @@ public:
   bool operator()(const Instance &instance) override;
 };
 
-class IsNotPartitioned : public Filter {
-  IsPartitioned filter;
-
-public:
-  bool operator()(const Instance &instance) override;
-};
-
 } // namespace filters
 
 } // namespace fqrp
