@@ -11,8 +11,6 @@ namespace fqrp {
 
 namespace generators {
 
-// Implements Heap's algorithm
-// https://en.wikipedia.org/wiki/Heap%27s_algorithm#cite_ref-3
 class RandomGenerator : public Generator {
   std::vector<vehicle_t> base;
   std::uniform_real_distribution<double> random_real;
