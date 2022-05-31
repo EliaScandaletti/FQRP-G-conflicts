@@ -20,7 +20,7 @@ conflictCount fqrp::getConflictCount(const Instance &instance) {
   // accumulator
   conflictCount count;
 
-  for (vehicle_t vehicle = 0; vehicle <= size; vehicle++) {
+  for (vehicle_t vehicle = 1; vehicle <= size; vehicle++) {
 
     vehicle_t CConflict = getCConflict(instance, vehicle);
     if (CConflict != fqrp::null_vehicle) {
@@ -34,7 +34,7 @@ conflictCount fqrp::getConflictCount(const Instance &instance) {
       if (checkAConflict(instance, vehicle, otherVehicle)) {
         count.AType++;
       }
-      if ((otherVehicle - vehicle) & 0b1 == 0) {
+      if (((otherVehicle - vehicle) & 0b1) == 0) {
         if (checkBConflict(instance, vehicle, otherVehicle)) {
           count.BType++;
           potentialMixedConflicts.push_back({vehicle, otherVehicle});
