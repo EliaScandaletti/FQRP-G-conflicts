@@ -11,8 +11,12 @@ namespace fqrp {
 conflictCount getConflictCount(const Instance &instance);
 
 template <typename result_t>
-result_t getEstimatedConflictCount(count_t maxSample, Generator *,
-                                   Aggregator<result_t> *);
+result_t getEstimatedConflictCount(count_t maxSample, Generator *generator,
+                                   Aggregator<result_t> *aggregator);
+
+template <typename result_t>
+result_t getExactConflictCount(Generator *generator,
+                               Aggregator<result_t> *aggregator);
 
 } // namespace fqrp
 
@@ -30,6 +34,12 @@ result_t fqrp::getEstimatedConflictCount(count_t maxSample,
   }
 
   return aggregator->result();
+}
+
+template <typename result_t>
+result_t fqrp::getExactConflictCount(Generator *generator,
+                                     Aggregator<result_t> *aggregator) {
+  return getEstimatedConflictCount(-1, generator, aggregator);
 }
 
 #endif
