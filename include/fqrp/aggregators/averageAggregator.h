@@ -17,17 +17,16 @@ namespace fqrp {
 
 namespace aggregators {
 
-class AverageAggregator : public Aggregator<conflictCount, _result_t> {
+class AverageAggregator : public Aggregator<_result_t> {
   conflictCount cumulative;
   count_t size;
 
 public:
-  typedef conflictCount value_t;
   typedef _result_t result_t;
   AverageAggregator();
   virtual ~AverageAggregator() = default;
 
-  void aggregate(const value_t &value) override;
+  void aggregate(const conflictCount &value) override;
   result_t result() const override;
 
   result_t merge(const AverageAggregator &other);

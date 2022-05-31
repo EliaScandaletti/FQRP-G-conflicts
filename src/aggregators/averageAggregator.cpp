@@ -5,7 +5,7 @@ using namespace fqrp::aggregators;
 
 AverageAggregator::AverageAggregator() : cumulative(), size(0) {}
 
-void AverageAggregator::aggregate(const value_t &value) {
+void AverageAggregator::aggregate(const conflictCount &value) {
   cumulative.arcType += value.arcType;
   cumulative.AType += value.AType;
   cumulative.BType += value.BType;
