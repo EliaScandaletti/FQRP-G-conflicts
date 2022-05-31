@@ -5,3 +5,6 @@
 *.run.xml
 *.synctex.*
 *.toc
+
+bin/
+obj/
