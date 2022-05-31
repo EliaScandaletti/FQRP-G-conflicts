@@ -41,5 +41,6 @@ Instance ExhaustiveGenerator::next() {
 }
 
 bool ExhaustiveGenerator::finished() {
-  return buf.empty() && cacheNext().empty();
+  cacheNext();
+  return buf.empty();
 }
