@@ -11,8 +11,8 @@ namespace fqrp {
 conflictCount getConflictCount(const Instance &instance);
 
 template <typename result_t>
-result_t getEstimatedConflictCount(vehicle_t size, count_t maxSample,
-                                   Generator *, Aggregator<result_t> *);
+result_t getEstimatedConflictCount(count_t maxSample, Generator *,
+                                   Aggregator<result_t> *);
 
 } // namespace fqrp
 
