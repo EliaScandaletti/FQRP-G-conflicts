@@ -12,16 +12,16 @@ namespace fqrp {
 // https://en.wikipedia.org/wiki/Heap%27s_algorithm#cite_ref-3
 class ExhaustiveGenerator : public Generator {
   vehicle_t size;
-  vehicle_t *perm;
-  vehicle_t *buf;
-  vehicle_t *c;
+  std::vector<vehicle_t> perm;
+  std::vector<vehicle_t> buf;
+  std::vector<vehicle_t> c;
   vehicle_t i;
 
-  vehicle_t *cacheNext();
+  std::vector<vehicle_t> cacheNext();
 
 public:
   ExhaustiveGenerator(vehicle_t size);
-  ~ExhaustiveGenerator();
+  virtual ~ExhaustiveGenerator() = default;
   Instance next() override;
   bool finished() override;
 };
