@@ -1,6 +1,7 @@
 #include <fqrp/generators/exhaustiveGenerator.h>
 
 using namespace fqrp;
+using namespace fqrp::generators;
 
 // assert(i == -1 || i < size)
 std::vector<vehicle_t> ExhaustiveGenerator::cacheNext() {

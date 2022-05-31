@@ -8,6 +8,8 @@
 
 namespace fqrp {
 
+namespace generators {
+
 // Implements Heap's algorithm
 // https://en.wikipedia.org/wiki/Heap%27s_algorithm#cite_ref-3
 class ExhaustiveGenerator : public Generator {
@@ -25,6 +27,8 @@ public:
   Instance next() override;
   bool finished() override;
 };
+
+} // namespace generators
 
 } // namespace fqrp
 
