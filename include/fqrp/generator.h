@@ -7,7 +7,7 @@ namespace fqrp {
 
 class Generator {
 public:
-  virtual ~Generator() = 0;
+  virtual ~Generator() = default;
   virtual Instance next() = 0;
   virtual bool finished() = 0;
 };
