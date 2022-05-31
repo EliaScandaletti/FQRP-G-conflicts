@@ -17,7 +17,6 @@ clean:
 	@-rm -r $(BINDIR)/
 
 $(BINDIR)/main: $(OBJECTS)
-	@echo $(OBJECTS)
 	@mkdir -p $(@D)
 	$(CXX) $(LDFLAGS) $? $(LOADLIBES) $(LDLIBS) -o $@
 
