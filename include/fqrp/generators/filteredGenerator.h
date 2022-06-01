@@ -3,30 +3,60 @@
 
 #include <vector>
 
+#include <core/generator.h>
+
 #include "../filter.h"
-#include "../generator.h"
-#include "../instance.h"
 
 namespace fqrp {
 
 namespace generators {
 
-class FilteredGenerator : public Generator {
-  Generator *generator;
-  Filter *filter;
-  Instance buf;
+template <typename raw_t>
+class FilteredGenerator : public core::Generator<raw_t> {
+  core::Generator<raw_t> &generator;
+  Filter<raw_t> &filter;
+  raw_t buf;
 
   void cacheNext();
 
 public:
-  FilteredGenerator(Generator *generator, Filter *filter);
+  FilteredGenerator(core::Generator<raw_t> &generator, Filter<raw_t> &filter);
   virtual ~FilteredGenerator() = default;
-  Instance next() override;
+  raw_t next() override;
   bool finished() override;
 };
 
 } // namespace generators
 
 } // namespace fqrp
+
+template <typename raw_t>
+fqrp::generators::FilteredGenerator<raw_t>::FilteredGenerator(
+    core::Generator<raw_t> &generator, Filter<raw_t> &filter)
+    : generator(generator), filter(filter), buf() {}
+
+template <typename raw_t>
+void fqrp::generators::FilteredGenerator<raw_t>::cacheNext() {
+  while (!static_cast<bool>(buf) && !generator.finished()) {
+    raw_t temp = generator.next();
+    if (filter.operator()(temp)) {
+      buf = temp;
+    }
+  }
+}
+
+template <typename raw_t>
+raw_t fqrp::generators::FilteredGenerator<raw_t>::next() {
+  cacheNext();
+  raw_t ret = std::move(buf);
+  buf = raw_t();
+  return ret;
+}
+
+template <typename raw_t>
+bool fqrp::generators::FilteredGenerator<raw_t>::finished() {
+  cacheNext();
+  return !static_cast<bool>(buf);
+}
 
 #endif

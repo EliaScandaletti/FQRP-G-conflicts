@@ -3,8 +3,9 @@
 
 #include <vector>
 
-#include "../generator.h"
-#include "../instance.h"
+#include <core/generator.h>
+
+#include "../types.h"
 
 namespace fqrp {
 
@@ -12,7 +13,7 @@ namespace generators {
 
 // Implements Heap's algorithm
 // https://en.wikipedia.org/wiki/Heap%27s_algorithm#cite_ref-3
-class ExhaustiveGenerator : public Generator {
+class ExhaustiveGenerator : public core::Generator<Instance> {
   std::vector<vehicle_t> perm;
   std::vector<vehicle_t> buf;
   std::vector<vehicle_t> c;

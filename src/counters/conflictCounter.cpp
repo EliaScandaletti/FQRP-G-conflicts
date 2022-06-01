@@ -1,13 +1,10 @@
-#include <utility>
-#include <vector>
+#include <fqrp/counters/conflictCounter.h>
 
-#include "conflicts.h"
-#include <fqrp/algorithms.h>
+#include "../conflicts.h"
 
-using namespace fqrp;
-
-conflictCount fqrp::getConflictCount(const Instance &instance) {
-  vehicle_t size = instance.getSize();
+fqrp::conflictCount
+fqrp::counters::conflictCounter::count(const Instance &instance) {
+  vehicle_t size = instance.size();
 
   // memo
   bool outgoingCConflict[size];
@@ -22,7 +19,7 @@ conflictCount fqrp::getConflictCount(const Instance &instance) {
 
   for (vehicle_t vehicle = 1; vehicle <= size; vehicle++) {
 
-    vehicle_t CConflict = getCConflict(instance, vehicle);
+    vehicle_t CConflict = conflicts::getCConflict(instance, vehicle);
     if (CConflict != fqrp::null_vehicle) {
       count.CType++;
       outgoingCConflict[vehicle - 1] = true;
@@ -31,16 +28,16 @@ conflictCount fqrp::getConflictCount(const Instance &instance) {
 
     for (vehicle_t otherVehicle = vehicle + 1; otherVehicle <= size;
          otherVehicle++) {
-      if (checkAConflict(instance, vehicle, otherVehicle)) {
+      if (conflicts::checkAConflict(instance, vehicle, otherVehicle)) {
         count.AType++;
       }
       if (((otherVehicle - vehicle) & 0b1) == 0) {
-        if (checkBConflict(instance, vehicle, otherVehicle)) {
+        if (conflicts::checkBConflict(instance, vehicle, otherVehicle)) {
           count.BType++;
           potentialMixedConflicts.push_back({vehicle, otherVehicle});
         }
       } else {
-        if (checkArcConflict(instance, vehicle, otherVehicle)) {
+        if (conflicts::checkArcConflict(instance, vehicle, otherVehicle)) {
           count.arcType++;
         }
       }
@@ -53,7 +50,8 @@ conflictCount fqrp::getConflictCount(const Instance &instance) {
         outgoingCConflict[conflict.first] &&
         incomingCConflict[conflict.second] &&
         outgoingCConflict[conflict.second] &&
-        !checkSameConflictChain(instance, conflict.first, conflict.second)) {
+        !conflicts::checkSameConflictChain(instance, conflict.first,
+                                           conflict.second)) {
       count.mixedType++;
     }
   }

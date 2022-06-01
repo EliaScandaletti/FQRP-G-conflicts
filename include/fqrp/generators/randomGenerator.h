@@ -4,14 +4,15 @@
 #include <random>
 #include <vector>
 
-#include "../generator.h"
-#include "../instance.h"
+#include <core/generator.h>
+
+#include "../types.h"
 
 namespace fqrp {
 
 namespace generators {
 
-class RandomGenerator : public Generator {
+class RandomGenerator : public core::Generator<Instance> {
   std::vector<vehicle_t> base;
   std::uniform_real_distribution<double> random_real;
   std::random_device source;

@@ -1,10 +1,15 @@
 #ifndef FQRP_AGGREGATOR_AVERAGE_H
 #define FQRP_AGGREGATOR_AVERAGE_H
 
-#include "../aggregator.h"
+#include <core/aggregator.h>
+
 #include "../types.h"
 
-struct _result_t {
+namespace fqrp {
+
+namespace aggregators {
+
+struct averageCount {
   long double arcType;
   long double AType;
   long double BType;
@@ -13,23 +18,18 @@ struct _result_t {
   fqrp::count_t sample_size;
 };
 
-namespace fqrp {
-
-namespace aggregators {
-
-class AverageAggregator : public Aggregator<_result_t> {
+class AverageAggregator : public core::Aggregator<conflictCount, averageCount> {
   conflictCount cumulative;
   count_t size;
 
 public:
-  typedef _result_t result_t;
   AverageAggregator();
   virtual ~AverageAggregator() = default;
 
   void aggregate(const conflictCount &value) override;
-  result_t result() const override;
+  averageCount result() const override;
 
-  result_t merge(const AverageAggregator &other);
+  averageCount merge(const AverageAggregator &other);
 };
 
 } // namespace aggregators

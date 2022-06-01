@@ -1,14 +1,14 @@
 #ifndef FQRP_FILTER_H
 #define FQRP_FILTER_H
 
-#include "instance.h"
-
 namespace fqrp {
 
-class Filter {
+template <typename _value_t> class Filter {
 public:
+  typedef _value_t value_t;
+
   virtual ~Filter() = default;
-  virtual bool operator()(const Instance &instance) = 0;
+  virtual bool operator()(const _value_t &instance) = 0;
 };
 
 } // namespace fqrp

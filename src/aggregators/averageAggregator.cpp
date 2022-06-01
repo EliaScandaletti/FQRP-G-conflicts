@@ -1,11 +1,10 @@
 #include <fqrp/aggregators/averageAggregator.h>
 
-using namespace fqrp;
-using namespace fqrp::aggregators;
+fqrp::aggregators::AverageAggregator::AverageAggregator()
+    : cumulative(), size(0) {}
 
-AverageAggregator::AverageAggregator() : cumulative(), size(0) {}
-
-void AverageAggregator::aggregate(const conflictCount &value) {
+void fqrp::aggregators::AverageAggregator::aggregate(
+    const conflictCount &value) {
   cumulative.arcType += value.arcType;
   cumulative.AType += value.AType;
   cumulative.BType += value.BType;
@@ -14,7 +13,8 @@ void AverageAggregator::aggregate(const conflictCount &value) {
   size += 1;
 }
 
-AverageAggregator::result_t AverageAggregator::result() const {
+fqrp::aggregators::AverageAggregator::result_t
+fqrp::aggregators::AverageAggregator::result() const {
   result_t res;
   res.arcType = static_cast<long double>(cumulative.arcType) / size;
   res.AType = static_cast<long double>(cumulative.AType) / size;
@@ -25,8 +25,8 @@ AverageAggregator::result_t AverageAggregator::result() const {
   return res;
 }
 
-AverageAggregator::result_t
-AverageAggregator::merge(const AverageAggregator &other) {
+fqrp::aggregators::AverageAggregator::result_t
+fqrp::aggregators::AverageAggregator::merge(const AverageAggregator &other) {
   cumulative.arcType += other.cumulative.arcType;
   cumulative.AType += other.cumulative.AType;
   cumulative.BType += other.cumulative.BType;

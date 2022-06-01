@@ -1,10 +1,8 @@
 #include <fqrp/generators/exhaustiveGenerator.h>
 
-using namespace fqrp;
-using namespace fqrp::generators;
-
 // assert(i == -1 || i < size)
-std::vector<vehicle_t> ExhaustiveGenerator::cacheNext() {
+std::vector<fqrp::vehicle_t>
+fqrp::generators::ExhaustiveGenerator::cacheNext() {
   while (buf.empty() && i < perm.size()) {
     if (c[i] < i) {
       if ((i % 2) == 0) {
@@ -24,7 +22,7 @@ std::vector<vehicle_t> ExhaustiveGenerator::cacheNext() {
   return buf;
 }
 
-ExhaustiveGenerator::ExhaustiveGenerator(vehicle_t size)
+fqrp::generators::ExhaustiveGenerator::ExhaustiveGenerator(vehicle_t size)
     : perm(size), buf(size), c(size), i(0) {
   for (vehicle_t i = 0; i < size; i += 1) {
     perm[i] = buf[i] = i + 1;
@@ -33,14 +31,14 @@ ExhaustiveGenerator::ExhaustiveGenerator(vehicle_t size)
 
 // assert(!finished())
 // assert(buf || cacheNext())
-Instance ExhaustiveGenerator::next() {
+fqrp::Instance fqrp::generators::ExhaustiveGenerator::next() {
   cacheNext();
   Instance ret = Instance(buf);
   buf.clear();
   return ret;
 }
 
-bool ExhaustiveGenerator::finished() {
+bool fqrp::generators::ExhaustiveGenerator::finished() {
   cacheNext();
   return buf.empty();
 }
