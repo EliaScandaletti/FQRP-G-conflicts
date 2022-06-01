@@ -1,6 +1,6 @@
 
-CXXFLAGS = -Iinclude -Wall -Wextra -Werror -g
-LDFLAGS = -Iinclude
+CPPFLAGS = -Iinclude
+CXXFLAGS = -Wall -Wextra -Werror -g
 
 SRCDIR = src
 SOURCES = $(shell find $(SRCDIR)/ -type f -name *.cpp)
