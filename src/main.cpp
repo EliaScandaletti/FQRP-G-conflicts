@@ -1,12 +1,12 @@
 #include <core/algorithms.h>
-#include <fqrp/aggregators/averageAggregator.h>
-#include <fqrp/counters/conflictCounter.h>
-#include <fqrp/filters/not.h>
-#include <fqrp/filters/partitioned.h>
-#include <fqrp/generators/exhaustiveGenerator.h>
-#include <fqrp/generators/filteredGenerator.h>
-#include <fqrp/generators/randomGenerator.h>
-#include <fqrp/types.h>
+#include "aggregators/averageAggregator.h"
+#include "counters/conflictCounter.h"
+#include "filters/not.h"
+#include "filters/partitioned.h"
+#include "generators/exhaustiveGenerator.h"
+#include "generators/filteredGenerator.h"
+#include "generators/randomGenerator.h"
+#include "types.h"
 
 #include <iostream>
 

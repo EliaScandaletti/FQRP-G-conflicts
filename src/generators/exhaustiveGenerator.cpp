@@ -1,4 +1,4 @@
-#include <fqrp/generators/exhaustiveGenerator.h>
+#include "exhaustiveGenerator.h"
 
 // assert(i == -1 || i < size)
 std::vector<fqrp::vehicle_t>

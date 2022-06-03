@@ -1,4 +1,4 @@
-#include <fqrp/generators/randomGenerator.h>
+#include "randomGenerator.h"
 
 fqrp::generators::RandomGenerator::RandomGenerator(vehicle_t size)
     : base(size), random_real(0, 1), source() {

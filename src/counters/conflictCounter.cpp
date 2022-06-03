@@ -1,4 +1,4 @@
-#include <fqrp/counters/conflictCounter.h>
+#include "conflictCounter.h"
 
 #include "../conflicts.h"
 
