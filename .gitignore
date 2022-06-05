@@ -6,7 +6,4 @@
 *.synctex.*
 *.toc
 
-bin/
-obj/
-
-*.cache
+src/main
