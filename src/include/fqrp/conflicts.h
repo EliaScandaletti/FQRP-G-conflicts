@@ -1,7 +1,7 @@
 #ifndef FQRP_CONFLICTS_HPP
 #define FQRP_CONFLICTS_HPP
 
-#include "types.h"
+#include <fqrp/types.h>
 
 namespace fqrp {
 

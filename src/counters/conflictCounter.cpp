@@ -1,6 +1,6 @@
-#include "conflictCounter.h"
+#include <fqrp/counters/conflictCounter.h>
 
-#include "../conflicts.h"
+#include <fqrp/conflicts.h>
 
 fqrp::conflictCount
 fqrp::counters::conflictCounter::count(const Instance &instance) {

@@ -9,7 +9,7 @@ all: main
 
 main: main.o aggregators/averageAggregator.o counters/conflictCounter.o filters/partitioned.o generators/exhaustiveGenerator.o generators/intervalGenerator.o generators/randomGenerator.o conflicts.o types.o | $(CORE)
 
-%.o: %.h
+%.o: include/fqrp/%.h
 
 .PHONY: clean
 clean:

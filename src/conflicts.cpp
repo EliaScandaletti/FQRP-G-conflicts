@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <cmath>
 
-#include "conflicts.h"
+#include <fqrp/conflicts.h>
 
 fqrp::vehicle_t absDiff(fqrp::vehicle_t a, fqrp::vehicle_t b) {
   return a < b ? b - a : a - b;

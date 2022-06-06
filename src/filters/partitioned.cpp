@@ -1,4 +1,4 @@
-#include "partitioned.h"
+#include <fqrp/filters/partitioned.h>
 
 bool fqrp::filters::IsPartitioned::operator()(const Instance &instance) {
   vehicle_t i = 0;

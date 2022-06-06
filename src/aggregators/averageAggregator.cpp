@@ -1,4 +1,4 @@
-#include "averageAggregator.h"
+#include <fqrp/aggregators/averageAggregator.h>
 
 fqrp::aggregators::AverageAggregator::AverageAggregator()
     : cumulative(), size(0) {}
