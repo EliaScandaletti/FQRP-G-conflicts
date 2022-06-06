@@ -6,4 +6,5 @@
 *.synctex.*
 *.toc
 
+*.o
 src/main
