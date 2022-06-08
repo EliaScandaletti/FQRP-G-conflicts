@@ -33,10 +33,11 @@ void print(const averageCount &c) {
 }
 
 int main() {
-  vehicle_t max_size = 20;
+  vehicle_t min_size = 20;
+  vehicle_t max_size = 25;
   count_t max_limit = 10000000;
 
-  for (vehicle_t size = 1; size < max_size; size++) {
+  for (vehicle_t size = min_size; size <= max_size; size++) {
     count_t limit = std::min<double>(max_limit, std::pow(size, 6));
 
     auto t1s = high_resolution_clock::now();

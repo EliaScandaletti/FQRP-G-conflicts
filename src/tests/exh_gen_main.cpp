@@ -2,10 +2,11 @@
 
 #include <fqrp/aggregators/averageAggregator.h>
 #include <fqrp/counters/conflictCounter.h>
-#include <fqrp/generators/intervalGenerator.h>
+#include <fqrp/generators/exhaustiveGenerator.h>
 #include <fqrp/types.h>
 
 #include <chrono>
+#include <cmath>
 #include <iostream>
 
 using namespace fqrp;
@@ -29,18 +30,18 @@ void print(const averageCount &c) {
 }
 
 int main() {
-  vehicle_t min_size = 20;
+  vehicle_t min_size = 1;
   vehicle_t max_size = 25;
-  count_t max_limit = 10000000;
+  // count_t max_limit = 10000000;
 
   for (vehicle_t size = min_size; size <= max_size; size++) {
-    count_t limit = std::min<double>(max_limit, std::pow(size, 6));
+    // count_t limit = std::min<double>(max_limit, std::pow(size, 6));
 
     auto t1s = high_resolution_clock::now();
-    IntervalGenerator g(size);
+    ExhaustiveGenerator g(size);
     conflictCounter c;
     AverageAggregator agg;
-    averageCount res = core::getEstimatedCount(limit, g, c, agg);
+    averageCount res = core::getExactCount( g, c, agg);
     auto t1e = high_resolution_clock::now();
 
     cout << "n: " << size;
