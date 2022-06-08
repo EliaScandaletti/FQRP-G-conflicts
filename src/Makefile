@@ -19,4 +19,4 @@ tests/exh_gen_main: tests/exh_gen_main.o aggregators/averageAggregator.o counter
 
 .PHONY: clean
 clean:
-	- find . -name "*.o" -delete
+	- which git > /dev/null && git clean -fX || find . -name "*.o" -delete
