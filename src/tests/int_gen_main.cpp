@@ -7,11 +7,13 @@
 
 #include <chrono>
 #include <iostream>
+#include <sstream>
 
 using namespace fqrp;
 using namespace fqrp::generators;
 using namespace fqrp::counters;
 using namespace fqrp::aggregators;
+using std::cerr;
 using std::cout;
 using std::endl;
 using std::chrono::duration_cast;
@@ -28,10 +30,43 @@ void print(const averageCount &c) {
   cout << endl;
 }
 
-int main() {
-  vehicle_t min_size = 20;
-  vehicle_t max_size = 25;
-  count_t max_limit = 10000000;
+int main(int argc, char const *argv[]) {
+
+  if (argc != 4) {
+    cerr << "Error in usage." << endl;
+    cerr << "Usage " << argv[0] << " min_size max_size max_limit" << endl;
+    return 1;
+  }
+
+  cout << "# Executing " << argv[0] << " " << argv[1] << " " << argv[2] << " "
+       << argv[3] << endl;
+  std::istringstream ss1(argv[1]);
+  vehicle_t min_size;
+  if (!(ss1 >> min_size)) {
+    cerr << "Invalid number: " << argv[1] << '\n';
+    return 1;
+  } else if (!ss1.eof()) {
+    cerr << "Trailing characters after number: " << argv[1] << '\n';
+    return 1;
+  }
+  std::istringstream ss2(argv[2]);
+  vehicle_t max_size;
+  if (!(ss2 >> max_size)) {
+    cerr << "Invalid number: " << argv[2] << '\n';
+    return 1;
+  } else if (!ss2.eof()) {
+    cerr << "Trailing characters after number: " << argv[2] << '\n';
+    return 1;
+  }
+  std::istringstream ss3(argv[3]);
+  vehicle_t max_limit;
+  if (!(ss3 >> max_limit)) {
+    cerr << "Invalid number: " << argv[3] << '\n';
+    return 1;
+  } else if (!ss3.eof()) {
+    cerr << "Trailing characters after number: " << argv[3] << '\n';
+    return 1;
+  }
 
   for (vehicle_t size = min_size; size <= max_size; size++) {
     count_t limit = std::min<double>(max_limit, std::pow(size, 6));
