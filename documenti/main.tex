@@ -1,9 +1,8 @@
 \documentclass{article}
 
-\usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{amsmath}
 \usepackage{amsthm}
-\usepackage{biblatex}
 \usepackage{cases}
 \usepackage{graphicx}
 \usepackage{listings}
@@ -11,12 +10,9 @@
 \usepackage{subfiles}
 \usepackage[dvipsnames]{xcolor}
 
-\addbibresource{../common.bib}
-\graphicspath{{images/}}
-
-\title{Descrizione di metodi per la generazione casuale di istanze FQRP-G non partizionate}
+\title{Relazione di Tirocinio Interno}
 \author{Elia Scandaletti}
-\date{Maggio-Giugno 2022}
+\date{Maggio - Giugno 2022}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definizione}
@@ -46,13 +42,12 @@
 \begin{document}
 
 \maketitle
-
 \tableofcontents
 
-\section{Definizione di istanza partizionata}
-\subfile{sections/definizione.tex}
+\section{Analisi dei Conflitti nei FQRP-G}
+\subfile{conflitti/conflitti.tex}
 
-\section{Metodi di generazione delle istanze}
-\subfile{sections/metodi.tex}
+\section{Metodi per la generazione casuale di istanze FQRP-G non partizionate}
+\subfile{generazione_istanze/generazione_istanze.tex}
 
 \end{document}

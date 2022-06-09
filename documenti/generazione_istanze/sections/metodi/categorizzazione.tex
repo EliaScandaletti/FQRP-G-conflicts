@@ -1,5 +1,4 @@
-\documentclass[../../main.tex]{subfiles}
-\graphicspath{{\subfix{../../images/}}}
+\documentclass[../../../main.tex]{subfiles}
 
 \begin{document}
 
@@ -9,7 +8,7 @@ I metodi seguenti possono essere raggruppati in due categorie che chiameremo:
     \item metodo a intervalli.
 \end{itemize}
 
-\subsubsection{Metodi casuali}
+\paragraph{Metodi casuali}
 Questi metodi prevedono la generazione di istanze casuali che vengono filtrate se non adeguate.
 Intrinsecamente questi metodi portano a generare anche istanze non valide, sprecando risorse computazionali.
 In compenso, hanno il grosso vantaggio di generare istanze con una distribuzione di probabilità uniforme.
@@ -19,7 +18,7 @@ L'efficienza è calcolata come
 \[ eff = average\left(\frac{dimensione\_istanza}{\#numeri\_casuali\_generati}\right) \]
 Questo parametro sarà incluso tra 0 e 1, dove 1 indica un'efficienza ottimale.
 
-\subsubsection{Metodo a intervalli}
+\paragraph{Metodo a intervalli}
 Questo metodo genera le istanze un veicolo alla volta in modo tale che le istanze costruite siano non partizionate.
 In questo modo nessuna istanza verrà sprecata, tuttavia il rischio di creare bias è forte.
 
