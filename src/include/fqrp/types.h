@@ -2,7 +2,15 @@
 #define FQRP_TYPES_H
 
 #include <cstdint>
+#include <iostream>
 #include <vector>
+
+namespace fqrp {
+class Instance;
+} // namespace fqrp
+
+std::ostream &operator<<(std::ostream &, const fqrp::Instance &);
+std::istream &operator>>(std::istream &, fqrp::Instance &);
 
 namespace fqrp {
 
@@ -21,6 +29,9 @@ struct conflictCount {
 };
 
 class Instance {
+  friend std::ostream & ::operator<<(std::ostream &, const fqrp::Instance &);
+  friend std::istream & ::operator>>(std::istream &, fqrp::Instance &);
+
   std::vector<vehicle_t> permutation;
 
 public:
@@ -31,9 +42,12 @@ public:
   // index of vehicles start at 1
   vehicle_t sigma(vehicle_t vehicle) const;
 
-  operator bool() const;
+  explicit operator bool() const;
 };
 
 } // namespace fqrp
+
+std::ostream &operator<<(std::ostream &, const fqrp::conflictCount &);
+std::istream &operator>>(std::istream &, fqrp::conflictCount &);
 
 #endif

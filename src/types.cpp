@@ -13,3 +13,34 @@ fqrp::vehicle_t fqrp::Instance::sigma(vehicle_t vehicle) const {
 }
 
 fqrp::Instance::operator bool() const { return !permutation.empty(); }
+
+std::ostream &operator<<(std::ostream &os, const fqrp::Instance &instance) {
+  if (instance.permutation.size() > 0) {
+    os << instance.permutation[0];
+    for (fqrp::vehicle_t i = 1; i < instance.permutation.size(); i++) {
+      os << " " << instance.permutation[i];
+    }
+  }
+  return os;
+}
+
+std::istream &operator>>(std::istream &is, fqrp::Instance &instance) {
+  instance.permutation.clear();
+  fqrp::vehicle_t next;
+  while (is >> next) {
+    instance.permutation.push_back(next);
+  }
+  return is;
+}
+
+std::ostream &operator<<(std::ostream &os, const fqrp::conflictCount &count) {
+  os << count.arcType << " " << count.AType << " " << count.BType << " "
+     << count.CType << " " << count.mixedType;
+  return os;
+}
+
+std::istream &operator>>(std::istream &is, fqrp::conflictCount &count) {
+  is >> count.arcType >> count.AType >> count.BType >> count.CType >>
+      count.mixedType;
+  return is;
+}

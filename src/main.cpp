@@ -12,6 +12,7 @@
 
 #include <chrono>
 #include <iostream>
+#include <sstream>
 
 using namespace fqrp;
 using namespace fqrp::generators;
@@ -35,7 +36,7 @@ void print(const fqrp::aggregators::averageCount &c) {
 }
 
 int main() {
-  vehicle_t max_size = 20;
+  vehicle_t max_size = 6;
   count_t max_limit = 10000000;
 
   for (vehicle_t size = 1; size < max_size; size++) {
@@ -54,7 +55,7 @@ int main() {
          << " elementi:" << endl;
     cout << "Tempo: " << duration_cast<milliseconds>(t1e - t1s).count() << "ms"
          << endl;
-    print(res);
+    cout << res << endl;
 
     auto t2s = high_resolution_clock::now();
     IntervalGenerator ig(size);
@@ -67,8 +68,19 @@ int main() {
          << " elementi:" << endl;
     cout << "Tempo: " << duration_cast<milliseconds>(t2e - t2s).count() << "ms"
          << endl;
-    print(ires);
+    cout << ires << endl;
   }
 
+  cout << Instance({3, 2, 1}) << endl;
+
+  Instance ins;
+  std::istringstream is(" 2 3 1 4");
+  is >> ins;
+  cout << ins << endl;
+
+  averageCount avg;
+  std::istringstream iss("1.87053 3.19923 0.937472 1.008 0 15625");
+  iss >> avg;
+  cout << avg << endl;
   return 0;
 }

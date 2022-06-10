@@ -2,6 +2,7 @@
 #define FQRP_AGGREGATOR_AVERAGE_H
 
 #include <core/aggregator.h>
+#include <iostream>
 
 #include "../types.h"
 
@@ -35,5 +36,9 @@ public:
 } // namespace aggregators
 
 } // namespace fqrp
+
+std::ostream &operator<<(std::ostream &,
+                         const fqrp::aggregators::averageCount &);
+std::istream &operator>>(std::istream &, fqrp::aggregators::averageCount &);
 
 #endif

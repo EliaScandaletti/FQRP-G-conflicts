@@ -35,3 +35,16 @@ fqrp::aggregators::AverageAggregator::merge(const AverageAggregator &other) {
   size += other.size;
   return result();
 }
+
+std::ostream &operator<<(std::ostream &os,
+                         const fqrp::aggregators::averageCount &count) {
+  os << count.arcType << " " << count.AType << " " << count.BType << " "
+     << count.CType << " " << count.mixedType << " " << count.sample_size;
+  return os;
+}
+std::istream &operator>>(std::istream &is,
+                         fqrp::aggregators::averageCount &count) {
+  is >> count.arcType >> count.AType >> count.BType >> count.CType >>
+      count.mixedType >> count.sample_size;
+  return is;
+}
