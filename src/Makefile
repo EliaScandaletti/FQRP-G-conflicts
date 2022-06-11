@@ -4,7 +4,7 @@ CPPFLAGS = -Iinclude
 CXXFLAGS = -Wall -Wextra -Werror -g
 
 CORE = include/core/aggregator.h include/core/algorithms.h include/core/counter.h include/core/generator.h
-UTILS = include/utils/unionFind.h
+UTILS = include/utils/unionFind.h include/utils/isAForest.h
 
 all: tests/random_gen_main tests/int_gen_main tests/exh_gen_main
 
