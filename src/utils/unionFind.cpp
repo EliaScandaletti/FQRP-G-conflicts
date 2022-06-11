@@ -1,16 +1,39 @@
 #include <utils/unionFind.h>
 
 fqrp::utils::UnionFind::UnionFind(vehicle_t g_size)
-    : parent(g_size), size(g_size), _nodes_num(0), _edges_num(0) {}
+    : _parent(g_size, null_vehicle), _size(g_size, 0), _nodes_num(0),
+      _edges_num(0) {}
+
+fqrp::vehicle_t &fqrp::utils::UnionFind::parent(vehicle_t v) {
+  _trash_vehicle = null_vehicle;
+  return v == null_vehicle || v > _parent.size() ? _trash_vehicle
+                                                 : _parent[v - 1];
+}
+
+const fqrp::vehicle_t &fqrp::utils::UnionFind::parent(vehicle_t v) const {
+  return v == null_vehicle || v > _parent.size() ? null_vehicle
+                                                 : _parent[v - 1];
+}
+
+size_t &fqrp::utils::UnionFind::size(vehicle_t v) {
+  _trash_size = 0;
+  return v == null_vehicle || v > _size.size() ? _trash_size : _size[v - 1];
+}
+
+const size_t &fqrp::utils::UnionFind::size(vehicle_t v) const {
+  return v == null_vehicle || v > _size.size() ? 0 : _size[v - 1];
+}
 
 void fqrp::utils::UnionFind::make_set(vehicle_t v) {
-  while (parent.size() <= v) {
-    parent.push_back(-1);
-    size.push_back(1);
+  if (!contains(v)) {
+    while (_parent.size() < v) {
+      _parent.push_back(null_vehicle);
+      _size.push_back(0);
+    }
+    parent(v) = v;
+    size(v) = 1;
+    _nodes_num++;
   }
-  parent[v] = v;
-  size[v] = 1;
-  _nodes_num++;
 }
 
 void fqrp::utils::UnionFind::union_set(vehicle_t a, vehicle_t b) {
@@ -18,26 +41,29 @@ void fqrp::utils::UnionFind::union_set(vehicle_t a, vehicle_t b) {
   b = find_set(b);
 
   if (a != b) {
-    if (size[a] < size[b]) {
+    if (size(a) < size(b)) {
       std::swap(a, b);
     }
-    size[a] += size[b];
-    parent[b] = a;
+    size(a) += size(b);
+    parent(b) = a;
     _edges_num++;
   }
 }
 
 fqrp::vehicle_t fqrp::utils::UnionFind::find_set(vehicle_t v) const {
-  auto p = const_cast<std::vector<vehicle_t> &>(parent);
-  while (v != p[v]) {
-    v = p[v] = p[p[v]];
+  while (v != parent(v)) {
+    v = const_cast<vehicle_t &>(parent(v)) = parent(parent(v));
   }
   return v;
 }
 
+bool fqrp::utils::UnionFind::contains(vehicle_t v) const {
+  return parent(v) != null_vehicle;
+}
+
 size_t fqrp::utils::UnionFind::set_size(vehicle_t v) const {
   v = find_set(v);
-  return size[v];
+  return size(v);
 }
 
 size_t fqrp::utils::UnionFind::sets_num() const {
