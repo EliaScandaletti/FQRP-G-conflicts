@@ -14,9 +14,11 @@ struct averageCount {
   long double arcType;
   long double AType;
   long double BType;
-  long double CType;
-  long double mixedType;
-  fqrp::count_t sample_size;
+  forest_info_t mixed_forest_info;
+  forest_info_t deepest_c_graph_info;
+  forest_info_t biggest_c_graph_info;
+  forest_info_t avg_c_graph_info;
+  count_t sample_size;
 };
 
 class AverageAggregator : public core::Aggregator<conflictCount, averageCount> {

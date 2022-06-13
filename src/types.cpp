@@ -1,8 +1,5 @@
 #include <fqrp/types.h>
 
-fqrp::conflictCount::conflictCount()
-    : arcType(0), AType(0), BType(0), CType(0), mixedType(0) {}
-
 fqrp::Instance::Instance(std::vector<fqrp::vehicle_t> perm)
     : permutation(perm) {}
 
@@ -33,14 +30,38 @@ std::istream &operator>>(std::istream &is, fqrp::Instance &instance) {
   return is;
 }
 
+std::ostream &operator<<(std::ostream &os, const fqrp::c_graph_info_t &info) {
+  return os << info.tree_num << " " << info.max_depth << " " << info.arcs_num
+            << " " << info.vertices_num;
+}
+std::istream &operator>>(std::istream &is, fqrp::c_graph_info_t &info) {
+  return is >> info.tree_num >> info.max_depth >> info.arcs_num >>
+         info.vertices_num;
+}
+
+std::ostream &operator<<(std::ostream &os, const fqrp::forest_info_t &info) {
+  os << info.is_a_forest;
+  if (info.is_a_forest)
+    return os << " " << info.tree_num << " " << info.max_tree_size << " "
+              << info.nodes_num << " " << info.edges_num;
+}
+
+std::istream &operator>>(std::istream &is, fqrp::forest_info_t &info) {
+  is >> info.is_a_forest;
+  if (info.is_a_forest)
+    return is >> info.tree_num >> info.max_tree_size >> info.nodes_num >>
+           info.edges_num;
+}
+
 std::ostream &operator<<(std::ostream &os, const fqrp::conflictCount &count) {
   os << count.arcType << " " << count.AType << " " << count.BType << " "
-     << count.CType << " " << count.mixedType;
+     << count.c_graph_info << " " << count.mixed_forest_info << " "
+     << count.mixed_forest_info;
   return os;
 }
 
 std::istream &operator>>(std::istream &is, fqrp::conflictCount &count) {
-  is >> count.arcType >> count.AType >> count.BType >> count.CType >>
-      count.mixedType;
+  is >> count.arcType >> count.AType >> count.BType >> count.c_graph_info >>
+      count.mixed_forest_info >> count.mixed_forest_info;
   return is;
 }
