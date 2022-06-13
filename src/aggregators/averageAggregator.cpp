@@ -76,7 +76,8 @@ fqrp::aggregators::AverageAggregator::result() const {
                   size,
           },
       .biggest_tree_mixed_forest_info = biggest_tree_mixed_forest_info,
-      .sample_size = size};
+      .sample_size = size,
+  };
 }
 
 fqrp::aggregators::AverageAggregator::result_t

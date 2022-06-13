@@ -19,16 +19,6 @@ using std::chrono::duration_cast;
 using std::chrono::high_resolution_clock;
 using std::chrono::milliseconds;
 
-void print(const averageCount &c) {
-  cout << "\tarcType: " << c.arcType;
-  cout << "\tAType: " << c.AType;
-  cout << "\tBType: " << c.BType;
-  cout << "\tCType: " << c.CType;
-  cout << "\tmixedType: " << c.mixedType;
-  cout << "\tsize: " << c.sample_size;
-  cout << endl;
-}
-
 int main() {
   vehicle_t min_size = 1;
   vehicle_t max_size = 25;
@@ -41,12 +31,12 @@ int main() {
     ExhaustiveGenerator g(size);
     conflictCounter c;
     AverageAggregator agg;
-    averageCount res = core::getExactCount( g, c, agg);
+    averageCount res = core::getExactCount(g, c, agg);
     auto t1e = high_resolution_clock::now();
 
     cout << "n: " << size;
     cout << "\tT: " << duration_cast<milliseconds>(t1e - t1s).count();
-    print(res);
+    cout << res << endl;
   }
 
   return 0;
