@@ -1,7 +1,9 @@
 #include <algorithm>
 #include <cmath>
+#include <tuple>
 
 #include <fqrp/conflicts.h>
+#include <utils/isAForest.h>
 
 fqrp::vehicle_t absDiff(fqrp::vehicle_t a, fqrp::vehicle_t b) {
   return a < b ? b - a : a - b;
@@ -77,24 +79,83 @@ fqrp::vehicle_t fqrp::conflicts::getCConflict(const Instance &instance,
 
 // assert(1 <= vehicleA <= instance.size)
 // assert(1 <= vehicleB <= instance.size)
-bool fqrp::conflicts::checkSameConflictChain(const Instance &instance,
-                                             vehicle_t vehicleA,
-                                             vehicle_t vehicleB) {
-  vehicle_t diffA = absDiff(vehicleA, instance.sigma(vehicleA));
-  vehicle_t diffB = absDiff(vehicleB, instance.sigma(vehicleB));
+bool fqrp::conflicts::checkSameConflictChain(
+    const std::vector<vehicle_t> &conflicts, vehicle_t vehicleA,
+    vehicle_t vehicleB) {
+
+  auto sigma = [&conflicts](vehicle_t vehicle) -> vehicle_t {
+    if (vehicle == null_vehicle)
+      return null_vehicle;
+    return conflicts[vehicle - 1];
+  };
+
+  vehicle_t diffA = absDiff(vehicleA, sigma(vehicleA));
+  vehicle_t diffB = absDiff(vehicleB, sigma(vehicleB));
   if (diffA > diffB) {
     std::swap(vehicleA, vehicleB);
   }
 
   while (vehicleA != null_vehicle && diffA < diffB) {
-    vehicleA = getCConflict(instance, vehicleA);
-    if (vehicleA != null_vehicle) {
-      diffA = absDiff(vehicleA, instance.sigma(vehicleA));
-      diffB = absDiff(vehicleB, instance.sigma(vehicleB));
-    }
+    vehicleA = sigma(vehicleA);
+    diffA = absDiff(vehicleA, sigma(vehicleA));
   }
 
   return vehicleA == vehicleB;
+}
+
+std::tuple<fqrp::c_graph_info_t, fqrp::forest_info_t>
+fqrp::conflicts::getConflictsInfo(
+    const std::vector<std::pair<vehicle_t, vehicle_t>> &BConflicts,
+    const std::vector<vehicle_t> &CConflicts, vehicle_t size) {
+
+  // leaves have height 0
+  std::vector<size_t> c_height(size, 0);
+  size_t max_height = 0;
+  for (size_t subj = 1; subj <= size; subj++) {
+    vehicle_t v = subj;
+
+    size_t height = 0;
+    while (v != null_vehicle && c_height[v - 1] < height) {
+      c_height[v - 1] = height;
+      height++;
+      v = CConflicts[v - 1];
+    }
+    max_height = std::max(max_height, height);
+  }
+
+  size_t arcs_num = 0;
+  size_t roots_num = 0;
+  size_t leaves_num = 0;
+  for (size_t subj = 1; subj <= size; subj++) {
+    vehicle_t obj = CConflicts[subj - 1];
+    if (obj != null_vehicle) {
+      arcs_num++;
+      if (c_height[subj - 1] == 0) {
+        leaves_num++;
+      }
+    } else if (c_height[subj - 1] > 0) {
+      roots_num++;
+    }
+  }
+
+  std::vector<std::pair<vehicle_t, vehicle_t>> mixedConflicts;
+  for (const std::pair<vehicle_t, vehicle_t> &conflict : BConflicts) {
+    if (CConflicts[conflict.first - 1] != null_vehicle &&
+        c_height[conflict.first - 1] > 0 &&
+        CConflicts[conflict.second - 1] != null_vehicle &&
+        c_height[conflict.second - 1] > 0 &&
+        !conflicts::checkSameConflictChain(CConflicts, conflict.first,
+                                           conflict.second)) {
+      mixedConflicts.push_back(conflict);
+    }
+  }
+
+  return {{.max_length = max_height + 1,
+           .tree_num = roots_num,
+           .arcs_num = arcs_num,
+           .chain_num = leaves_num,
+           .vehicles_num = arcs_num + roots_num},
+          utils::isAForest(mixedConflicts)};
 }
 
 std::ostream &operator<<(std::ostream &os, const fqrp::c_graph_info_t &info) {

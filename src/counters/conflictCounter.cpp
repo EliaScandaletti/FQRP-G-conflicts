@@ -1,3 +1,5 @@
+#include <tuple>
+
 #include <fqrp/counters/conflictCounter.h>
 
 #include <fqrp/conflicts.h>
@@ -6,13 +8,8 @@ fqrp::conflictCount
 fqrp::counters::conflictCounter::count(const Instance &instance) {
   vehicle_t size = instance.size();
 
-  // memo
-  bool outgoingCConflict[size];
-  bool incomingCConflict[size];
-  std::vector<std::pair<vehicle_t, vehicle_t>> potentialMixedConflicts;
-  // memo.init
-  for (vehicle_t i = 0; i < size; i++)
-    outgoingCConflict[i] = incomingCConflict[i] = false;
+  std::vector<std::pair<vehicle_t, vehicle_t>> BConflicts;
+  std::vector<vehicle_t> CConflicts(size, null_vehicle);
 
   // accumulator
   conflictCount count;
@@ -20,11 +17,7 @@ fqrp::counters::conflictCounter::count(const Instance &instance) {
   for (vehicle_t vehicle = 1; vehicle <= size; vehicle++) {
 
     vehicle_t CConflict = conflicts::getCConflict(instance, vehicle);
-    if (CConflict != fqrp::null_vehicle) {
-      count.CType++;
-      outgoingCConflict[vehicle - 1] = true;
-      incomingCConflict[CConflict - 1] = true;
-    }
+    CConflicts[vehicle - 1] = CConflict;
 
     for (vehicle_t otherVehicle = vehicle + 1; otherVehicle <= size;
          otherVehicle++) {
@@ -33,8 +26,7 @@ fqrp::counters::conflictCounter::count(const Instance &instance) {
       }
       if (((otherVehicle - vehicle) & 0b1) == 0) {
         if (conflicts::checkBConflict(instance, vehicle, otherVehicle)) {
-          count.BType++;
-          potentialMixedConflicts.push_back({vehicle, otherVehicle});
+          BConflicts.push_back({vehicle, otherVehicle});
         }
       } else {
         if (conflicts::checkArcConflict(instance, vehicle, otherVehicle)) {
@@ -43,18 +35,10 @@ fqrp::counters::conflictCounter::count(const Instance &instance) {
       }
     }
   }
+  count.BType = BConflicts.size();
 
-  for (const std::pair<vehicle_t, vehicle_t> &conflict :
-       potentialMixedConflicts) {
-    if (incomingCConflict[conflict.first] &&
-        outgoingCConflict[conflict.first] &&
-        incomingCConflict[conflict.second] &&
-        outgoingCConflict[conflict.second] &&
-        !conflicts::checkSameConflictChain(instance, conflict.first,
-                                           conflict.second)) {
-      count.mixedType++;
-    }
-  }
+  std::tie(count.c_graph_info, count.mixed_forest_info) =
+      conflicts::getConflictsInfo(BConflicts, CConflicts, size);
 
   return count;
 }
