@@ -3,7 +3,8 @@
 
 #include <core/counter.h>
 
-#include "../types.h"
+#include <fqrp/conflicts.h>
+#include <fqrp/types.h>
 
 namespace fqrp {
 

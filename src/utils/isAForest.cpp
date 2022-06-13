@@ -11,7 +11,13 @@ fqrp::forest_info_t fqrp::utils::isAForest(
     uf.make_set(e.second);
 
     if (uf.find_set(e.first) == uf.find_set(e.second)) {
-      return {.is_a_forest = false};
+      return {
+          .is_a_forest = false,
+          0,
+          0,
+          0,
+          0,
+      };
     }
 
     uf.union_set(e.first, e.second);

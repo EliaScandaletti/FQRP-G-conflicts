@@ -170,15 +170,17 @@ std::istream &operator>>(std::istream &is, fqrp::c_graph_info_t &info) {
 std::ostream &operator<<(std::ostream &os, const fqrp::forest_info_t &info) {
   os << info.is_a_forest;
   if (info.is_a_forest)
-    return os << " " << info.tree_num << " " << info.max_tree_size << " "
-              << info.nodes_num << " " << info.edges_num;
+    os << " " << info.tree_num << " " << info.max_tree_size << " "
+       << info.nodes_num << " " << info.edges_num;
+  return os;
 }
 
 std::istream &operator>>(std::istream &is, fqrp::forest_info_t &info) {
   is >> info.is_a_forest;
   if (info.is_a_forest)
-    return is >> info.tree_num >> info.max_tree_size >> info.nodes_num >>
-           info.edges_num;
+    is >> info.tree_num >> info.max_tree_size >> info.nodes_num >>
+        info.edges_num;
+  return is;
 }
 
 std::ostream &operator<<(std::ostream &os, const fqrp::conflictCount &count) {

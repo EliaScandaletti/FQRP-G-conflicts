@@ -1,6 +1,7 @@
 #ifndef UTILS_ISAFOREST_H
 #define UTILS_ISAFOREST_H
 
+#include <fqrp/conflicts.h>
 #include <fqrp/types.h>
 #include <vector>
 

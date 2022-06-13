@@ -61,7 +61,6 @@ fqrp::aggregators::AverageAggregator::result() const {
       .most_chains_c_graph_info = most_chains_c_graph_info,
       .avg_mixed_forest_info =
           {
-              .is_a_forest = true,
               .tree_num =
                   static_cast<long double>(mixed_forest_info_sum.tree_num) /
                   size,
@@ -115,6 +114,29 @@ fqrp::aggregators::AverageAggregator::merge(const AverageAggregator &other) {
   }
   size += other.size;
   return result();
+}
+
+std::ostream &operator<<(std::ostream &os,
+                         const fqrp::aggregators::avg_c_graph_info_t &info) {
+  return os << info.max_length << " " << info.tree_num << " " << info.arcs_num
+            << " " << info.vehicles_num;
+}
+std::istream &operator>>(std::istream &is,
+                         fqrp::aggregators::avg_c_graph_info_t &info) {
+  return is >> info.max_length >> info.tree_num >> info.arcs_num >>
+         info.vehicles_num;
+}
+
+std::ostream &operator<<(std::ostream &os,
+                         const fqrp::aggregators::avg_forest_info_t &info) {
+  return os << " " << info.tree_num << " " << info.max_tree_size << " "
+            << info.nodes_num << " " << info.edges_num;
+}
+
+std::istream &operator>>(std::istream &is,
+                         fqrp::aggregators::avg_forest_info_t &info) {
+  return is >> info.tree_num >> info.max_tree_size >> info.nodes_num >>
+         info.edges_num;
 }
 
 std::ostream &operator<<(std::ostream &os,

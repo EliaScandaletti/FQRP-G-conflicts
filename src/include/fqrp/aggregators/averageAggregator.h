@@ -11,14 +11,29 @@ namespace fqrp {
 
 namespace aggregators {
 
+struct avg_c_graph_info_t {
+  long double max_length;
+  long double tree_num;
+  long double arcs_num;
+  long double chain_num;
+  long double vehicles_num;
+};
+
+struct avg_forest_info_t {
+  long double tree_num;
+  long double max_tree_size;
+  long double nodes_num;
+  long double edges_num;
+};
+
 struct averageCount {
   long double arcType;
   long double AType;
   long double BType;
-  c_graph_info_t avg_c_graph_info;
+  avg_c_graph_info_t avg_c_graph_info;
   c_graph_info_t longest_c_graph_info;
   c_graph_info_t most_chains_c_graph_info;
-  forest_info_t avg_mixed_forest_info;
+  avg_forest_info_t avg_mixed_forest_info;
   forest_info_t biggest_tree_mixed_forest_info;
   count_t sample_size;
 };
@@ -47,6 +62,16 @@ public:
 } // namespace aggregators
 
 } // namespace fqrp
+
+std::ostream &operator<<(std::ostream &,
+                         const fqrp::aggregators::avg_c_graph_info_t &);
+std::istream &operator>>(std::istream &,
+                         fqrp::aggregators::avg_c_graph_info_t &);
+
+std::ostream &operator<<(std::ostream &,
+                         const fqrp::aggregators::avg_forest_info_t &);
+std::istream &operator>>(std::istream &,
+                         fqrp::aggregators::avg_forest_info_t &);
 
 std::ostream &operator<<(std::ostream &,
                          const fqrp::aggregators::averageCount &);

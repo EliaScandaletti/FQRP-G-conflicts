@@ -1,8 +1,12 @@
 #include <utils/unionFind.h>
 
+fqrp::vehicle_t fqrp::utils::UnionFind::_trash_vehicle = 0;
+
+size_t fqrp::utils::UnionFind::_trash_size = 0;
+
 fqrp::utils::UnionFind::UnionFind(vehicle_t g_size)
-    : _parent(g_size, null_vehicle), _size(g_size, 0), _nodes_num(0),
-      _edges_num(0) {}
+    : _parent(g_size, null_vehicle), _size(g_size, 0), _edges_num(0),
+      _nodes_num(0) {}
 
 fqrp::vehicle_t &fqrp::utils::UnionFind::parent(vehicle_t v) {
   _trash_vehicle = null_vehicle;
@@ -21,7 +25,8 @@ size_t &fqrp::utils::UnionFind::size(vehicle_t v) {
 }
 
 const size_t &fqrp::utils::UnionFind::size(vehicle_t v) const {
-  return v == null_vehicle || v > _size.size() ? 0 : _size[v - 1];
+  _trash_size = 0;
+  return v == null_vehicle || v > _size.size() ? _trash_size : _size[v - 1];
 }
 
 void fqrp::utils::UnionFind::make_set(vehicle_t v) {

@@ -42,8 +42,8 @@ bool checkBConflict(const Instance &instance, vehicle_t vehicleA,
 
 vehicle_t getCConflict(const Instance &instance, vehicle_t vehicle);
 
-bool checkSameConflictChain(const Instance &instance, vehicle_t vehicleA,
-                            vehicle_t vehicleB);
+bool checkSameConflictChain(const std::vector<vehicle_t> &instance,
+                            vehicle_t vehicleA, vehicle_t vehicleB);
 
 std::tuple<c_graph_info_t, forest_info_t>
 getConflictsInfo(const std::vector<std::pair<vehicle_t, vehicle_t>> &BConflicts,
