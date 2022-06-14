@@ -16,6 +16,8 @@ tests/int_gen_main: tests/int_gen_main.o aggregators/averageAggregator.o counter
 
 tests/exh_gen_main: tests/exh_gen_main.o aggregators/averageAggregator.o counters/conflictCounter.o generators/exhaustiveGenerator.o conflicts.o utils/isAForest.o utils/unionFind.o types.o | $(CORE)
 
+tests/exh_filt_gen_main: tests/exh_filt_gen_main.o aggregators/averageAggregator.o counters/conflictCounter.o filters/partitioned.o filters/symmetric.o  generators/exhaustiveGenerator.o conflicts.o utils/isAForest.o utils/unionFind.o types.o | $(CORE)
+
 %.o: include/fqrp/%.h
 
 .PHONY: clean

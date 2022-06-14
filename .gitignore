@@ -9,5 +9,6 @@
 *.o
 src/main
 src/tests/exh_gen_main
+src/tests/exh_filt_gen_main
 src/tests/int_gen_main
 src/tests/random_gen_main
