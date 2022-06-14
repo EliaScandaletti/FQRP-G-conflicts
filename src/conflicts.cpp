@@ -5,6 +5,23 @@
 #include <fqrp/conflicts.h>
 #include <utils/isAForest.h>
 
+fqrp::c_graph_info_t::c_graph_info_t(size_t max_length, size_t tree_num,
+                                     size_t arcs_num, size_t chain_num,
+                                     size_t vehicles_num)
+    : max_length(max_length), tree_num(tree_num), arcs_num(arcs_num),
+      chain_num(chain_num), vehicles_num(vehicles_num){};
+fqrp::forest_info_t::forest_info_t(bool is_a_forest, size_t tree_num,
+                                   size_t max_tree_size, size_t nodes_num,
+                                   size_t edges_num)
+    : is_a_forest(is_a_forest), tree_num(tree_num),
+      max_tree_size(max_tree_size), nodes_num(nodes_num),
+      edges_num(edges_num){};
+fqrp::conflictCount::conflictCount(count_t arcType, count_t AType,
+                                   count_t BType, c_graph_info_t c_graph_info,
+                                   forest_info_t mixed_forest_info)
+    : arcType(arcType), AType(AType), BType(BType), c_graph_info(c_graph_info),
+      mixed_forest_info(mixed_forest_info){};
+
 fqrp::vehicle_t absDiff(fqrp::vehicle_t a, fqrp::vehicle_t b) {
   return a < b ? b - a : a - b;
 }
@@ -150,11 +167,8 @@ fqrp::conflicts::getConflictsInfo(
     }
   }
 
-  return {{.max_length = max_height + 1,
-           .tree_num = roots_num,
-           .arcs_num = arcs_num,
-           .chain_num = leaves_num,
-           .vehicles_num = arcs_num + roots_num},
+  return {c_graph_info_t(max_height + 1, roots_num, arcs_num, leaves_num,
+                         arcs_num + roots_num),
           utils::isAForest(mixedConflicts)};
 }
 

@@ -1,5 +1,32 @@
 #include <fqrp/aggregators/averageAggregator.h>
 
+fqrp::aggregators::avg_c_graph_info_t::avg_c_graph_info_t(
+    long double max_length, long double tree_num, long double arcs_num,
+    long double chain_num, long double vehicles_num)
+    : max_length(max_length), tree_num(tree_num), arcs_num(arcs_num),
+      chain_num(chain_num), vehicles_num(vehicles_num) {}
+
+fqrp::aggregators::avg_forest_info_t::avg_forest_info_t(
+    long double tree_num, long double max_tree_size, long double nodes_num,
+    long double edges_num)
+    : tree_num(tree_num), max_tree_size(max_tree_size), nodes_num(nodes_num),
+      edges_num(edges_num) {}
+
+fqrp::aggregators::averageCount::averageCount(
+    long double arcType, long double AType, long double BType,
+    const avg_c_graph_info_t &avg_c_graph_info,
+    const c_graph_info_t &longest_c_graph_info,
+    const c_graph_info_t &most_chains_c_graph_info,
+    const avg_forest_info_t &avg_mixed_forest_info,
+    const forest_info_t &biggest_tree_mixed_forest_info, count_t sample_size)
+    : arcType(arcType), AType(AType), BType(BType),
+      avg_c_graph_info(avg_c_graph_info),
+      longest_c_graph_info(longest_c_graph_info),
+      most_chains_c_graph_info(most_chains_c_graph_info),
+      avg_mixed_forest_info(avg_mixed_forest_info),
+      biggest_tree_mixed_forest_info(biggest_tree_mixed_forest_info),
+      sample_size(sample_size) {}
+
 void fqrp::aggregators::AverageAggregator::aggregate(
     const conflictCount &value) {
   arcType_sum += value.arcType;
@@ -36,50 +63,32 @@ void fqrp::aggregators::AverageAggregator::aggregate(
   size += 1;
 }
 
-fqrp::aggregators::AverageAggregator::result_t
+fqrp::aggregators::averageCount
 fqrp::aggregators::AverageAggregator::result() const {
-  return {
-      .arcType = static_cast<long double>(arcType_sum) / size,
-      .AType = static_cast<long double>(AType_sum) / size,
-      .BType = static_cast<long double>(BType_sum) / size,
+  return averageCount(
+      static_cast<long double>(arcType_sum) / size,
+      static_cast<long double>(AType_sum) / size,
+      static_cast<long double>(BType_sum) / size,
 
-      .avg_c_graph_info =
-          {
-              .max_length =
-                  static_cast<long double>(c_graph_info_sum.max_length) / size,
-              .tree_num =
-                  static_cast<long double>(c_graph_info_sum.tree_num) / size,
-              .arcs_num =
-                  static_cast<long double>(c_graph_info_sum.arcs_num) / size,
-              .chain_num =
-                  static_cast<long double>(c_graph_info_sum.chain_num) / size,
-              .vehicles_num =
-                  static_cast<long double>(c_graph_info_sum.vehicles_num) /
-                  size,
-          },
-      .longest_c_graph_info = longest_c_graph_info,
-      .most_chains_c_graph_info = most_chains_c_graph_info,
-      .avg_mixed_forest_info =
-          {
-              .tree_num =
-                  static_cast<long double>(mixed_forest_info_sum.tree_num) /
-                  size,
-              .max_tree_size = static_cast<long double>(
-                                   mixed_forest_info_sum.max_tree_size) /
-                               size,
-              .nodes_num =
-                  static_cast<long double>(mixed_forest_info_sum.nodes_num) /
-                  size,
-              .edges_num =
-                  static_cast<long double>(mixed_forest_info_sum.edges_num) /
-                  size,
-          },
-      .biggest_tree_mixed_forest_info = biggest_tree_mixed_forest_info,
-      .sample_size = size,
-  };
+      avg_c_graph_info_t(
+          static_cast<long double>(c_graph_info_sum.max_length) / size,
+          static_cast<long double>(c_graph_info_sum.tree_num) / size,
+          static_cast<long double>(c_graph_info_sum.arcs_num) / size,
+          static_cast<long double>(c_graph_info_sum.chain_num) / size,
+          static_cast<long double>(c_graph_info_sum.vehicles_num) / size),
+      longest_c_graph_info, most_chains_c_graph_info,
+
+      avg_forest_info_t(
+          static_cast<long double>(mixed_forest_info_sum.tree_num) / size,
+          static_cast<long double>(mixed_forest_info_sum.max_tree_size) / size,
+          static_cast<long double>(mixed_forest_info_sum.nodes_num) / size,
+          static_cast<long double>(mixed_forest_info_sum.edges_num) / size),
+      biggest_tree_mixed_forest_info,
+
+      size);
 }
 
-fqrp::aggregators::AverageAggregator::result_t
+fqrp::aggregators::averageCount
 fqrp::aggregators::AverageAggregator::merge(const AverageAggregator &other) {
   arcType_sum += other.arcType_sum;
   AType_sum += other.AType_sum;
@@ -121,6 +130,7 @@ std::ostream &operator<<(std::ostream &os,
   return os << info.max_length << " " << info.tree_num << " " << info.arcs_num
             << " " << info.vehicles_num;
 }
+
 std::istream &operator>>(std::istream &is,
                          fqrp::aggregators::avg_c_graph_info_t &info) {
   return is >> info.max_length >> info.tree_num >> info.arcs_num >>
@@ -147,6 +157,7 @@ std::ostream &operator<<(std::ostream &os,
      << " " << count.biggest_tree_mixed_forest_info << " " << count.sample_size;
   return os;
 }
+
 std::istream &operator>>(std::istream &is,
                          fqrp::aggregators::averageCount &count) {
   is >> count.arcType >> count.AType >> count.BType >> count.avg_c_graph_info >>
