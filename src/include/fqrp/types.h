@@ -10,7 +10,6 @@ class Instance;
 } // namespace fqrp
 
 std::ostream &operator<<(std::ostream &, const fqrp::Instance &);
-std::istream &operator>>(std::istream &, fqrp::Instance &);
 
 namespace fqrp {
 
@@ -21,7 +20,6 @@ constexpr vehicle_t null_vehicle = 0;
 
 class Instance {
   friend std::ostream & ::operator<<(std::ostream &, const fqrp::Instance &);
-  friend std::istream & ::operator>>(std::istream &, fqrp::Instance &);
 
   std::vector<vehicle_t> permutation;
 

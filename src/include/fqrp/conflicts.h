@@ -66,12 +66,9 @@ getConflictsInfo(const std::vector<std::pair<vehicle_t, vehicle_t>> &BConflicts,
 } // namespace fqrp
 
 std::ostream &operator<<(std::ostream &, const fqrp::c_graph_info_t &);
-std::istream &operator>>(std::istream &, fqrp::c_graph_info_t &);
 
 std::ostream &operator<<(std::ostream &, const fqrp::forest_info_t &);
-std::istream &operator>>(std::istream &, fqrp::forest_info_t &);
 
 std::ostream &operator<<(std::ostream &, const fqrp::conflictCount &);
-std::istream &operator>>(std::istream &, fqrp::conflictCount &);
 
 #endif

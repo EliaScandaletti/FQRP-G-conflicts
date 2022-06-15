@@ -82,16 +82,11 @@ public:
 
 std::ostream &operator<<(std::ostream &,
                          const fqrp::aggregators::avg_c_graph_info_t &);
-std::istream &operator>>(std::istream &,
-                         fqrp::aggregators::avg_c_graph_info_t &);
 
 std::ostream &operator<<(std::ostream &,
                          const fqrp::aggregators::avg_forest_info_t &);
-std::istream &operator>>(std::istream &,
-                         fqrp::aggregators::avg_forest_info_t &);
 
 std::ostream &operator<<(std::ostream &,
                          const fqrp::aggregators::averageCount &);
-std::istream &operator>>(std::istream &, fqrp::aggregators::averageCount &);
 
 #endif

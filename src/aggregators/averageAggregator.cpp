@@ -132,42 +132,33 @@ fqrp::aggregators::AverageAggregator::merge(const AverageAggregator &other) {
 
 std::ostream &operator<<(std::ostream &os,
                          const fqrp::aggregators::avg_c_graph_info_t &info) {
-  return os << info.max_length << " " << info.tree_num << " " << info.arcs_num
-            << " " << info.vehicles_num;
-}
-
-std::istream &operator>>(std::istream &is,
-                         fqrp::aggregators::avg_c_graph_info_t &info) {
-  return is >> info.max_length >> info.tree_num >> info.arcs_num >>
-         info.vehicles_num;
+  os << info.max_length << " ";
+  os << info.tree_num << " ";
+  os << info.arcs_num << " ";
+  os << info.vehicles_num;
+  return os;
 }
 
 std::ostream &operator<<(std::ostream &os,
                          const fqrp::aggregators::avg_forest_info_t &info) {
-  return os << " " << info.tree_num << " " << info.max_tree_size << " "
-            << info.nodes_num << " " << info.edges_num;
-}
-
-std::istream &operator>>(std::istream &is,
-                         fqrp::aggregators::avg_forest_info_t &info) {
-  return is >> info.tree_num >> info.max_tree_size >> info.nodes_num >>
-         info.edges_num;
+  os << " ";
+  os << info.tree_num << " ";
+  os << info.max_tree_size << " ";
+  os << info.nodes_num << " ";
+  os << info.edges_num;
+  return os;
 }
 
 std::ostream &operator<<(std::ostream &os,
                          const fqrp::aggregators::averageCount &count) {
-  os << count.arcType << " " << count.AType << " " << count.BType << " "
-     << count.avg_c_graph_info << " " << count.longest_c_graph_info << " "
-     << count.most_chains_c_graph_info << " " << count.avg_mixed_forest_info
-     << " " << count.biggest_tree_mixed_forest_info << " " << count.sample_size;
+  os << count.arcType << " ";
+  os << count.AType << " ";
+  os << count.BType << " ";
+  os << count.avg_c_graph_info << " ";
+  os << count.longest_c_graph_info << " ";
+  os << count.most_chains_c_graph_info << " ";
+  os << count.avg_mixed_forest_info << " ";
+  os << count.biggest_tree_mixed_forest_info << " ";
+  os << count.sample_size;
   return os;
-}
-
-std::istream &operator>>(std::istream &is,
-                         fqrp::aggregators::averageCount &count) {
-  is >> count.arcType >> count.AType >> count.BType >> count.avg_c_graph_info >>
-      count.longest_c_graph_info >> count.most_chains_c_graph_info >>
-      count.avg_mixed_forest_info >> count.biggest_tree_mixed_forest_info >>
-      count.sample_size;
-  return is;
 }

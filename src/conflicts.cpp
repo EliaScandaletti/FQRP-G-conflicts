@@ -173,39 +173,28 @@ fqrp::conflicts::getConflictsInfo(
 }
 
 std::ostream &operator<<(std::ostream &os, const fqrp::c_graph_info_t &info) {
-  return os << info.max_length << " " << info.tree_num << " " << info.arcs_num
-            << " " << info.vehicles_num;
-}
-std::istream &operator>>(std::istream &is, fqrp::c_graph_info_t &info) {
-  return is >> info.max_length >> info.tree_num >> info.arcs_num >>
-         info.vehicles_num;
+  os << info.max_length << " ";
+  os << info.tree_num << " ";
+  os << info.arcs_num << " ";
+  os << info.vehicles_num;
+  return os;
 }
 
 std::ostream &operator<<(std::ostream &os, const fqrp::forest_info_t &info) {
-  os << info.is_a_forest;
-  if (info.is_a_forest)
-    os << " " << info.tree_num << " " << info.max_tree_size << " "
-       << info.nodes_num << " " << info.edges_num;
+  os << info.is_a_forest << " ";
+  os << info.tree_num << " ";
+  os << info.max_tree_size << " ";
+  os << info.nodes_num << " ";
+  os << info.edges_num;
   return os;
-}
-
-std::istream &operator>>(std::istream &is, fqrp::forest_info_t &info) {
-  is >> info.is_a_forest;
-  if (info.is_a_forest)
-    is >> info.tree_num >> info.max_tree_size >> info.nodes_num >>
-        info.edges_num;
-  return is;
 }
 
 std::ostream &operator<<(std::ostream &os, const fqrp::conflictCount &count) {
-  os << count.arcType << " " << count.AType << " " << count.BType << " "
-     << count.c_graph_info << " " << count.mixed_forest_info << " "
-     << count.mixed_forest_info;
+  os << count.arcType << " ";
+  os << count.AType << " ";
+  os << count.BType << " ";
+  os << count.c_graph_info << " ";
+  os << count.mixed_forest_info << " ";
+  os << count.mixed_forest_info;
   return os;
-}
-
-std::istream &operator>>(std::istream &is, fqrp::conflictCount &count) {
-  is >> count.arcType >> count.AType >> count.BType >> count.c_graph_info >>
-      count.mixed_forest_info >> count.mixed_forest_info;
-  return is;
 }

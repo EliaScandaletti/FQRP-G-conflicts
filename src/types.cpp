@@ -20,12 +20,3 @@ std::ostream &operator<<(std::ostream &os, const fqrp::Instance &instance) {
   }
   return os;
 }
-
-std::istream &operator>>(std::istream &is, fqrp::Instance &instance) {
-  instance.permutation.clear();
-  fqrp::vehicle_t next;
-  while (is >> next) {
-    instance.permutation.push_back(next);
-  }
-  return is;
-}
