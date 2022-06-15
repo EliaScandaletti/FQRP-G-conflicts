@@ -33,10 +33,10 @@ struct conflictCount {
   count_t BType;
   c_graph_info_t c_graph_info;
   forest_info_t mixed_forest_info;
-  explicit conflictCount(
-      count_t arcType = 0, count_t AType = 0, count_t BType = 0,
-      c_graph_info_t c_graph_info = c_graph_info_t(),
-      forest_info_t mixed_forest_info = forest_info_t());
+  explicit conflictCount(count_t arcType = 0, count_t AType = 0,
+                         count_t BType = 0,
+                         c_graph_info_t c_graph_info = c_graph_info_t(),
+                         forest_info_t mixed_forest_info = forest_info_t());
 };
 
 namespace conflicts {

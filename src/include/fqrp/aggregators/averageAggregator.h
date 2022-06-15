@@ -67,7 +67,7 @@ class AverageAggregator : public core::Aggregator<conflictCount, averageCount> {
   count_t size;
 
 public:
-  AverageAggregator() = default;
+  AverageAggregator();
   virtual ~AverageAggregator() = default;
 
   void aggregate(const conflictCount &value) override;

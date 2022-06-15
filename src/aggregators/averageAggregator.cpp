@@ -27,6 +27,11 @@ fqrp::aggregators::averageCount::averageCount(
       biggest_tree_mixed_forest_info(biggest_tree_mixed_forest_info),
       sample_size(sample_size) {}
 
+fqrp::aggregators::AverageAggregator::AverageAggregator()
+    : arcType_sum(0), AType_sum(0), BType_sum(0), c_graph_info_sum(),
+      longest_c_graph_info(), most_chains_c_graph_info(),
+      mixed_forest_info_sum(), biggest_tree_mixed_forest_info(), size(0) {}
+
 void fqrp::aggregators::AverageAggregator::aggregate(
     const conflictCount &value) {
   arcType_sum += value.arcType;
