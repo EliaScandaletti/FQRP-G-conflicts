@@ -1,6 +1,8 @@
 #ifndef FQRP_CONFLICTS_HPP
 #define FQRP_CONFLICTS_HPP
 
+#include <tuple>
+
 #include <fqrp/types.h>
 
 namespace fqrp {

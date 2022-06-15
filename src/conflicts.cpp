@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <cmath>
-#include <tuple>
 
 #include <fqrp/conflicts.h>
 #include <utils/isAForest.h>
@@ -126,36 +125,35 @@ std::tuple<fqrp::c_graph_info_t, fqrp::forest_info_t>
 fqrp::conflicts::getConflictsInfo(
     const std::vector<std::pair<vehicle_t, vehicle_t>> &BConflicts,
     const std::vector<vehicle_t> &CConflicts, vehicle_t size) {
+  c_graph_info_t c_graph_info;
 
   // leaves have height 0
   std::vector<size_t> c_height(size, 0);
-  size_t max_height = 0;
-  for (size_t subj = 1; subj <= size; subj++) {
-    vehicle_t v = subj;
-
-    size_t height = 0;
-    while (v != null_vehicle && c_height[v - 1] < height) {
-      c_height[v - 1] = height;
-      height++;
+  for (size_t v = 1; v <= size; v++) {
+    size_t chain_length = 0;
+    while (v != null_vehicle && (c_height[v - 1] < chain_length ||
+                                 // c_height[v - 1] == 0 && chain_length == 0
+                                 c_height[v - 1] + chain_length == 0)) {
+      c_height[v - 1] = chain_length;
+      chain_length++;
       v = CConflicts[v - 1];
     }
-    max_height = std::max(max_height, height);
+
+    c_graph_info.max_length = std::max(c_graph_info.max_length, chain_length);
   }
 
-  size_t arcs_num = 0;
-  size_t roots_num = 0;
-  size_t leaves_num = 0;
   for (size_t subj = 1; subj <= size; subj++) {
     vehicle_t obj = CConflicts[subj - 1];
     if (obj != null_vehicle) {
-      arcs_num++;
+      c_graph_info.arcs_num++;
       if (c_height[subj - 1] == 0) {
-        leaves_num++;
+        c_graph_info.chain_num++;
       }
     } else if (c_height[subj - 1] > 0) {
-      roots_num++;
+      c_graph_info.tree_num++;
     }
   }
+  c_graph_info.vehicles_num = c_graph_info.arcs_num + c_graph_info.tree_num;
 
   std::vector<std::pair<vehicle_t, vehicle_t>> mixedConflicts;
   for (const std::pair<vehicle_t, vehicle_t> &conflict : BConflicts) {
@@ -169,9 +167,9 @@ fqrp::conflicts::getConflictsInfo(
     }
   }
 
-  return {c_graph_info_t(max_height + 1, roots_num, arcs_num, leaves_num,
-                         arcs_num + roots_num),
-          utils::isAForest(mixedConflicts)};
+  forest_info_t mixed_forest_info = utils::isAForest(mixedConflicts);
+
+  return {c_graph_info, mixed_forest_info};
 }
 
 std::ostream &operator<<(std::ostream &os, const fqrp::c_graph_info_t &info) {
