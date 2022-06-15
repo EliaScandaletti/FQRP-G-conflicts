@@ -4,7 +4,7 @@
 fqrp::forest_info_t fqrp::utils::isAForest(
     const std::vector<std::pair<vehicle_t, vehicle_t>> &edges) {
   UnionFind uf;
-  size_t max_tree_size;
+  size_t max_tree_size = 0;
 
   for (const std::pair<vehicle_t, vehicle_t> &e : edges) {
     uf.make_set(e.first);
