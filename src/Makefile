@@ -8,8 +8,6 @@ UTILS = include/utils/unionFind.h include/utils/isAForest.h
 
 all: tests/random_gen_main tests/int_gen_main tests/exh_gen_main tests/exh_filt_gen_main
 
-main: main.o aggregators/averageAggregator.o counters/conflictCounter.o filters/partitioned.o generators/exhaustiveGenerator.o generators/intervalGenerator.o generators/randomGenerator.o conflicts.o types.o | $(CORE)
-
 tests/random_gen_main: tests/random_gen_main.o aggregators/averageAggregator.o counters/conflictCounter.o filters/partitioned.o generators/randomGenerator.o conflicts.o utils/isAForest.o utils/unionFind.o types.o | $(CORE)
 
 tests/int_gen_main: tests/int_gen_main.o aggregators/averageAggregator.o counters/conflictCounter.o generators/intervalGenerator.o conflicts.o utils/isAForest.o utils/unionFind.o types.o | $(CORE)
