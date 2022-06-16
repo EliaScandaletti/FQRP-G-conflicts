@@ -11,6 +11,7 @@
 
 #include <chrono>
 #include <cmath>
+#include <fstream>
 #include <iostream>
 
 using namespace fqrp;
@@ -28,6 +29,13 @@ int main() {
   vehicle_t min_size = 1;
   vehicle_t max_size = 25;
 
+  std::ofstream logMultiChain("multichain.log", std::ios_base::app);
+  logger_t logMixed(
+      [](const conflictCount &c) -> bool {
+        return c.mixed_forest_info.edges_num > 0;
+      },
+      logMultiChain);
+
   for (vehicle_t size = min_size; size <= max_size; size++) {
 
     auto t1s = high_resolution_clock::now();
@@ -36,7 +44,7 @@ int main() {
     FilteredGenerator<Instance> sg(g, sym_filter);
     Not<IsPartitioned> part_filter;
     FilteredGenerator<Instance> fg(sg, part_filter);
-    conflictCounter c;
+    conflictCounter c({logMixed});
     AverageAggregator agg;
     averageCount res = core::getExactCount(fg, c, agg);
     auto t1e = high_resolution_clock::now();
