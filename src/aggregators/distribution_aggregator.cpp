@@ -2,19 +2,19 @@
 
 void fqrp::aggregators::c_graph_dist_t::add(const c_graph_info_t &info,
                                             size_t freq) {
-  max_length.add(info.max_length);
-  tree_num.add(info.tree_num);
-  arcs_num.add(info.arcs_num);
-  chain_num.add(info.chain_num);
-  vehicles_num.add(info.vehicles_num);
+  max_length.add(info.max_length, freq);
+  tree_num.add(info.tree_num, freq);
+  arcs_num.add(info.arcs_num, freq);
+  chain_num.add(info.chain_num, freq);
+  vehicles_num.add(info.vehicles_num, freq);
 }
 
 void fqrp::aggregators::forest_dist_t::add(const forest_info_t &info,
                                            size_t freq) {
-  tree_num.add(info.tree_num);
-  max_tree_size.add(info.max_tree_size);
-  nodes_num.add(info.nodes_num);
-  edges_num.add(info.edges_num);
+  tree_num.add(info.tree_num, freq);
+  max_tree_size.add(info.max_tree_size, freq);
+  nodes_num.add(info.nodes_num, freq);
+  edges_num.add(info.edges_num, freq);
 }
 
 void fqrp::aggregators::DistAggregator::aggregate(const conflictCount &value) {
