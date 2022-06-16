@@ -129,7 +129,9 @@ fqrp::conflicts::getConflictsInfo(
 
   // leaves have height 0
   std::vector<size_t> c_height(size, 0);
-  for (size_t v = 1; v <= size; v++) {
+  for (size_t subj = 1; subj <= size; subj++) {
+    vehicle_t v = subj;
+
     size_t chain_length = 0;
     while (v != null_vehicle && (c_height[v - 1] < chain_length ||
                                  // c_height[v - 1] == 0 && chain_length == 0
