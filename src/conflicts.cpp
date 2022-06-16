@@ -141,9 +141,9 @@ fqrp::conflicts::getConflictsInfo(
       v = CConflicts[v - 1];
     }
 
-    c_graph_info.max_length =
-        std::max(c_graph_info.max_length, chain_length - 1);
+    c_graph_info.max_length = std::max(c_graph_info.max_length, chain_length);
   }
+  c_graph_info.max_length -= 1;
 
   for (size_t subj = 1; subj <= size; subj++) {
     vehicle_t obj = CConflicts[subj - 1];
