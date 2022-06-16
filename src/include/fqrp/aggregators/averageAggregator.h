@@ -72,8 +72,6 @@ public:
 
   void aggregate(const conflictCount &value) override;
   averageCount result() const override;
-
-  averageCount merge(const AverageAggregator &other);
 };
 
 } // namespace aggregators

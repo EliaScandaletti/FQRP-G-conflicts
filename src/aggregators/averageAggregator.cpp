@@ -93,55 +93,18 @@ fqrp::aggregators::AverageAggregator::result() const {
       size);
 }
 
-fqrp::aggregators::averageCount
-fqrp::aggregators::AverageAggregator::merge(const AverageAggregator &other) {
-  arcType_sum += other.arcType_sum;
-  AType_sum += other.AType_sum;
-  BType_sum += other.BType_sum;
-
-  c_graph_info_sum.max_length += other.c_graph_info_sum.max_length;
-  c_graph_info_sum.tree_num += other.c_graph_info_sum.tree_num;
-  c_graph_info_sum.arcs_num += other.c_graph_info_sum.arcs_num;
-  c_graph_info_sum.chain_num += other.c_graph_info_sum.chain_num;
-  c_graph_info_sum.vehicles_num += other.c_graph_info_sum.vehicles_num;
-
-  if (other.longest_c_graph_info.max_length > longest_c_graph_info.max_length) {
-    longest_c_graph_info = other.longest_c_graph_info;
-  }
-
-  if (other.most_chains_c_graph_info.chain_num >
-      most_chains_c_graph_info.chain_num) {
-    most_chains_c_graph_info = other.most_chains_c_graph_info;
-  }
-
-  if (other.mixed_forest_info_sum.is_a_forest) {
-    mixed_forest_info_sum.tree_num += other.mixed_forest_info_sum.tree_num;
-    mixed_forest_info_sum.max_tree_size +=
-        other.mixed_forest_info_sum.max_tree_size;
-    mixed_forest_info_sum.nodes_num += other.mixed_forest_info_sum.nodes_num;
-    mixed_forest_info_sum.edges_num += other.mixed_forest_info_sum.edges_num;
-
-    if (other.biggest_tree_mixed_forest_info.max_tree_size >
-        biggest_tree_mixed_forest_info.max_tree_size) {
-      biggest_tree_mixed_forest_info = other.biggest_tree_mixed_forest_info;
-    }
-  }
-  size += other.size;
-  return result();
-}
-
 std::ostream &operator<<(std::ostream &os,
                          const fqrp::aggregators::avg_c_graph_info_t &info) {
   os << info.max_length << " ";
   os << info.tree_num << " ";
   os << info.arcs_num << " ";
+  os << info.chain_num << " ";
   os << info.vehicles_num;
   return os;
 }
 
 std::ostream &operator<<(std::ostream &os,
                          const fqrp::aggregators::avg_forest_info_t &info) {
-  os << " ";
   os << info.tree_num << " ";
   os << info.max_tree_size << " ";
   os << info.nodes_num << " ";
