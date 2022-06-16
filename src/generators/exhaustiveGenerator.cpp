@@ -33,7 +33,7 @@ fqrp::generators::ExhaustiveGenerator::ExhaustiveGenerator(vehicle_t size)
 // assert(buf || cacheNext())
 fqrp::Instance fqrp::generators::ExhaustiveGenerator::next() {
   cacheNext();
-  Instance ret = Instance(buf);
+  Instance ret(buf);
   buf.clear();
   return ret;
 }
