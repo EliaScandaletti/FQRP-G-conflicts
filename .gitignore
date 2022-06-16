@@ -11,5 +11,5 @@
 *.d
 src/progs/exh_gen_main
 src/progs/exh_filt_gen_main
-src/progs/int_gen_main
-src/progs/random_gen_main
+src/progs/int_filt_gen_main
+src/progs/rand_filt_gen_main

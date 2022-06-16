@@ -1,42 +1,46 @@
 #include <core/algorithms.h>
 
-#include <fqrp/aggregators/averageAggregator.h>
+#include <fqrp/aggregators/distribution_aggregator.h>
 #include <fqrp/counters/conflictCounter.h>
 #include <fqrp/generators/exhaustiveGenerator.h>
 #include <fqrp/types.h>
 
-#include <chrono>
-#include <cmath>
-#include <iostream>
-
-using namespace fqrp;
-using namespace fqrp::generators;
-using namespace fqrp::counters;
-using namespace fqrp::aggregators;
+using fqrp::Instance;
+using fqrp::vehicle_t;
+using fqrp::aggregators::dist_count;
+using fqrp::aggregators::DistAggregator;
+using fqrp::counters::conflictCounter;
+using fqrp::generators::ExhaustiveGenerator;
+using std::cerr;
 using std::cout;
 using std::endl;
-using std::chrono::duration_cast;
-using std::chrono::high_resolution_clock;
-using std::chrono::milliseconds;
 
-int main() {
-  vehicle_t min_size = 1;
-  vehicle_t max_size = 25;
-  // count_t max_limit = 10000000;
+int main(int argc, char const *argv[]) {
+
+  if (argc != 3) {
+    cerr << "Error in usage." << endl;
+    cerr << "Usage " << argv[0] << " min_size max_size" << endl;
+    return 1;
+  }
+
+  // cout << "# Executing " << argv[0] << " " << argv[1] << " " << argv[2] <<
+  // endl;
+  vehicle_t min_size;
+  vehicle_t max_size;
+  try {
+    min_size = std::stoi(argv[1]);
+    max_size = std::stoi(argv[2]);
+  } catch (const std::exception &e) {
+    cerr << "Invalid input: conversion error" << endl;
+  }
 
   for (vehicle_t size = min_size; size <= max_size; size++) {
-    // count_t limit = std::min<double>(max_limit, std::pow(size, 6));
-
-    auto t1s = high_resolution_clock::now();
     ExhaustiveGenerator g(size);
     conflictCounter c;
-    AverageAggregator agg;
-    averageCount res = core::getExactCount(g, c, agg);
-    auto t1e = high_resolution_clock::now();
+    DistAggregator agg;
+    dist_count res = core::getExactCount(g, c, agg);
 
-    cout << "n: " << size;
-    cout << "\tT: " << duration_cast<milliseconds>(t1e - t1s).count();
-    cout << res << endl;
+    cout << size << " " << res << endl;
   }
 
   return 0;
