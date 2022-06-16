@@ -4,6 +4,20 @@
 
 #include <fqrp/conflicts.h>
 
+fqrp::counters::logger_t::logger_t(condition_t test, std::ostream &os)
+    : test(test), os(os) {}
+
+void fqrp::counters::logger_t::operator()(const Instance &instance,
+                                          const conflictCount &count) {
+  if (test(count)) {
+    os << instance << std::endl;
+  }
+}
+
+fqrp::counters::conflictCounter::conflictCounter(
+    const std::vector<logger_t> &loggers)
+    : loggers(loggers) {}
+
 fqrp::conflictCount
 fqrp::counters::conflictCounter::count(const Instance &instance) {
   vehicle_t size = instance.size();
@@ -39,6 +53,10 @@ fqrp::counters::conflictCounter::count(const Instance &instance) {
 
   std::tie(count.c_graph_info, count.mixed_forest_info) =
       conflicts::getConflictsInfo(BConflicts, CConflicts, size);
+
+  for (auto &&logger : loggers) {
+    logger(instance, count);
+  }
 
   return count;
 }
