@@ -4,8 +4,8 @@
 
 fqrp::utils::distribution::distribution(size_t range)
     : _dist(range, 0), _sum(0), _size(0),
-      _min(std::numeric_limits<size_t>::max()),
-      _max(std::numeric_limits<size_t>::min()) {}
+      _min(std::numeric_limits<vehicle_t>::max()),
+      _max(std::numeric_limits<vehicle_t>::min()) {}
 
 void fqrp::utils::distribution::add(vehicle_t v, size_t freq) {
   if (v >= _dist.size()) {
@@ -35,10 +35,9 @@ const std::vector<size_t> &fqrp::utils::distribution::get() const {
 std::ostream &operator<<(std::ostream &os,
                          const fqrp::utils::distribution &dist) {
   const auto &_dist = dist.get();
+  os << _dist.size();
   for (size_t i = 0; i < _dist.size(); i++) {
-    if (i != 0) {
-      os << " ";
-    }
-    os << _dist[i];
+    os << " " << _dist[i];
   }
+  return os;
 }
