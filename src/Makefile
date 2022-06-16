@@ -29,7 +29,7 @@ include $(DEPENDENCIES)
 
 .PHONY: clean
 clean:
-	- which git > /dev/null && git clean -fX || { \
+	- git rev-parse --git-dir > /dev/null 2>&1 && find . -wholename .git && git clean -fX || { \
 	find . -name "*.o" -delete; \
 	find . -name "*.a" -delete; \
 	find . -name "*.d" -delete; \
