@@ -35,6 +35,7 @@ struct dist_count {
   utils::distribution BType;
   c_graph_dist_t c_graph_dist;
   forest_dist_t mixed_forest_dist;
+  size_t sample_size() const;
 };
 
 class DistAggregator : public core::Aggregator<conflictCount, dist_count> {

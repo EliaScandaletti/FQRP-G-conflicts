@@ -17,6 +17,10 @@ void fqrp::aggregators::forest_dist_t::add(const forest_info_t &info,
   edges_num.add(info.edges_num, freq);
 }
 
+size_t fqrp::aggregators::dist_count::sample_size() const {
+  return arcType.size();
+}
+
 void fqrp::aggregators::DistAggregator::aggregate(const conflictCount &value) {
   cumulative.arcType.add(value.arcType);
   cumulative.AType.add(value.AType);
