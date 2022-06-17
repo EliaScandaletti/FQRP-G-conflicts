@@ -5,7 +5,7 @@ CXXFLAGS = -Wall -Wextra -Werror -g
 
 DEPENDENCIES = $(subst .cpp,.d,$(shell find . -name "*.cpp"))
 
-all: progs/rand_filt_gen_main progs/int_filt_gen_main progs/exh_gen_main progs/exh_filt_gen_main
+all: progs/rand_filt_gen_main progs/int_filt_gen_main progs/exh_gen_main progs/exh_filt_gen_main parser/converter_main
 
 progs/rand_filt_gen_main: progs/rand_filt_gen_main.o aggregators/distribution_aggregator.o utils/distribution.o counters/conflictCounter.o filters/partitioned.o generators/randomGenerator.o conflicts.a types.o
 
@@ -18,6 +18,7 @@ progs/exh_filt_gen_main: progs/exh_filt_gen_main.o aggregators/distribution_aggr
 conflicts.a: conflicts.o conflicts.o utils/isAForest.o utils/unionFind.o
 	ar r $@ $?
 
+parser/converter_main: parser/converter_main.o parser/parse.o parser/print.o aggregators/distribution_aggregator.o utils/distribution.o
 
 %.d: %.cpp
 	@set -e; rm -f $@; \
@@ -33,4 +34,5 @@ clean:
 	find . -name "*.o" -delete; \
 	find . -name "*.a" -delete; \
 	find . -name "*.d" -delete; \
+	find . -name "*.dat" -delete; \
 	}
