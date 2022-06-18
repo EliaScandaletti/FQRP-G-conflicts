@@ -22,14 +22,15 @@ void parser::print_table(const string &name,
     throw "Unable to create file " + name + ".dat";
   }
 
-  ofs << "n\tvalue\tfreq" << endl;
+  ofs << "n\tvalue\tfreq\tmax_freq\tsample" << endl;
   for (auto &&tup : counts) {
     const vehicle_t &size = get<0>(tup);
     const distribution &dist = get<1>(tup);
-    const vector<size_t> &_dist = dist.get();
     for (vehicle_t i = dist.min(); i <= dist.max(); i++) {
-      ofs << size << '\t' << i << '\t' << _dist[i] << endl;
+      ofs << size << '\t' << i << '\t' << dist.get(i) << '\t'
+          << dist.get(dist.most_freq()) << '\t' << dist.size() << endl;
     }
+    ofs << endl;
   }
 
   ofs.close();
