@@ -11,11 +11,13 @@ namespace fqrp {
 namespace utils {
 
 class distribution {
-  std::vector<size_t> _dist;
+  std::vector<size_t> _freqs;
   size_t _sum;
-  size_t _size;
+  size_t sample;
   vehicle_t _min;
   vehicle_t _max;
+  vehicle_t _most_freq;
+  size_t _highest_freq;
 
 public:
   distribution(size_t range = 0);
@@ -23,8 +25,9 @@ public:
   long double avg() const;
   vehicle_t min() const;
   vehicle_t max() const;
+  vehicle_t most_freq() const;
   vehicle_t size() const;
-  const std::vector<size_t> &get() const;
+  size_t get(vehicle_t v) const;
 };
 
 } // namespace utils
