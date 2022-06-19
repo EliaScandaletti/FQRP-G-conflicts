@@ -13,6 +13,8 @@
 \usepackage{subfiles}
 \usepackage{xcolor}
 
+\usetikzlibrary{plotmarks}
+
 \theoremstyle{definition}
 \newtheorem{definition}{Definizione}
 
@@ -39,7 +41,7 @@
 }
 
 \pgfplotsset{compat=1.18}
-\pgfplotsset{colormap={rs}{color(0)=(white) color(1)=(red!50!lightgray) color=(red)}}
+\pgfplotsset{colormap name=viridis}
 
 \newcommand{\makeaxis}[2]{
     \begin{minipage}{0.4\paperwidth}
@@ -49,7 +51,10 @@
             ]
                 \addplot+ [
                     scatter,
-                    only marks,
+                    mesh,
+                    empty line=jump,
+                    mark=square*,
+                    restrict expr to domain={{\thisrow{freq}}{1:{+inf}}},
                     scatter src={\thisrow{freq}/\thisrow{max_freq}}
                     ] table [x=n,y=value] {#2};
             \end{axis}
@@ -70,26 +75,21 @@
             \hfill
             \expandafter\makeaxis{Generatore a intervalli}{data/int_filt_gen_#2.dat}
         }
+        \vskip\baselineskip
         \makebox[\textwidth]{
-            \begin{tikzpicture}
-                \begin{axis}[
-                    hide axis,
-                    scale only axis,
-                    height=0pt,
-                    width=0pt,
-                    colormap name=rs,
-                    colorbar horizontal,
-                    point meta min=0,
-                    point meta max=100,
-                    colorbar style={
-                        width=10cm,
-                        xtick={0,10,...,100}
-                    }
-                ]
-                    \addplot [draw=none] coordinates {(0,0)};
-                \end{axis}
-            \end{tikzpicture}
+            \pgfplotscolorbardrawstandalone[
+                colorbar horizontal,
+                point meta min=0,
+                point meta max=100,
+                colorbar style={
+                    width=\textwidth,
+                    xtick={0,10,...,100},
+                    xticklabel={\pgfmathprintnumber{\tick}\%}
+                }
+            ]
         }
         \caption{#1}
     \end{figure}
 }
+
+\renewcommand{\makefigure}[2]{Figures have been disabled for compilation time reason. Comment this line to activate plots.}
