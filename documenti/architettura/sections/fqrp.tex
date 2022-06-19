@@ -1,0 +1,67 @@
+\documentclass[../../main.tex]{subfiles}
+
+\begin{document}
+
+All'interno del namespace \texttt{fqrp}, oltre a essere implementate le componenti definite nel namespace \texttt{core}, vengono anche definiti i tipi che saranno argomento dei template.
+
+\paragraph{Tipi primitivi}
+Vengono definiti i seguenti tipi primitivi:
+\begin{itemize}
+    \item \texttt{vehicle\_t}: \texttt{unsigned int} a 32 bit,rappresenta un veicolo;
+    \item \texttt{count\_t}: \texttt{unsigned int} a 64 bit, tipo usato per contare i conflitti che sono al più $(2^{32})^2$.
+\end{itemize}
+
+\paragraph{Classi}
+Vengono definite le seguenti classi:
+\begin{itemize}
+    \item \texttt{Instance}: rappresenta un'istanza FQRP- ed espone i seguenti metodi:
+    \begin{itemize}
+        \item \texttt{vehicle\_t size() const}: ritorna la dimensione dell'istanza;
+        \item \texttt{vehicle\_t sigma(vehicle\_t vehicle) const}: dato un veicolo \texttt{vehicle} ritorna la sua destinazione.
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Strutture}
+Vengono definite le seguenti strutture:
+\begin{itemize}
+    \item \texttt{dist\_count}: rappresenta il dato aggregato del problema. \\    
+    Espone il metodo:
+    \begin{itemize}
+        \item \texttt{size\_t sample\_size() const}: ritorna il numero di campioni usati per costruire il dato aggregato.
+    \end{itemize}
+    Espone i membri:
+    \begin{itemize}
+        \item \texttt{utils::distribution arcType}: distribuzione del numero dei conflitti di arco;
+        \item \texttt{utils::distribution AType}: distribuzione del numero dei conflitti di tipo A;
+        \item \texttt{utils::distribution BType}: distribuzione del numero dei conflitti di tipo B;
+        \item \texttt{c\_graph\_dist\_t c\_graph\_dist}: distribuzione dei grafi dei conflitti di tipo C;
+        \item \texttt{forest\_dist\_t mixed\_forest\_dist}: distribuzione dei grafi dei conflitti di tipo misto.
+    \end{itemize}
+    \item \texttt{c\_graph\_dist\_t}: rappresenta la distribuzione dei grafi dei conflitti di tipo C. \\
+    Espone il metodo:
+    \begin{itemize}
+        \item \texttt{void add(const c\_graph\_info\_t \&v, size\_t freq = 1)}: funzione di utilità che invoca i metodi \texttt{add} di ciascuno dei membri della struttura.
+    \end{itemize}
+    Espone i membri:
+    \begin{itemize}
+        \item \texttt{utils::distribution max\_length}: distribuzione della lunghezza massima delle catene di conflitti di tipo C;
+        \item \texttt{utils::distribution tree\_num}: distribuzione del numero di alberi all'interno della foresta di conflitti di tipo C;
+        \item \texttt{utils::distribution arcs\_num}: distribuzione del numero di conflitti di tipo C;
+        \item \texttt{utils::distribution chain\_num}: distribuzione del numero di catene di conflitti di tipo C;
+        \item \texttt{utils::distribution vehicles\_num}: distribuzione del numero di veicoli coinvolti in conflitti di tipo C.
+    \end{itemize}
+    \item \texttt{forest\_dist\_t}: rappresenta la distribuzione dei grafi dei conflitti di tipo C. \\
+    Espone il metodo:
+    \begin{itemize}
+        \item \texttt{void add(const forest\_info\_t \&v, size\_t freq = 1)}: funzione di utilità che invoca i metodi \texttt{add} di ciascuno dei membri della struttura.
+    \end{itemize}
+    Espone i membri:
+    \begin{itemize}
+        \item \texttt{utils::distribution tree\_num}: distribuzione del numero di alberi all'interno della foresta di conflitti di tipo misto;
+        \item \texttt{utils::distribution max\_tree\_size}: distribuzione del numero massimo di veicoli coinvolti nello stessa componente connessa del grafo di conflitti;
+        \item \texttt{utils::distribution nodes\_num}: distribuzione del numero di veicoli coinvolti in conflitti di tipo misto;
+        \item \texttt{utils::distribution edges\_num}: distribuzione del numero di conflitti di tipo misto.
+    \end{itemize}
+\end{itemize}
+
+\end{document}

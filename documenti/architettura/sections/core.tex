@@ -1,0 +1,63 @@
+\documentclass[../../main.tex]{subfiles}
+
+\begin{document}
+
+Il core definisce una pipeline che composta da:
+\begin{itemize}
+    \item generatore;
+    \item contatore;
+    \item accumulatore.
+\end{itemize}
+
+Ogni componente è rappresentato da un template, in questo modo non vengono fatte assunzioni sui dati che vengono trattati e viene consentita la massima flessibilità.
+Gli argomenti di tipo dei template sono \texttt{\_raw\_t} che rappresenta il dato grezzo, \texttt{\_value\_t} che rappresenta il dato elaborato e \texttt{\_result\_t} che rappresenta il dato aggregato.
+
+Inoltre, vengono definiti e implementati due algoritmi che implementano la pipeline e collegano le componenti appena elencate.
+
+\paragraph{Generatore}
+Il generatore è la componente che produce i dati grezzi, in questo caso istanze FQRP-G, ciascuna rappresentata da una permutazione.
+
+Espone i metodi:
+\begin{itemize}
+    \item \texttt{bool finished()}: ritorna un valore booleano che indica se il generatore si è esaurito o meno;
+    \item \texttt{\_raw\_t next()}: ritorna il successivo dato grezzo se il generatore non è esaurito.
+\end{itemize}
+
+\paragraph{Contatore}
+Il contatore è la componente che produce un risultato a partire dal dato grezzo.
+
+Espone solo il metodo:
+\begin{itemize}
+    \item \texttt{\_value\_t count(const \_raw\_t \&input)}: che accetta un dato grezzo e ritorna un dato elaborato.
+\end{itemize}
+
+\paragraph{Accumulatore}
+L'accumulatore è la componente che accumula i dati raccolti dal contatore e li ritorna in forma aggregata.
+
+Espone i metodi:
+\begin{itemize}
+    \item \texttt{void aggregate(const \_value\_t \&)}: che accetta un dato prodotto dal contatore e tiene traccia di ciò internamente;
+    \item \texttt{\_result\_t result() const}: che ritorna i dati in forma aggregata.
+\end{itemize}
+
+\paragraph{Algoritmi implementati}
+Gli algoritmi implementati sono:
+\begin{itemize}
+    \item \texttt{result\_t getEstimatedCount(limit\_t limit, Generator<raw\_t> \&generator, Counter<raw\_t, count\_t> \&counter,
+    Aggregator<count\_t, result\_t> \&aggregator)} che:
+    \begin{enumerate}
+        \item genera al più \texttt{limit} dati grezzi utilizzando il generatore \texttt{generator};
+        \item elabora i dati grezzi attraverso il contatore \texttt{counter};
+        \item ritorna i dati aggregati utilizzando l'accumulatore \texttt{aggregator}.
+    \end{enumerate}
+    \item \texttt{result\_t getExactCount(Generator<raw\_t> \&generator,
+    Counter<raw\_t, count\_t> \&counter,
+    Aggregator<count\_t, result\_t> \&aggregator)} che:
+    \begin{enumerate}
+        \item genera dati grezzi utilizzando il generatore \texttt{generator} fino al suo esaurimento;
+        \item elabora i dati grezzi attraverso il contatore \texttt{counter};
+        \item ritorna i dati aggregati utilizzando l'accumulatore \texttt{aggregator}.
+    \end{enumerate}
+\end{itemize}
+
+\end{document}

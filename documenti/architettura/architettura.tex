@@ -1,0 +1,19 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+L'architettura adottata prevede l'utilizzo di una pipeline costituita da varie componenti definite nel namespace \texttt{core}.
+All'interno del namespace \texttt{fqrp} queste componenti vengono implementate in modo diverso.
+
+All'interno del \texttt{main} è possibile, quindi, assemblare la pipeline scegliendo l'implementazione di ciascun componente.
+
+\subsection{Namespace core}
+\subfile{sections/core.tex}
+
+\subsection{Namespace fqrp}
+\subfile{sections/fqrp.tex}
+% \subparagraph{Filtri}
+% Particolare rilevanza ha il generatore \texttt{FilteredGenerator} che permette di applicare un filtro a un altro generatore.
+% Nello specifico, questo generatore contiene un altro generatore a cui richiede dati che ritorna solo 
+
+\end{document}
