@@ -9,7 +9,7 @@ fqrp::counters::logger_t::logger_t(condition_t test, std::ostream &os)
 
 void fqrp::counters::logger_t::operator()(const Instance &instance,
                                           const conflictCount &count) {
-  if (test(count)) {
+  if (test(instance, count)) {
     os << instance << std::endl;
   }
 }

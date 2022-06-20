@@ -12,7 +12,7 @@ namespace fqrp {
 namespace counters {
 
 class logger_t {
-  typedef bool (*condition_t)(const conflictCount &);
+  typedef bool (*condition_t)(const Instance &, const conflictCount &);
   condition_t test;
   std::ostream &os;
 
