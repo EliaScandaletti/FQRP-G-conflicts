@@ -18,7 +18,8 @@ fqrp::aggregators::averageCount::averageCount(
     const c_graph_info_t &longest_c_graph_info,
     const c_graph_info_t &most_chains_c_graph_info,
     const avg_forest_info_t &avg_mixed_forest_info,
-    const forest_info_t &biggest_tree_mixed_forest_info, count_t sample_size)
+    const mixed_graph_info_t &biggest_tree_mixed_forest_info,
+    count_t sample_size)
     : arcType(arcType), AType(AType), BType(BType),
       avg_c_graph_info(avg_c_graph_info),
       longest_c_graph_info(longest_c_graph_info),

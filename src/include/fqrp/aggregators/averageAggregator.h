@@ -43,7 +43,7 @@ struct averageCount {
   c_graph_info_t longest_c_graph_info;
   c_graph_info_t most_chains_c_graph_info;
   avg_forest_info_t avg_mixed_forest_info;
-  forest_info_t biggest_tree_mixed_forest_info;
+  mixed_graph_info_t biggest_tree_mixed_forest_info;
   count_t sample_size;
   explicit averageCount(
       long double arcType = 0, long double AType = 0, long double BType = 0,
@@ -51,7 +51,8 @@ struct averageCount {
       const c_graph_info_t &longest_c_graph_info = c_graph_info_t(),
       const c_graph_info_t &most_chains_c_graph_info = c_graph_info_t(),
       const avg_forest_info_t &avg_mixed_forest_info = avg_forest_info_t(),
-      const forest_info_t &biggest_tree_mixed_forest_info = forest_info_t(),
+      const mixed_graph_info_t &biggest_tree_mixed_forest_info =
+          mixed_graph_info_t(),
       count_t sample_size = 0);
 };
 
@@ -62,8 +63,8 @@ class AverageAggregator : public core::Aggregator<conflictCount, averageCount> {
   c_graph_info_t c_graph_info_sum;
   c_graph_info_t longest_c_graph_info;
   c_graph_info_t most_chains_c_graph_info;
-  forest_info_t mixed_forest_info_sum;
-  forest_info_t biggest_tree_mixed_forest_info;
+  mixed_graph_info_t mixed_forest_info_sum;
+  mixed_graph_info_t biggest_tree_mixed_forest_info;
   count_t size;
 
 public:

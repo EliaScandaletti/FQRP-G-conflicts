@@ -9,7 +9,7 @@ namespace fqrp {
 
 namespace utils {
 
-forest_info_t
+mixed_graph_info_t
 isAForest(const std::vector<std::pair<vehicle_t, vehicle_t>> &edges);
 
 } // namespace utils

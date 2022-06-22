@@ -22,11 +22,12 @@ struct c_graph_dist_t {
 };
 
 struct forest_dist_t {
+  utils::distribution is_forest;
   utils::distribution tree_num;
   utils::distribution max_tree_size;
   utils::distribution nodes_num;
   utils::distribution edges_num;
-  void add(const forest_info_t &v, size_t freq = 1);
+  void add(const mixed_graph_info_t &v, size_t freq = 1);
 };
 
 struct dist_count {

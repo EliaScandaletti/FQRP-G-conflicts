@@ -9,8 +9,9 @@ void fqrp::aggregators::c_graph_dist_t::add(const c_graph_info_t &info,
   vehicles_num.add(info.vehicles_num, freq);
 }
 
-void fqrp::aggregators::forest_dist_t::add(const forest_info_t &info,
+void fqrp::aggregators::forest_dist_t::add(const mixed_graph_info_t &info,
                                            size_t freq) {
+  is_forest.add(info.is_a_forest, freq);
   tree_num.add(info.tree_num, freq);
   max_tree_size.add(info.max_tree_size, freq);
   nodes_num.add(info.nodes_num, freq);
