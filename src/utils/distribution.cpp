@@ -36,9 +36,30 @@ fqrp::vehicle_t fqrp::utils::distribution::most_freq() const {
   return _most_freq;
 }
 
+long double fqrp::utils::distribution::quantile(double part) const {
+  size_t v = 0;
+  size_t part_sum = get(0);
+  while (part_sum < part * sample) {
+    v++;
+    part_sum += get(v);
+  }
+  if (part_sum == part * sample) {
+    size_t n = v + 1;
+    while (n < max() && get(n) == 0) {
+      n++;
+    }
+    return 0.5 * (n + v);
+  }
+  return v;
+}
+
 fqrp::vehicle_t fqrp::utils::distribution::size() const { return sample; }
 
-size_t fqrp::utils::distribution::get(vehicle_t v) const { return _freqs[v]; }
+size_t fqrp::utils::distribution::get(vehicle_t v) const {
+  if (v > max() || v < min())
+    return 0;
+  return _freqs[v];
+}
 
 std::ostream &operator<<(std::ostream &os,
                          const fqrp::utils::distribution &dist) {

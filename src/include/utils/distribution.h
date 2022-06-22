@@ -27,6 +27,7 @@ public:
   vehicle_t max() const;
   vehicle_t most_freq() const;
   vehicle_t size() const;
+  long double quantile(double part) const;
   size_t get(vehicle_t v) const;
 };
 
