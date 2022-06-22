@@ -97,9 +97,9 @@ int main(int argc, char const *argv[]) {
     FilteredGenerator<Instance> fg(g, part_filter);
     conflictCounter c({nonMixedTreeLogger, longCChainLogger, mixedChainLogger});
     DistAggregator agg;
-    core::getEstimatedCount(limit, fg, c, agg);
+    dist_count res = core::getEstimatedCount(limit, fg, c, agg);
 
-    cout << '\r' << size << "/" << max_size << std::flush;
+    cout << size << " " << res << endl;
   }
 
   return 0;
