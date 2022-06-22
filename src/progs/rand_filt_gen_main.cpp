@@ -86,7 +86,7 @@ int main(int argc, char const *argv[]) {
   logger_t mixedChainLogger(
       [](const Instance &instance, const conflictCount &count) {
         (void)(instance); // remove unused parameter warning
-        vehicle_t k = 3;
+        vehicle_t k = 0.4 * count.BType;
         return count.mixed_forest_info.max_tree_size >= k;
       },
       mixedChainOut);
@@ -97,9 +97,9 @@ int main(int argc, char const *argv[]) {
     FilteredGenerator<Instance> fg(g, part_filter);
     conflictCounter c({nonMixedTreeLogger, longCChainLogger, mixedChainLogger});
     DistAggregator agg;
-    dist_count res = core::getEstimatedCount(limit, fg, c, agg);
+    core::getEstimatedCount(limit, fg, c, agg);
 
-    cout << size << " " << res << endl;
+    cout << '\r' << size << "/" << max_size << std::flush;
   }
 
   return 0;
