@@ -15,7 +15,7 @@ void fqrp::utils::distribution::add(vehicle_t v, size_t freq) {
   _freqs[v] += freq;
   _sum += v * freq;
   sample += freq;
-  if (freq > v)
+  if (freq > 0)
     _min = std::min(_min, v);
   _max = std::max(_max, v);
   if (_freqs[v] > _highest_freq) {
