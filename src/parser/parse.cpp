@@ -33,6 +33,7 @@ std::istream &operator>>(std::istream &is, c_graph_dist_t &graph_dist) {
 }
 
 std::istream &operator>>(std::istream &is, forest_dist_t &forest_dist) {
+  is >> forest_dist.is_forest;
   is >> forest_dist.tree_num;
   is >> forest_dist.max_tree_size;
   is >> forest_dist.nodes_num;

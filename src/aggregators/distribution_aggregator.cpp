@@ -47,6 +47,7 @@ std::ostream &operator<<(std::ostream &os,
 
 std::ostream &operator<<(std::ostream &os,
                          const fqrp::aggregators::forest_dist_t &info) {
+  os << info.is_forest << " ";
   os << info.tree_num << " ";
   os << info.max_tree_size << " ";
   os << info.nodes_num << " ";
