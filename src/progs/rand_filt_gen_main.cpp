@@ -99,9 +99,7 @@ int main(int argc, char const *argv[]) {
     DistAggregator agg;
     dist_count res = core::getEstimatedCount(limit, fg, c, agg);
 
-    cout << size << " " << res.c_graph_dist.max_length.quantile(0.25)
-         << " " << res.c_graph_dist.max_length.quantile(0.5) << " "
-         << res.c_graph_dist.max_length.quantile(0.75) << endl;
+    cout << size << " " << res << endl;
   }
 
   return 0;
