@@ -5,9 +5,11 @@ CXXFLAGS = -Wall -Wextra -Werror -g
 
 DEPENDENCIES = $(subst .cpp,.d,$(shell find . -name "*.cpp"))
 
-all: progs/rand_filt_gen_main progs/int_filt_gen_main progs/exh_gen_main progs/exh_filt_gen_main parser/converter_main
+all: progs/rand_filt_gen_main progs/rand_filt_log_main progs/int_filt_gen_main progs/exh_gen_main progs/exh_filt_gen_main parser/converter_main
 
 progs/rand_filt_gen_main: progs/rand_filt_gen_main.o aggregators/distribution_aggregator.o utils/distribution.o counters/conflictCounter.o filters/partitioned.o generators/randomGenerator.o conflicts.a types.o
+
+progs/rand_filt_log_main: progs/rand_filt_log_main.o aggregators/distribution_aggregator.o utils/distribution.o counters/conflictCounter.o filters/partitioned.o generators/randomGenerator.o conflicts.a types.o
 
 progs/int_filt_gen_main: progs/int_filt_gen_main.o aggregators/distribution_aggregator.o utils/distribution.o counters/conflictCounter.o filters/partitioned.o generators/intervalGenerator.o conflicts.a types.o
 
