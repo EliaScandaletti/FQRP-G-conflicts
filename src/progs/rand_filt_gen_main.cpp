@@ -46,56 +46,11 @@ int main(int argc, char const *argv[]) {
     cerr << "Invalid input: conversion error" << endl;
   }
 
-  std::ofstream nonMixedTreeOut("benchmark/non_mixed_tree.ins.dat",
-                                std::ios_base::app);
-  if (!nonMixedTreeOut) {
-    cerr << "Unable to create file benchmark/non_mixed_tree.ins.dat" << endl;
-    cerr << "Check if the directory exists" << endl;
-    throw "Unable to create file benchmark/non_mixed_tree.ins.dat";
-  }
-  logger_t nonMixedTreeLogger(
-      [](const Instance &instance, const conflictCount &count) {
-        (void)(instance); // remove unused parameter warning
-        return !count.mixed_forest_info.is_a_forest;
-      },
-      nonMixedTreeOut);
-
-  std::ofstream longCChainOut("benchmark/long_C_chain.ins.dat",
-                              std::ios_base::app);
-  if (!longCChainOut) {
-    cerr << "Unable to create file benchmark/long_C_chain.ins.dat" << endl;
-    cerr << "Check if the directory exists" << endl;
-    throw "Unable to create file benchmark/long_C_chain.ins.dat";
-  }
-  logger_t longCChainLogger(
-      [](const Instance &instance, const conflictCount &count) {
-        vehicle_t n = instance.size();
-        size_t theoretical_min = n >= 3 ? 1 + std::floor((n - 1) / 4) : 0;
-        return count.c_graph_info.max_length >=
-               std::floor(0.8 * theoretical_min);
-      },
-      longCChainOut);
-
-  std::ofstream mixedChainOut("benchmark/mixed_chain.ins.dat",
-                              std::ios_base::app);
-  if (!mixedChainOut) {
-    cerr << "Unable to create file benchmark/mixed_chain.ins.dat" << endl;
-    cerr << "Check if the directory exists" << endl;
-    throw "Unable to create file benchmark/mixed_chain.ins.dat";
-  }
-  logger_t mixedChainLogger(
-      [](const Instance &instance, const conflictCount &count) {
-        (void)(instance); // remove unused parameter warning
-        vehicle_t k = 0.4 * count.BType;
-        return count.mixed_forest_info.max_tree_size >= k;
-      },
-      mixedChainOut);
-
   for (vehicle_t size = min_size; size <= max_size; size++) {
     RandomGenerator g(size);
     Not<IsPartitioned> part_filter;
     FilteredGenerator<Instance> fg(g, part_filter);
-    conflictCounter c({nonMixedTreeLogger, longCChainLogger, mixedChainLogger});
+    conflictCounter c;
     DistAggregator agg;
     dist_count res = core::getEstimatedCount(limit, fg, c, agg);
 
