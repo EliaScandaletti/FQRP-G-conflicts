@@ -17,23 +17,17 @@ void parser::print_table(const string &name,
                          const vector<tuple<vehicle_t, distribution>> &counts) {
   ofstream ofs(name + ".scat.dat");
   if (!ofs) {
-    cerr << "Unable to create file " + name + ".dat";
+    cerr << "Unable to create file " + name + ".scat.dat";
     cerr << "Check if the directory exists";
-    throw "Unable to create file " + name + ".dat";
+    throw "Unable to create file " + name + ".scat.dat";
   }
 
-  ofs << "n\tvalue\tfreq\tmax_freq\tsample" << endl;
-  for (auto &&tup : counts) {
-    const vehicle_t &size = get<0>(tup);
-    const distribution &dist = get<1>(tup);
-    for (vehicle_t i = dist.min(); i <= dist.max(); i++) {
-      ofs << size << '\t' << i << '\t' << dist.get(i) << '\t'
-          << dist.get(dist.most_freq()) << '\t' << dist.size() << endl;
-    }
-    ofs << endl;
+  ofstream dist_ofs(name + ".dist.dat");
+  if (!dist_ofs) {
+    cerr << "Unable to create file " + name + ".dist.dat";
+    cerr << "Check if the directory exists";
+    throw "Unable to create file " + name + ".dist.dat";
   }
-
-  ofs.close();
 
   ofstream simple_ofs(name + ".dat");
   if (!simple_ofs) {
@@ -42,13 +36,27 @@ void parser::print_table(const string &name,
     throw "Unable to create file " + name + ".dat";
   }
 
+  ofs << "n\tvalue\tfreq\tmax_freq\tsample" << endl;
   simple_ofs << "n\tavg\tp25\tp75" << endl;
+  dist_ofs << "size\tvalue\tprob";
   for (auto &&tup : counts) {
     const vehicle_t &size = get<0>(tup);
     const distribution &dist = get<1>(tup);
+    size_t cum = 0;
+    for (vehicle_t i = dist.min(); i <= dist.max(); i++) {
+      ofs << size << '\t' << i << '\t' << dist.get(i) << '\t'
+          << dist.get(dist.most_freq()) << '\t' << dist.size() << endl;
+      cum += dist.get(i);
+      dist_ofs << size << '\t' << i << '\t'
+               << static_cast<long double>(cum) / dist.size() << endl;
+    }
+    ofs << endl;
+    dist_ofs << endl;
     simple_ofs << size << '\t' << dist.avg() << '\t' << dist.quantile(0.25)
                << '\t' << dist.quantile(0.75) << endl;
   }
+
+  ofs.close();
   simple_ofs.close();
 }
 

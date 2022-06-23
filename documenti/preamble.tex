@@ -44,52 +44,83 @@
 \pgfplotsset{colormap name=viridis}
 
 \newcommand{\makeaxis}[2]{
-    \begin{minipage}{0.4\paperwidth}
-        \begin{tikzpicture}
-            \begin{axis} [
-                title={#1}
-            ]
-                \addplot+ [
-                    scatter,
-                    mesh,
-                    empty line=jump,
-                    mark=square*,
-                    restrict expr to domain={{\thisrow{freq}}{1:{+inf}}},
-                    scatter src={\thisrow{freq}/\thisrow{max_freq}}
-                    ] table [x=n,y=value] {#2};
-            \end{axis}
-        \end{tikzpicture}
-    \end{minipage}
+    \makebox[\textwidth]{
+        \begin{minipage}{0.8\paperwidth}
+            \begin{tikzpicture}
+                \begin{axis} [
+                    set layers,
+                    title={#1 - scatter plot}
+                ]
+                    \addplot+ [
+                        scatter,
+                        mesh,
+                        empty line=jump,
+                        mark=square*,
+                        restrict expr to domain={{\thisrow{freq}}{1:{+inf}}},
+                        scatter src={\thisrow{freq}/\thisrow{max_freq}}
+                        ] table [x=n,y=value] {#2.scat.dat};
+
+                    \addplot+ [
+                        on layer=axis foreground,
+                        mark=none,
+                        error bars/y dir=both,
+                        error bars/y explicit,
+                        error bars/error mark=|,
+                        error bars/error mark options={
+                            mark size=3pt,
+                        }
+                    ] table [
+                        x=n,
+                        y=avg,
+                        y error plus expr={\thisrow{p75}-\thisrow{avg}},
+                        y error minus expr={\thisrow{avg}-\thisrow{p25}}
+                        ] {#2.dat};
+                \end{axis}
+            \end{tikzpicture}
+            \hfill
+            \begin{tikzpicture}
+                \begin{axis} [
+                    set layers,
+                    title={#1 - funzione di distribuzione},
+                    cycle list name=color list
+                ]
+                    \foreach \size in {1,2,...,100} {
+                        \addplot+ [
+                            smooth,
+                            restrict expr to domain={
+                                {\thisrow{size}-\size}{0:0}}
+                        ] table [
+                            x=value,
+                            y=prob
+                        ] {#2.dist.dat};
+                    }%
+                \end{axis}
+            \end{tikzpicture}
+        \end{minipage}
+    }
 }
 
 \newcommand{\makefigure}[2]{
-    \begin{figure}[H]
-        \makebox[\textwidth]{
-            \expandafter\makeaxis{Generatore esaustivo}{data/exh_gen_#2.dat}
-            \hfill
-            \expandafter\makeaxis{Generatore esaustivo con flitro}{data/exh_filt_gen_#2.dat}
-        }
-        \vskip\baselineskip
-        \makebox[\textwidth]{
-            \expandafter\makeaxis{Generatore casuale con filtro}{data/rand_filt_gen_#2.dat}
-            \hfill
-            \expandafter\makeaxis{Generatore a intervalli}{data/int_filt_gen_#2.dat}
-        }
-        \vskip\baselineskip
-        \makebox[\textwidth]{
-            \pgfplotscolorbardrawstandalone[
-                colorbar horizontal,
-                point meta min=0,
-                point meta max=100,
-                colorbar style={
-                    width=\textwidth,
-                    xtick={0,10,...,100},
-                    xticklabel={\pgfmathprintnumber{\tick}\%}
-                }
-            ]
-        }
-        \caption{#1}
-    \end{figure}
+    \expandafter\makeaxis{Generatore esaustivo}{data/exh_gen_#2}
+    \vskip\baselineskip
+    \expandafter\makeaxis{Generatore esaustivo con flitro}{data/exh_filt_gen_#2}
+    \vskip\baselineskip
+    \expandafter\makeaxis{Generatore casuale con filtro}{data/rand_filt_gen_#2}
+    \vskip\baselineskip
+    \expandafter\makeaxis{Generatore a intervalli}{data/int_filt_gen_#2}
+    \vskip\baselineskip
+    \makebox[\textwidth]{
+        \pgfplotscolorbardrawstandalone[
+            colorbar horizontal,
+            point meta min=0,
+            point meta max=100,
+            colorbar style={
+                width=\textwidth,
+                xtick={0,100},
+                xticklabels={min, max}
+            }
+        ]
+    }
 }
 
-\renewcommand{\makefigure}[2]{Figures have been disabled for compilation time reason. Comment this line to activate plots.}
+% \renewcommand{\makefigure}[2]{Figures have been disabled for compilation time reason. Comment this line to activate plots.}
