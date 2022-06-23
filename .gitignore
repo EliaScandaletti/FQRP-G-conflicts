@@ -13,5 +13,6 @@ src/progs/exh_gen_main
 src/progs/exh_filt_gen_main
 src/progs/int_filt_gen_main
 src/progs/rand_filt_gen_main
+src/progs/rand_filt_log_main
 src/parser/converter_main
 src/data/*.dat
