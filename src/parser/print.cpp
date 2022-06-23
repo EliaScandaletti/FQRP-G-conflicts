@@ -15,7 +15,7 @@ using std::vector;
 
 void parser::print_table(const string &name,
                          const vector<tuple<vehicle_t, distribution>> &counts) {
-  ofstream ofs(name + ".dat");
+  ofstream ofs(name + ".scat.dat");
   if (!ofs) {
     cerr << "Unable to create file " + name + ".dat";
     cerr << "Check if the directory exists";
@@ -34,6 +34,22 @@ void parser::print_table(const string &name,
   }
 
   ofs.close();
+
+  ofstream simple_ofs(name + ".dat");
+  if (!simple_ofs) {
+    cerr << "Unable to create file " + name + ".dat";
+    cerr << "Check if the directory exists";
+    throw "Unable to create file " + name + ".dat";
+  }
+
+  simple_ofs << "n\tavg\tp25\tp75" << endl;
+  for (auto &&tup : counts) {
+    const vehicle_t &size = get<0>(tup);
+    const distribution &dist = get<1>(tup);
+    simple_ofs << size << '\t' << dist.avg() << '\t' << dist.quantile(0.25)
+               << '\t' << dist.quantile(0.75) << endl;
+  }
+  simple_ofs.close();
 }
 
 void parser::print_tables(const string &dir,
