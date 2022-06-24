@@ -86,7 +86,6 @@
                 ]
                     \foreach \size in {1,2,...,100} {
                         \addplot+ [
-                            smooth,
                             restrict expr to domain={
                                 {\thisrow{size}-\size}{0:0}}
                         ] table [
