@@ -53,7 +53,7 @@ long double fqrp::utils::distribution::quantile(double part) const {
   return v;
 }
 
-fqrp::vehicle_t fqrp::utils::distribution::size() const { return sample; }
+size_t fqrp::utils::distribution::size() const { return sample; }
 
 size_t fqrp::utils::distribution::get(vehicle_t v) const {
   if (v > max() || v < min())
