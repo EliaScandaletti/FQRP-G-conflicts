@@ -72,7 +72,7 @@ int main(int argc, char const *argv[]) {
         vehicle_t n = instance.size();
         size_t theoretical_min = n >= 3 ? 1 + std::floor((n - 1) / 4) : 0;
         return count.c_graph_info.max_length >=
-               std::floor(0.8 * theoretical_min);
+               std::floor(0.9 * theoretical_min);
       },
       longCChainOut);
 
@@ -86,7 +86,7 @@ int main(int argc, char const *argv[]) {
   logger_t mixedChainLogger(
       [](const Instance &instance, const conflictCount &count) {
         (void)(instance); // remove unused parameter warning
-        vehicle_t k = 0.4 * count.BType;
+        vehicle_t k = 0.5 * count.BType;
         return count.mixed_forest_info.max_tree_size >= k;
       },
       mixedChainOut);
