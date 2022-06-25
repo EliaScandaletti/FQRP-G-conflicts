@@ -1,0 +1,9 @@
+*.o
+*.a
+*.d
+progs/exh_gen_main
+progs/exh_filt_gen_main
+progs/int_filt_gen_main
+progs/rand_filt_gen_main
+progs/rand_filt_log_main
+parser/converter_main
