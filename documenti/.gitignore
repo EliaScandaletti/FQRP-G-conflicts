@@ -1,8 +1,9 @@
 *.aux
+*.auxlock
 *.bcf
 *.log
 *.out
 *.pdf
 *.run.xml
-*.synctex.*
+*.synctex*
 *.toc
