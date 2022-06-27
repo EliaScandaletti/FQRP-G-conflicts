@@ -1,0 +1,25 @@
+\documentclass[../../../relazione.tex]{subfiles}
+
+\begin{document}
+
+Basandosi sulla definizione (\ref{def:nodeC}), è possibile definire una catena di conflitti.
+Parliamo di una catena di conflitti quando un veicolo è oggetto di un conflitto di tipo C e è a sua volta soggetto di un altro conflitto dello stesso tipo.
+Per esempio, dati i veicoli $i$, $j$ e $k$ e i conflitti $i(j)$ e $j(k)$, allora $i$, $j$ e $k$ formano una catena di conflitto.
+
+\begin{theorem}
+  La distanza tra partenza e destinazione dei veicoli in una catena di conflitti di tipo C è strettamente crescente.
+  \[i(j) \implies \left|i-\sigma(i)\right| < \left|j-\sigma(j)\right|\]
+\end{theorem}
+\begin{proof}
+  Senza perdita di generalità, assumiamo $i \in \mathbb{R}$ e $j \in \mathbb{L}$.
+  Bisogna quindi dimostrare che $\sigma(i) - i < j - \sigma(j)$.
+  \begin{equation*}
+    \begin{split}
+      i(j) & \implies \sigma(j) < \sigma(i) = \frac{i+j}{2} \\
+      & \implies \sigma(i) + \sigma(j) < i + j \\
+      & \implies \sigma(i) - i < j - \sigma(j)
+    \end{split}
+  \end{equation*}
+\end{proof}
+
+\end{document}

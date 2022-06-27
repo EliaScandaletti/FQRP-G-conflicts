@@ -1,0 +1,20 @@
+\documentclass[../../../relazione.tex]{subfiles}
+
+\begin{document}
+
+È possibile rappresentare i conflitti di tipo C di un'istanza del problema in un grafo orientato i cui vertici rappresentano i veicoli e i archi rappresentano un nodo.
+In particolare, il vertice $(i, j)$ rappresenta il conflitto $i(j)$.
+
+\begin{observation}\label{obs:confC_singolo_sogg}
+  Un veicolo può essere soggetto di un solo conflitto di tipo C ma oggetto di più conflitti.
+\end{observation}
+
+\begin{observation}\label{obs:grafo_albero}
+  Per la costruzione del grafo di conflitti e per l'osservazione \ref{obs:confC_singolo_sogg}, il grafo di conflitti di tipo C è una foresta in cui tutti gli archi puntano verso la radice del proprio albero.
+\end{observation}
+
+\begin{proposition}\label{prop:eq_catena_foglia}
+  Per costruzione dell'albero di conflitti, abbiamo che ogni cammino da una foglia a una radice corrisponde a una catena di conflitti.
+\end{proposition}
+
+\end{document}
