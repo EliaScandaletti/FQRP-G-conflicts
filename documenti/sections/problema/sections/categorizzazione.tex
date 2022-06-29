@@ -50,4 +50,16 @@ In particolare, un conflitto è di tipo C se e solo se rispetta le seguenti cond
 Nel caso $\sigma(i) = \frac{i+j}{2}$, la notazione $i(j)$ indica che $i$ è soggetto a conflitto di tipo C con $j$.
 Nel caso $\sigma(j) = \frac{i+j}{2}$, la notazione $j(i)$ indica che $j$ è soggetto a conflitto di tipo C con $i$.
 
+\subparagraph{Conflitti di nodo di tipo misto}
+I conflitti di tipo misto sono un particolare caso di conflitti di tipo B.
+In particolare, i veicoli $i$ e $j$ sono in conflitto di tipo misto se e solo se:
+\begin{subnumcases}{\label{def:nodeMisto}}
+  i \in \mathbb{R}\label{def:nodeMisto:a} \\
+  j \in \mathbb{L}\label{def:nodeMisto:b} \\
+  j - i = 2n,\ n \in \mathbb{N}\label{def:nodeMisto:c} \\
+  \sigma(j) < \frac{i+j}{2} < \sigma(i)\label{def:nodeMisto:d} \\
+  \exists\ i', i'' \in \mathbb{L} : i'(i)\, \wedge\, i(i'')\label{def:nodeMisto:e} \\
+  \exists\ j', j'' \in \mathbb{R} : j'(j)\, \wedge\, j(j'')\label{def:nodeMisto:e}
+\end{subnumcases}
+
 \end{document}
