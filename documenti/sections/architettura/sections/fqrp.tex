@@ -69,4 +69,21 @@ Vengono implementati i seguenti filtri:
     \item \texttt{ExcludeSymmetric}: per ogni coppia di istanze di cui una è simmetrica all'altra, ne accetta solo una.
 \end{itemize}
 
+\paragraph{Generazione benchmark}
+Per la generazione del benchmark di istanze interessanti viene utilizzata la classe \texttt{logger\_t}.
+Il costruttore della classe accetta come parametro un puntatore a una funzione del tipo \texttt{bool func(const Instance \&, const conflictCount \&)}.
+Inoltre, accetta un output stream che, di default, è quello standard.
+
+La classe implementa l'\texttt{operator()(const Instance \&instance, const conflictCount \&count)} in modo tale che se la funzione ricevuta dal costruttore ritorna vero con gli stessi parametri, allora l'istanza ricevuta viene scritta nell'output stream ricevuto dal costruttore.
+
+Gli oggetti di tipo \texttt{logger\_t} vengono passati al costruttore della classe \texttt{conflictCounter} che, ogni volta che un'istanza viene analizzata, passa l'istanza stessa e il risultato ottenuto al logger attraverso il suo \texttt{operator()}.
+
+I criteri utilizzati sono stati i seguenti:
+\begin{itemize}
+    \item il grafo dei conflitti misti dell'istanza non è una foresta;
+    \item la lunghezza della catena massima di conflitti di tipo C dell'istanza è maggiore o uguale al 90\% della lunghezza massima teorica;
+    \item il numero di conflitti misti è maggiore o uguale al 50\% del numero di conflitti di tipo B.
+\end{itemize}
+Tutti e tre i criteri sono stati applicati col generatore casuale con filtro a posteriori e alle sole istanze di dimensione minima 16.
+
 \end{document}
