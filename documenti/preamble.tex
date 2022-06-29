@@ -98,6 +98,7 @@
                     ]
                     \foreach \size in {1,2,...,100} {
                             \addplot+ [
+                                jump mark left,
                                 restrict expr to domain={
                                         {\thisrow{size}-\size}{0:0}}
                             ] table [
@@ -114,7 +115,7 @@
 \newcommand{\makefigure}[2]{
     \expandafter\makeaxis{Generatore esaustivo}{exh_gen_#2}
     \vskip\baselineskip
-    \expandafter\makeaxis{Generatore esaustivo con flitro}{exh_filt_gen_#2}
+    \expandafter\makeaxis{Generatore esaustivo con filtro}{exh_filt_gen_#2}
     \vskip\baselineskip
     \expandafter\makeaxis{Generatore casuale con filtro}{rand_filt_gen_#2}
     \vskip\baselineskip
@@ -129,7 +130,7 @@
             colorbar style={
                     width=\textwidth,
                     xtick={0,100},
-                    xticklabels={min, max}
+                    xticklabels={0, 1}
                 }
         ]
     }

@@ -10,10 +10,13 @@ Per ogni metrica misurata, per ogni generatore utilizzato, vengono proposti due 
 Il primo grafico rappresenta la distribuzione della metrica in funzione della dimensione del problema.
 Ogni punto indica che quel valore è possibile.
 Il colore del punto indica qualitativamente la probabilità che quel valore venga trovato.
+In particolare, il colore indica il rapporto tra frequenza del valore rappresentato e la frequenza del valore più frequente in istanze della stessa dimensione.
+In questo modo, ogni colonna del grafico avrà uno o più valori con frequenza massima e rapporto uguale a 1, e gli altri valori avranno un rapporto compreso tra 0 e 1.
+
 Inoltre, la linea rossa rappresenta il valore medio della metrica in funzione della dimensione dell'istanza e le barre verticali rappresentano il primo e il terzo quartile.
 
 Nel secondo grafico, viene riportata la funzione di distribuzione della metrica.
-Ogni linea rappresenta una dimensione dell'istanza.
+Ogni colore rappresenta una dimensione dell'istanza.
 
 \subsection{Generatori utilizzati}
 I dati sono stati ricavati utilizzando quattro generatori diversi:
@@ -53,8 +56,8 @@ I dati sono stati ricavati utilizzando quattro generatori diversi:
 \subsubsection{Numero di conflitti}
 \makefigure{Numero di conflitti}{MForest_edges_num}
 
-\subsubsection{Dimensione dell'albero di conflitti più grande}
-\makefigure{Dimensione dell'albero di conflitti più grande}{MForest_max_tree_size}
+\subsubsection{Dimensione della componente connessa di conflitti più grande}
+\makefigure{Dimensione della componente connessa di conflitti più grande}{MForest_max_tree_size}
 
 \subsubsection{Numero di veicoli coinvolti}
 \makefigure{Numero di veicoli coinvolti}{MForest_nodes_num}
