@@ -56,7 +56,9 @@
             \begin{tikzpicture}
                 \begin{axis} [
                         set layers,
-                        title={#1 - scatter plot}
+                        title={#1 - scatter plot},
+                        ylabel=valore,
+                        xlabel=dimensione istanza
                     ]
                     \addplot+ [
                     scatter,
@@ -90,6 +92,8 @@
                 \begin{axis} [
                         set layers,
                         title={#1 - funzione di distribuzione},
+                        ylabel=probabilità,
+                        xlabel=valore,
                         cycle list name=color list
                     ]
                     \foreach \size in {1,2,...,100} {
