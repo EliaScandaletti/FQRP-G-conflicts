@@ -2,7 +2,7 @@
 
 \begin{document}
 
-Dato un problema di $n$ colonne, vogliamo calcolare la probabilità che un veicolo $i$ sia oggetto di un conflitto di tipo C.
+Dato un problema di $n$ colonne, vogliamo calcolare la probabilità che un veicolo $i$ sia soggetto di un conflitto di tipo C.
 Formalmente vogliamo calcolare
 \begin{equation*}
   P(\exists j : i(j))
@@ -60,7 +60,7 @@ Possiamo quindi scrivere che
     \sigma(j) < \sigma(i)
   \end{cases}
 \end{equation}
-per $i \in \mathbb{R}$ e $j = 2\sigma(i) - i$.
+con $i \in \mathbb{R}$ e $j = 2\sigma(i) - i$.
 
 Per l'equivalenza (\ref{analisi:probC:condEx}), si può affermare che
 \begin{equation}\label{analisi:probC:chainRule}
@@ -74,27 +74,63 @@ Per l'equivalenza (\ref{analisi:probC:condEx}), si può affermare che
     &= P(\sigma(j) < \sigma(i)\ \mid\ j \leq n \wedge i < \sigma(i)) * P(j \leq n\ \mid\ i < \sigma(i))
   \end{split}
 \end{equation}
-per $i \in \mathbb{R}$ e $j = 2\sigma(i) - i$.
+con $j = 2\sigma(i) - i$.
 
 Procediamo ora a calcolare il valore di ciascun fattore dell'equazione (\ref{analisi:probC:chainRule}).
 \paragraph{$P(j \leq n\ \mid\ i < \sigma(i))$}
 Sostituendo $j$, otteniamo
-$$j = 2\sigma(i) - i \leq n \implies \sigma(i) \leq \frac{n+i}{2}$$
+\[j = 2\sigma(i) - i \leq n \implies \sigma(i) \leq \frac{n+i}{2}\]
 Per definizione del problema, $\sigma(i) \leq n$.
 Calcoliamo la probabilità come il rapporto tra casi favorevoli e casi possibili.
 I casi possibili sono $n-i$, i.e. $i < \sigma(i) \leq n$.
+I casi favorevoli sono $\lfloor \frac{n-i}{2} \rfloor$, i.e. $i < \sigma(i) \leq \frac{n+i}{2}$.
 
-Per calcolare i casi favorevoli appare evidente la necessità di distinguere i casi $n+i$ pari e $n+i$ dispari.
-Nel primo caso avrò $\frac{n+i}{2}$ casi favorevoli; nel secondo $\frac{n+i-1}{2}$.
+Da ciò
+\begin{equation}\label{analisi:probC:chainRule:part1}
+  P(j \leq n\ \mid\ i < \sigma(i)) =
+  \begin{cases}
+    \frac{1}{2},                  & \mbox{se $i+n$ pari}    \\
+    \frac{1}{2}\frac{n-i-1}{n-i}, & \mbox{se $i+n$ dispari}
+  \end{cases}
+\end{equation}
 
-Calcoliamo quindi le rispettive probabilità.
+\paragraph{$P(\sigma(j) < \sigma(i)\ \mid\ j \leq n \wedge i < \sigma(i))$}
+Dalle condizioni $j \leq n \wedge i < \sigma(i)$ sappiamo che $i < \sigma(i) \leq \frac{n+i}{2}$ per quanto visto al punto precedente.
+Poiché il valore di $\sigma(j)$ è casuale e uniformemente distribuito, allora $P(\sigma(j) < \sigma(i)) = \frac{\sigma(i)-1}{n}$.
 
-\dotfill
+Al fine di rimuovere la dipendenza da $\sigma(i)$, bisogna risolvere una sommatoria per tutti i possibili valori di $\sigma(i)$.
 
-{\large\textbf{A questo punto il calcolo diventa complesso e oltre le mie capacità}}
+\begin{equation*}
+  \begin{split}
+    P(\sigma(j) < \sigma(i)\ \mid\ j \leq n \wedge i < \sigma(i))
+    &= \sum_{k = i+1}^{\lfloor \frac{n+1}{2} \rfloor} \frac{k-1}{n} * P(\sigma(i)=k) \\
+    &= \sum_{k = i+1}^{\lfloor \frac{n+1}{2} \rfloor} \frac{k-1}{n} * \frac{1}{n} \\
+    &= \frac{1}{n^2}\sum_{k = i+1}^{\lfloor \frac{n+1}{2} \rfloor}k-1 \\
+    &= \frac{1}{n^2}\sum_{k = i}^{\lfloor \frac{n-1}{2} \rfloor}k \\
+    &= \frac{1}{n^2}\left( \sum_{k = 1}^{\lfloor \frac{n-1}{2} \rfloor}k - \sum_{k = 1}^{i-1}k \right) \\
+    &= \frac{1}{n^2}\left( \frac{\lfloor \frac{n+1}{2} \rfloor\lfloor \frac{n-1}{2} \rfloor}{2} - \frac{i(i-1)}{2} \right) \\
+    &= \frac{1}{2n^2}\left( \lfloor \frac{n+1}{2} \rfloor\lfloor \frac{n-1}{2} \rfloor - i(i-1) \right) \\
+  \end{split}
+\end{equation*}
 
-\dotfill
+Distinguendo i casi $n$ pari e dispari, avremo
+\begin{equation}\label{analisi:probC:chainRule:part2}
+  P(\sigma(j) < \sigma(i)\ \mid\ j \leq n \wedge i < \sigma(i)) =
+  \begin{cases}
+    \frac{1}{2n^2}\left( \frac{n}{2} \left(\frac{n}{2}-1\right) - i(i-1) \right), & \mbox{se $n$ pari} \\
+    \frac{1}{2n^2}\left( \frac{n}{2} \left(\frac{n}{2}+1\right) - i(i-1) \right), & \mbox{se $n$ dispari}
+  \end{cases}
+\end{equation}
 
-TODO: scrivere una conclusione migliore e vedere se si riesce a tirar fuori qualcosa di utile.
+Mettendo insieme i risultati ottenuti dalle equazioni (\ref{analisi:probC:chainRule}), (\ref{analisi:probC:chainRule:part1}), (\ref{analisi:probC:chainRule:part2}), otteniamo che
+\begin{equation}
+  P(\exists j : i(j)\ \mid\ i \in \mathbb{R}) =
+  \begin{cases}
+    \frac{1}{4n^2}\left( \frac{n}{2} \left(\frac{n}{2}-1\right) - i(i-1) \right), & \mbox{se $n$ pari e $i$ pari} \\
+    \frac{n-i-1}{2n^2(n-i)}\left( \frac{n}{2} \left(\frac{n}{2}-1\right) - i(i-1) \right), & \mbox{se $n$ pari e $i$ dispari} \\
+    \frac{1}{4n^2}\left( \frac{n}{2} \left(\frac{n}{2}+1\right) - i(i-1) \right), & \mbox{se $n$ dispari e $i$ dispari} \\
+    \frac{n-i-1}{2n^2(n-i)}\left( \frac{n}{2} \left(\frac{n}{2}+1\right) - i(i-1) \right), & \mbox{se $n$ dispari e $i$ pari}
+  \end{cases}
+\end{equation}
 
 \end{document}
