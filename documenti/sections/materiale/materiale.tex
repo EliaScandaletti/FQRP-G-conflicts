@@ -15,6 +15,14 @@ A termine del tirocinio, oltre alla presente relazione, vengono consegnati i seg
     \item \textbf{cartella pseudocode}, contiene pseudocodice che è stato utilizzato come base per il codice vero e proprio;
     \item \textbf{cartella src}, contiene il codice sorgente dei programmi:
           \begin{itemize}
+              \item \textbf{cartella benchmark}, contiene il benchmark generato durante l'esecuzione dei programmi;
+                    \begin{itemize}
+                        \item \textbf{long\_C\_chains.ins.dat}, contiene istanze nelle quali la lunghezza della catena massima di conflitti di tipo C è maggiore o uguale
+                              al 90\% della lunghezza massima teorica;
+                        \item \textbf{mixed\_chains.ins.dat}, contiene istanze nelle quali il numero di conflitti misti è maggiore o uguale al 50\% del numero di conflitti di tipo B dell'istanza stessa;
+                        \item \textbf{mixed\_non\_tree.ins.dat}, il grafo dei conflitti misti dell'istanza non è una foresta;
+                    \end{itemize}
+              \item \textbf{cartella data}, contiene i dati generati dall'esecuzione dei programmi;
               \item \textbf{cartella include}, contiene i file header utilizzati;
               \item \textbf{Makefile}, contiene le istruzioni per la compilazione degli eseguibili;
               \item altre cartelle e file contenenti i sorgenti dei programmi;
@@ -22,7 +30,5 @@ A termine del tirocinio, oltre alla presente relazione, vengono consegnati i seg
     \item \textbf{convert.sh}, file bash che converte i file di dati generati dai programmi in file di dati utili alla creazione dei grafici;
     \item \textbf{run.sh}, file bash di utilità per far eseguire tutti i programmi nella configurazione utilizzata.
 \end{itemize}
-
-Inoltre, si allegano i file contenenti il benchmark di istanze generato.
 
 \end{document}
